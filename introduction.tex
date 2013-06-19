@@ -11,19 +11,20 @@ environment of these reactive systems is also real-time. Yet, these
 languages do not support describing real-time as first class language
 constructs. For example, one cannot describe a simple real-time delay
 \texttt{delay 0.2 ms} in these languages. These languages are based on
-formal semantics, essential for the formal verification of functional
-correctness of the developed programs, but leave non-functional
-properties such as timing behavior as an implementation
-detail~\cite{ringler00,boldt07}.
-
-These languages only support discrete \textit{logical} clock rather than
-a continuous clock. The period of the discrete logical clock (also
-referred to as a \textit{logical tick}) is determined by the
-responsiveness of the program and as opposed to a discrete
-\textit{physical} clock is elastic. Although this timing model has
-worked well for these languages in designing discrete systems there is
-obviously a need to introduce continuous time since often implementation
-models are in the continuous time
+formal semantics, essential for the verification of functional
+correctness properties of the developed programs, but leave
+non-functional properties such as timing behavior as an implementation
+detail~\cite{ringler00,boldt07}. Arguably rightly so, because physical
+time cannot be incorporated without information about the underlying
+execution platform. But, one can still reason in terms of
+\textit{logical} time. These languages support discrete \textit{logical}
+clock rather than a continuous clock. The period of the discrete logical
+clock (also referred to as a \textit{logical tick}) is determined by the
+responsiveness of the program to the input signals and as opposed to a
+discrete \textit{physical} clock is elastic. Although this timing model
+has worked well for these languages in designing discrete systems there
+is obviously a need to introduce continuous time since often
+implementation models are in the continuous time
 domain~\cite{DBLP:journals/pieee/SifakisTY03}.
 
 \input{motivation}
@@ -45,6 +46,8 @@ follows:
   not require one to change the compiler at all.
 \item Our solution gives complete control of under and over
   approximation of real-time to the system designer.
+\item We are the first to allow specification of both deterministic and
+  non-deterministic real-time.
 \end{enumerate}
 
 The rest of the paper is arranged as follows...
