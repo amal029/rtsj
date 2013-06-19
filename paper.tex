@@ -36,6 +36,9 @@
 %% If you use dvips and ps2pdf, please use Postscript font 
 %% and uncomment the line below.
 %%\usepackage{times}
+\usepackage{url}
+\usepackage{amsmath}
+\usepackage{amsfonts}
 \pagestyle{empty}
 %set paper size
 %for A4 paper
@@ -98,7 +101,7 @@ minus3pt\let\@listi\@listI}
 \date{}
 
 %make title
-\title{Marriage of real-time and GALS programming languages}	% Modified by K. Kobayashi 18/06/02
+\title{Marriage of real time and logical time} % Modified by K. Kobayashi 18/06/02
 
 %for single author
 %\author{Center the Authors Names Here \\
@@ -123,12 +126,12 @@ room for the final submission.\\
 
 
 \input{introduction}
-\input{motivation}
-\input{related_work}
 \input{background}
 \input{delays}
 \input{exps}
+\input{related_work}
 \input{conclusion}
 
+\bibliographystyle{plain}
 \bibliography{main.bib}
 \end{document}

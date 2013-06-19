@@ -1,7 +1,83 @@
-\section{Motivating Example}
+\subsection{Motivating Example}
 \label{sec:motivating-example}
 
+% system{
+%  interface{
+%   input signal TOUCH;
+%   output signal GREEN_LIGHT;
+%   output char channel S;
+%   input char channel R;
+%  }
+\begin{figure}[t!]
+% \begin{center}
+\begin{minipage}{5cm}
+\begin{verbatim}
+{ // Clock-domain 1
+while(1) {
+  trap(TRAP){
+   // Abort if user touches the screen
+   abort(TOUCH){
+    {sustain GREEN_LIGHT;}
+    || // synchronous parallel operator
+    {
+    //exit after any 
+    // where from 0.5 to 1 ms.
+    /*delay [0.5..1]ms;*/
+    exit(TRAP); 
+    }
+   } do {send S(1);} // Send 1 if touched 
+  } do {send S(0);} // Else Send 0
+  pause; // only construct to consume time
+ }
+}
+>< // asynchronous operator
+{ // Clock-domain 2
+  while(1){ receive S;}
+  // do something with S
+}
+\end{verbatim}
+\end{minipage}
+\caption{An example human reaction time collection system (HRTCS)}
+% }
+% \end{center}
+\label{fig:1}
+\end{figure}
 
+Consider a simple machine used to test human reaction time and collect
+this data for future research purposes. The machine switches on a green
+light on a touch screen for anywhere between \texttt{0.5ms} to
+\texttt{1ms}, if the user can touch this green light then she is
+successful and an integer \texttt{1} is sent to a data-base server, if
+unsuccessful a \texttt{0} is sent instead, this way a database of human
+responsiveness can easily be generated.
+
+The SystemJ~\cite{amal10} code for such a system is shown in
+Figure~\ref{fig:1}. We use the SystemJ language in this paper first of
+all, because being a \textit{Globally Asynchronous Locally Synchronous}
+(GALS) language it helps us easily describe a larger class of systems
+(like HRTCS in Figure~\ref{fig:1}) compared to purely synchronous
+languages like Esterel. Moreover, being a super-set of Esterel, SystemJ
+allows us to explore the marriage of real-time and logical time, which
+is equally applicable to the synchronous sub-set.
+
+The SystemJ program is divided into two clock-domains, the first
+clock-domain continuously displays a green light (\texttt{GREEN\_LIGHT}
+signal) on the touch screen sensor and waits for the user to respond. If
+the user is able to touch the screen within the specified time of
+\texttt{0.5ms} to \texttt{1ms} a positive response is sent to the second
+clock-domain, which is interacting with data-base (via CSP style channel
+communication via \texttt{S}) server in Java. The synchronous parallel
+operator \texttt{||} along with the \texttt{trap-exit} (exception
+mechanism) is used to make sure that the green light is switched on for
+only a specified delay. The 2 clock-domains are implemented using the
+asynchronous parallel \texttt{><} operator. All these constructs are
+described in~\cite{amal10}.
+
+This SystemJ example is \textit{incomplete}, the \texttt{delay}
+specification, which models the non-deterministic delay between
+\texttt{0.5ms} and \texttt{1ms} does not work with the SystemJ compiler!
+In fact, there is no way to include such real-time specifications in the
+language itself.
 
 %%% Local Variables: 
 %%% mode: latex

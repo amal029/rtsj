@@ -1,6 +1,53 @@
-\section{Introduction}
-\label{sec:introduction}
+\section{Introduction and motivation}
+\label{sec:intr-motiv}
 
+Reactive languages~\cite{gber05,amal10} are a class of programming
+languages used for designing and implementing \textit{reactive} systems,
+which continuously respond to input from their environment. These
+languages have been successfully used in programming a plethora of
+systems such as fly by wire in Airbus~\cite{eairbus}, security
+surveillance systems~\cite{amal121}, etc. Usually the working
+environment of these reactive systems is also real-time. Yet, these
+languages do not support describing real-time as first class language
+constructs. For example, one cannot describe a simple real-time delay
+\texttt{delay 0.2 ms} in these languages. These languages are based on
+formal semantics, essential for the formal verification of functional
+correctness of the developed programs, but leave non-functional
+properties such as timing behavior as an implementation
+detail~\cite{ringler00,boldt07}.
+
+These languages only support discrete \textit{logical} clock rather than
+a continuous clock. The period of the discrete logical clock (also
+referred to as a \textit{logical tick}) is determined by the
+responsiveness of the program and as opposed to a discrete
+\textit{physical} clock is elastic. Although this timing model has
+worked well for these languages in designing discrete systems there is
+obviously a need to introduce continuous time since often implementation
+models are in the continuous time
+domain~\cite{DBLP:journals/pieee/SifakisTY03}.
+
+\input{motivation}
+
+The fundamental contribution of this paper is the inclusion of real-time
+constructs in GALS (and its subset synchronous) reactive
+languages. Moreover, our contributions can be further refined as
+follows:
+
+\begin{enumerate}
+\item The real-time is modeled in the $\mathbb{Q}^{>0}$ domain of
+  numbers, i.e., non-negative rational numbers.
+\item We consider the property of \textit{non maximal-parallelism},
+  i.e., we consider scheduling on constrained resources to be an
+  integral part of the solution. To our knowledge we are the very first
+  to do so.
+\item Our solution does not change the functional or timing semantics of
+  GALS and its subset synchronous programs, in fact, our solution does
+  not require one to change the compiler at all.
+\item Our solution gives complete control of under and over
+  approximation of real-time to the system designer.
+\end{enumerate}
+
+The rest of the paper is arranged as follows...
 
 
 %%% Local Variables: 
