@@ -42,6 +42,7 @@
 \usepackage{amsfonts}
 \usepackage{subfig}
 \usepackage{graphicx}
+\usepackage[boxed,linesnumberedhidden]{algorithm2e}
 \pagestyle{empty}
 \newtheorem{theorem}{Theorem}[section]
 \newtheorem{lemma}[theorem]{Lemma}
@@ -117,15 +118,28 @@ minus3pt\let\@listi\@listI}
 \def\thetable{\Roman{table}}
 
 \makeatother
-
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
+% REMOVE UNTIL MARKED TO REMOVE SPACE SAVING!!
+\usepackage{mdwlist}
+\usepackage{color}
+\setlength{\parskip}{0pt}
+\setlength{\parsep}{0pt}
+\setlength{\headsep}{0pt}
+\setlength{\topskip}{0pt}
+\setlength{\topmargin}{0pt}
+\setlength{\topsep}{0pt}
+\setlength{\partopsep}{0pt}
+\usepackage[compact]{titlesec}
+\titlespacing{\section}{0pt}{*0}{*0}
+\titlespacing{\subsection}{0pt}{*0}{*0}
+\titlespacing{\subsubsection}{0pt}{*0}{*0}
+% REMOVE UNTIL HERE
 \begin{document}
 %date not printed
 \date{}
 
 %make title
-\title{Time square -- an intersection of logical and physical times} % Modified by K. Kobayashi 18/06/02
+\title{Times square -- an intersection of logical and physical times} % Modified by K. Kobayashi 18/06/02
 
 %for single author
 %\author{Center the Authors Names Here \\

@@ -14,15 +14,15 @@ constructs. For example, one cannot describe a simple real-time delay
 formal semantics, essential for the verification of functional
 correctness properties of the developed programs, but leave
 non-functional properties such as timing behavior as an implementation
-detail~\cite{ringler00,boldt07}. Arguably rightly so, because physical
+detail~\cite{ringler00,boldt07}. Arguably, rightly so, because physical
 time cannot be incorporated without information about the underlying
 execution platform. But, one can still reason in terms of
 \textit{logical} time. These languages support discrete \textit{logical}
 clock rather than a continuous clock. The period of the discrete logical
 clock (also referred to as a \textit{logical tick}) is determined by the
 responsiveness of the program to the input signals and as opposed to a
-discrete \textit{physical} clock is elastic. Although this timing model
-has worked well for these languages in designing discrete systems there
+discrete \textit{physical} clock, is elastic. Although this timing model
+has worked well for these languages in designing discrete systems, there
 is obviously a need to introduce continuous time since often
 implementation models are in the continuous time
 domain~\cite{DBLP:journals/pieee/SifakisTY03}.
@@ -34,21 +34,21 @@ constructs in GALS (and its subset synchronous) reactive
 languages. Moreover, our contributions can be further refined as
 follows:
 
-\begin{enumerate}
-\item The real-time is modeled in the $\mathbb{Q}^{>0}$ domain of
-  numbers, i.e., non-negative rational numbers.
+\begin{enumerate*}
+\item Real-time is modeled in the $\mathbb{Q}^{>0}$ domain of numbers,
+  i.e., non-negative rational numbers.
 \item We consider the property of \textit{non maximal-parallelism},
   i.e., we consider scheduling on constrained resources to be an
   integral part of the solution. To our knowledge we are the very first
   to do so.
 \item Our solution does not change the functional or timing semantics of
   GALS and its subset synchronous programs, in fact, our solution does
-  not require one to change the compiler at all.
-\item Our solution gives complete control of under and over
-  approximation of real-time to the system designer.
-\item We are the first to allow specification of both deterministic and
-  non-deterministic real-time.
-\end{enumerate}
+  not require one to change the mid-end, the back-end or the related
+  optimization phases of the compiler at all.
+\item We are the first, to our knowledge, to allow specification of both
+  deterministic and non-deterministic real-time in GALS and synchronous
+  languages.
+\end{enumerate*}
 
 The rest of the paper is arranged as follows...
 
