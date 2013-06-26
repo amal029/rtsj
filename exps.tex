@@ -1,9 +1,13 @@
 
 \section{Experimental results}
 \label{sec:experimental-results}
+\begin{table}[t]
+\centering
+\twocolumn[
 
-\begin{center}
-\scalebox{0.9}{
+\begin{@twocolumnfalse}
+\caption{Benchmark programs using \texttt{delay} constructs} \label{table:benchmark}
+\scalebox{0.85}{
 \begin{tabular}{|c| c | c | c | c | c | c | c |}
 	\cline{4-8}
 	\multicolumn{3}{c|}{}											& HRTCS 		& Motor 		  & Robot 			  & AECS/CD1  		   & AECS/CD2\\ \hline
@@ -34,14 +38,50 @@
 	\hline
 \end{tabular}
 }
-\end{center}
+\end{@twocolumnfalse}
+]
+
+\end{table}
+In this section, we present a set of SystemJ benchmark programs in which real-time requirements should be met.
+We have carried out a set of experiments to obtain BCRT and WCRT of the benchmark programs on two execution platforms called Java Optimized Processor(JOP) 
+\cite{jop:jnl:jsa2007} and TP-JOP \cite{6119095}. JOP is a hardware implementation of the JVM which enables real-time execution of Java programs by translating
+Java bytecodes into a sequence of JOP's native instructions called \emph{microcode} which is time-predictable. As SystemJ's default compilation
+target is Java source code, JOP is an excellent platform which enables us to analyze timing properties of SystemJ program. On the other hand, there is also
+an option where compiled code could be more tightly coupled to specific platforms such as TP-JOP, which execute SystemJ's kernel statements more
+efficiently. By utilizing our internal tools in conjunction with Worst-Case-Execution-Time (WCET) analyzer \cite{jop:jnl:jsa2007} 
+provided by JOP tools, we were able to estimate BCRT and WCRT of our benchmark programs: (full-name?) HRTCS, Stepper motor controller (Motor) \cite{}, Robot 
+and Access Environment Control System (AECS) \cite{}.
+
+%HRTCS, as already illustrated in Section \ref{sec:intr-motiv}, tests for an ability of one's responsiveness by generating green
+%lights between the real-time range \emph{M - N}. For AECS \ref{} we have replaced the external timer with our delay constructs. Stepper motor controller
+%is originally introduced in \cite{Bourke2009a} which converted into SystemJ.
+
+As one can see in Table \ref{table:benchmark}, BCRT and WCRT of overall programs are smaller when they run on TP-JOP. For example,
+WCRT and BCRT of HRTCS are \(\times\)11.9 and \(\times\)3.4 smaller, respectively, for TP-JOP (0.0028, 0.0329 ms) compared to JOP (0.0334, 0.1120 ms). On the other
+hand, required logical delays \emph{d} are generally bigger on TP-JOP e.g. \(\times\)4.5 - \(\times\)5.9 and \(\times\)30.9 in 
+Motor and Robot respectively. It is expected as their BCRT and WCRT differences are bigger on TP-JOP. 
+This also led to greater increase in minimum upper real-time bounds \emph{N} for TP-JOP in every example.
+In AECS, there are two clock-domains using delay constructs that each has their own BCRT and WCRT. Again, individual BCRT and WCRT is smaller 
+whereas \emph{d} is bigger on TP-JOP. One important property to note here, is that BCRT and WCRT of any clock-domains are invariant of \emph{d} as explained 
+in Section \ref{sec:intr-real-time}. It is our fundamental assumption to find \emph{d} in our benchmark programs. 
 
 
-aa
 
 %%% Local Variables: 
 %%% mode: latex
 %%% TeX-master: "paper"
 %%% End: 
+
+
+
+
+
+
+
+
+
+
+
+
 
 

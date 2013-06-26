@@ -3,3 +3,7 @@
 *.bbl
 *.dvi
 *.log
+.project
+.texlipse
+paper.synctex.gz
+tmp
