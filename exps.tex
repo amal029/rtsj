@@ -64,8 +64,8 @@ analyze timing properties of SystemJ program.
 By utilizing in-house tools in conjunction with Worst-Case-Execution-Time (WCET)
 analyzer \cite{jop:jnl:jsa2007} provided by JOP tools, we were able to estimate
 BCRT and WCRT of the following benchmark programs: (full-name?) HRTCS \cite{},
-Stepper motor controller (Motor) \cite{}, Robot and Access Environment Control
-System (AECS) \cite{}. We have also added a set of customized hardware counters
+Stepper motor controller (Motor) \cite{Bourke2009a}, Robot and Access Environment Control
+System (AECS) \cite{aecs_ispa}. We have also added a set of customized hardware counters
 to the original JOP design in order to collect numbers of clock cycles required
 for logical ticks of given SystemJ program. All examples except Robot are
 existing applications translated into pure SystemJ programs. The Robot example
@@ -91,8 +91,8 @@ is applied to those examples to determine the minimum upper real-time bound
 \emph{N} such that there exist a solution for \emph{D} in Algorithm \ref{alg:1}.
 Unlike in HRTCS, however, this algorithm gives a unique number for logical tick
 delay \emph{d} such that \emph{d} = Min(\emph{$S_2$}) = Max(\emph{$S_1$}).
-The compiler, therefore, will choose \emph{d} based on the newly computed \emph{N} for
-the examples Robot, Motor and AECS. 
+The compiler, therefore, will choose \emph{d} based on the newly computed
+\emph{N} for the examples Robot, Motor and AECS.
 
 
 % HRTCS, as already illustrated in Section \ref{sec:intr-motiv}, tests for an
