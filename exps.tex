@@ -1,88 +1,206 @@
 
 \section{Experimental results}
 \label{sec:experimental-results}
-\begin{table}[t]
-  \centering
-  \twocolumn[
+% <<<<<<< HEAD
+% \begin{table}[t]
+%   \centering
+%   \twocolumn[
 
-  \begin{@twocolumnfalse}
-    \caption{Benchmark programs using \texttt{delay} constructs} \label{table:benchmark}
-    \scalebox{0.85}{
-      \begin{tabular}{|c| c | c | c | c | c | c | c |}
-	\cline{4-8}
-	\multicolumn{3}{c|}{}											& HRTCS 		& Motor 		  & Robot 			  & AECS/CD1  		   & AECS/CD2\\ \hline
-	\multirow{12}{*}{JOP} 		& \multicolumn{2}{|c|}{BCRT} 		&0.0334 ms 		& 0.0361 ms		  & 0.0325 ms		  & 0.1683 ms		   & 0.1881 ms\\ \cline{2-8}   
-        & \multicolumn{2}{|c|}{WCRT} 		&0.1120 ms 		& 0.1116 ms		  & 0.0601 ms		  & 0.7147 ms		   & 1.0115 ms\\ \cline{2-8} 
-        & \multirow{2}{*}{Delay 1}	 & M..N &50.3-200.3 ms 	& 2.4-7.4772 ms	  & 1230-2274.0263 ms & 10000-42473.2197 ms& 10000-53772.0045 ms \\ \cline{3-8} 
-        &			   & d			 		&1506-1787  	& 67 			  & 37861			  & 59427		       &53160\\ \cline{2-8}
-        & \multirow{2}{*}{Delay 2}	 & M..N & 	N/A 		& 1.667-5.2452 ms & N/A				  & N/A 			   &10000-53772.0045 ms\\ \cline{3-8} 
-        &			   & d			 		& 	N/A	 		& 47			  & N/A				  & N/A       		   &53160\\ \cline{2-8}
-        & \multirow{2}{*}{Delay 3}	 & M..N & 	N/A	 		& 0.05-0.2232 ms  & N/A				  & N/A       		   &N/A\\ \cline{3-8} 
-        &			   & d			 		& 	N/A	 		& 2		      	  &	N/A				  & N/A       		   &N/A\\ \cline{2-8}
-        & \multirow{2}{*}{Delay 4}	 & M..N & 	N/A	 		& 0.3-1.0044 ms   & N/A				  &	N/A       		   &N/A\\ \cline{3-8} 
-        &			   & d				 	& 	N/A	 		& 9				  & N/A				  &	N/A      		   &N/A\\ \cline{2-8}
-        & \multirow{2}{*}{Delay 5}	 & M..N & 	N/A	 		& 0.733-2.3436 ms & N/A				  &	N/A      		   &N/A\\ \cline{3-8} 
-        &			   & d			 		& 	N/A	 		& 21 			  &	N/A				  & N/A      		   &N/A\\ \hline
-	\multirow{12}{*}{TP-JOP} 	& \multicolumn{2}{|c|}{BCRT} 		&0.0028 ms 		& 0.0060 ms		  & 0.0011 ms		  & 0.0532 ms		   & 0.0292 ms\\ \cline{2-8}   
-        & \multicolumn{2}{|c|}{WCRT} 		&0.0329 ms 		& 0.0393 ms		  & 0.0361 ms		  & 0.5072 ms		   & 0.8388 ms\\ \cline{2-8} 
-        & \multirow{2}{*}{Delay 1}	 & M..N &50.3-600.3 ms 	& 2.4-15.6265 ms  & 1230-42317.8276 ms& 10000-95358.8578 ms& 10000-287757.9834 ms \\ \cline{3-8} 
-        &			   & d			 		&18209-18232 	& 398 			  & 1171429			  & 188015		       &343054\\ \cline{2-8}
-        & \multirow{2}{*}{Delay 2}	 & M..N & 	N/A 		& 1.667-10.8757 ms& N/A				  & N/A 			   &10000-287757.9834 ms\\ \cline{3-8} 
-        &			   & d			 		& 	N/A	 		& 277			  & N/A				  & N/A       		   &343054\\ \cline{2-8}
-        & \multirow{2}{*}{Delay 3}	 & M..N & 	N/A	 		& 0.05-0.3534 ms  & N/A				  & N/A       		   &N/A\\ \cline{3-8} 
-        &			   & d			 		& 	N/A	 		& 9		      	  &	N/A				  & N/A       		   &N/A\\ \cline{2-8}
-        & \multirow{2}{*}{Delay 4}	 & M..N & 	N/A	 		& 0.3-1.9631 ms   & N/A				  &	N/A       		   &N/A\\ \cline{3-8} 
-        &			   & d				 	& 	N/A	 		& 50			  & N/A				  &	N/A      		   &N/A\\ \cline{2-8}
-        & \multirow{2}{*}{Delay 5}	 & M..N & 	N/A	 		& 0.733-4.79 ms   & N/A				  &	N/A      		   &N/A\\ \cline{3-8} 
-        &			   & d			 		& 	N/A	 		& 122 			  &	N/A				  & N/A      		   &N/A\\ \cline{2-8}
-	\hline
-      \end{tabular}
-    }
-  \end{@twocolumnfalse}
-  ]
+%   \begin{@twocolumnfalse}
+%     \caption{Benchmark programs using \texttt{delay} constructs} \label{table:benchmark}
+%     \scalebox{0.85}{
+%       \begin{tabular}{|c| c | c | c | c | c | c | c |}
+% 	\cline{4-8}
+% 	\multicolumn{3}{c|}{}											& HRTCS 		& Motor 		  & Robot 			  & AECS/CD1  		   & AECS/CD2\\ \hline
+% 	\multirow{12}{*}{JOP} 		& \multicolumn{2}{|c|}{BCRT} 		&0.0334 ms 		& 0.0361 ms		  & 0.0325 ms		  & 0.1683 ms		   & 0.1881 ms\\ \cline{2-8}   
+%         & \multicolumn{2}{|c|}{WCRT} 		&0.1120 ms 		& 0.1116 ms		  & 0.0601 ms		  & 0.7147 ms		   & 1.0115 ms\\ \cline{2-8} 
+%         & \multirow{2}{*}{Delay 1}	 & M..N &50.3-200.3 ms 	& 2.4-7.4772 ms	  & 1230-2274.0263 ms & 10000-42473.2197 ms& 10000-53772.0045 ms \\ \cline{3-8} 
+%         &			   & d			 		&1506-1787  	& 67 			  & 37861			  & 59427		       &53160\\ \cline{2-8}
+%         & \multirow{2}{*}{Delay 2}	 & M..N & 	N/A 		& 1.667-5.2452 ms & N/A				  & N/A 			   &10000-53772.0045 ms\\ \cline{3-8} 
+%         &			   & d			 		& 	N/A	 		& 47			  & N/A				  & N/A       		   &53160\\ \cline{2-8}
+%         & \multirow{2}{*}{Delay 3}	 & M..N & 	N/A	 		& 0.05-0.2232 ms  & N/A				  & N/A       		   &N/A\\ \cline{3-8} 
+%         &			   & d			 		& 	N/A	 		& 2		      	  &	N/A				  & N/A       		   &N/A\\ \cline{2-8}
+%         & \multirow{2}{*}{Delay 4}	 & M..N & 	N/A	 		& 0.3-1.0044 ms   & N/A				  &	N/A       		   &N/A\\ \cline{3-8} 
+%         &			   & d				 	& 	N/A	 		& 9				  & N/A				  &	N/A      		   &N/A\\ \cline{2-8}
+%         & \multirow{2}{*}{Delay 5}	 & M..N & 	N/A	 		& 0.733-2.3436 ms & N/A				  &	N/A      		   &N/A\\ \cline{3-8} 
+%         &			   & d			 		& 	N/A	 		& 21 			  &	N/A				  & N/A      		   &N/A\\ \hline
+% 	\multirow{12}{*}{TP-JOP} 	& \multicolumn{2}{|c|}{BCRT} 		&0.0028 ms 		& 0.0060 ms		  & 0.0011 ms		  & 0.0532 ms		   & 0.0292 ms\\ \cline{2-8}   
+%         & \multicolumn{2}{|c|}{WCRT} 		&0.0329 ms 		& 0.0393 ms		  & 0.0361 ms		  & 0.5072 ms		   & 0.8388 ms\\ \cline{2-8} 
+%         & \multirow{2}{*}{Delay 1}	 & M..N &50.3-600.3 ms 	& 2.4-15.6265 ms  & 1230-42317.8276 ms& 10000-95358.8578 ms& 10000-287757.9834 ms \\ \cline{3-8} 
+%         &			   & d			 		&18209-18232 	& 398 			  & 1171429			  & 188015		       &343054\\ \cline{2-8}
+%         & \multirow{2}{*}{Delay 2}	 & M..N & 	N/A 		& 1.667-10.8757 ms& N/A				  & N/A 			   &10000-287757.9834 ms\\ \cline{3-8} 
+%         &			   & d			 		& 	N/A	 		& 277			  & N/A				  & N/A       		   &343054\\ \cline{2-8}
+%         & \multirow{2}{*}{Delay 3}	 & M..N & 	N/A	 		& 0.05-0.3534 ms  & N/A				  & N/A       		   &N/A\\ \cline{3-8} 
+%         &			   & d			 		& 	N/A	 		& 9		      	  &	N/A				  & N/A       		   &N/A\\ \cline{2-8}
+%         & \multirow{2}{*}{Delay 4}	 & M..N & 	N/A	 		& 0.3-1.9631 ms   & N/A				  &	N/A       		   &N/A\\ \cline{3-8} 
+%         &			   & d				 	& 	N/A	 		& 50			  & N/A				  &	N/A      		   &N/A\\ \cline{2-8}
+%         & \multirow{2}{*}{Delay 5}	 & M..N & 	N/A	 		& 0.733-4.79 ms   & N/A				  &	N/A      		   &N/A\\ \cline{3-8} 
+%         &			   & d			 		& 	N/A	 		& 122 			  &	N/A				  & N/A      		   &N/A\\ \cline{2-8}
+% 	\hline
+%       \end{tabular}
+%     }
+%   \end{@twocolumnfalse}
+%   ]
 
-\end{table}
+% \end{table}
+% In this section, we present a set of SystemJ benchmark programs in which
+% real-time requirements should be met.  We have carried out a set of
+% experiments to obtain BCRT and WCRT of the benchmark programs on two
+% execution platforms called Java Optimized Processor(JOP)
+% \cite{jop:jnl:jsa2007} and TP-JOP \cite{6119095}. JOP is a hardware
+% implementation of the JVM which enables real-time execution of Java
+% programs by translating Java bytecodes into a sequence of JOP's native
+% instructions called \emph{microcode} which is time-predictable. As
+% SystemJ's default compilation target is Java source code, JOP is an
+% excellent platform which enables us to analyze timing properties of
+% SystemJ program. On the other hand, there is also an option where
+% compiled code could be more tightly coupled to specific platforms such
+% as TP-JOP, which execute SystemJ's kernel statements more
+% efficiently. By utilizing our internal tools in conjunction with
+% Worst-Case-Execution-Time (WCET) analyzer \cite{jop:jnl:jsa2007}
+% provided by JOP tools, we were able to estimate BCRT and WCRT of our
+% benchmark programs: (full-name?) HRTCS, Stepper motor controller (Motor)
+% \cite{}, Robot and Access Environment Control System (AECS) \cite{}.
+
+% % HRTCS, as already illustrated in Section \ref{sec:intr-motiv}, tests
+% % for an ability of one's responsiveness by generating green lights
+% % between the real-time range \emph{M - N}. For AECS \ref{} we have
+% % replaced the external timer with our delay constructs. Stepper motor
+% % controller is originally introduced in \cite{Bourke2009a} which
+% % converted into SystemJ.
+
+% As one can see in Table \ref{table:benchmark}, BCRT and WCRT of overall
+% programs are smaller when they run on TP-JOP. For example, WCRT and BCRT
+% of HRTCS are \(\times\)11.9 and \(\times\)3.4 smaller, respectively, for
+% TP-JOP (0.0028, 0.0329 ms) compared to JOP (0.0334, 0.1120 ms). On the
+% other hand, required logical delays \emph{d} are generally bigger on
+% TP-JOP e.g. \(\times\)4.5 - \(\times\)5.9 and \(\times\)30.9 in Motor
+% and Robot respectively. It is expected as their BCRT and WCRT
+% differences are bigger on TP-JOP.  This also led to greater increase in
+% minimum upper real-time bounds \emph{N} for TP-JOP in every example.  In
+% AECS, there are two clock-domains using delay constructs that each has
+% their own BCRT and WCRT. Again, individual BCRT and WCRT is smaller
+% whereas \emph{d} is bigger on TP-JOP. One important property to note
+% here, is that BCRT and WCRT of any clock-domains are invariant of
+% \emph{d} as explained in Section \ref{sec:intr-real-time}. It is our
+% fundamental assumption to find \emph{d} in our benchmark programs.
+% =======
+% \begin{table}[t]
+% \centering
+%\twocolumn[
+%\begin{@twocolumnfalse}
+%\caption{Benchmark programs using \texttt{delay} constructs} \label{table:benchmark}
+%\scalebox{0.85}{
+%\begin{tabular}{|c| c | c | c | c | c | c | c |}
+%	\cline{4-8}
+% 	\multicolumn{3}{c|}{}											& HRTCS 		& Motor 		  & Robot 			  & AECS/CD1  		   & AECS/CD2\\ \hline
+% 	\multirow{12}{*}{JOP} 		& \multicolumn{2}{|c|}{BCRT} 		&0.0334 ms 		& 0.0361 ms		  & 0.0325 ms		  & 0.1683 ms		   & 0.1881 ms\\ \cline{2-8}   
+% 								& \multicolumn{2}{|c|}{WCRT} 		&0.1120 ms 		& 0.1116 ms		  & 0.0601 ms		  & 0.7147 ms		   & 1.0115 ms\\ \cline{2-8} 
+% 								& \multirow{2}{*}{Delay 1}	 & M..N &50.3-200.3 ms 	& 2.4-7.4772 ms	  & 1230-2274.0263 ms & 10000-42473.2197 ms& 10000-53772.0045 ms \\ \cline{3-8} 
+% 								&			   & d			 		&1506-1787  	& 67 			  & 37861			  & 59427		       &53160\\ \cline{2-8}
+% 								& \multirow{2}{*}{Delay 2}	 & M..N & 	N/A 		& 1.667-5.2452 ms & N/A				  & N/A 			   &10000-53772.0045 ms\\ \cline{3-8} 
+% 								&			   & d			 		& 	N/A	 		& 47			  & N/A				  & N/A       		   &53160\\ \cline{2-8}
+% 								& \multirow{2}{*}{Delay 3}	 & M..N & 	N/A	 		& 0.05-0.2232 ms  & N/A				  & N/A       		   &N/A\\ \cline{3-8} 
+% 								&			   & d			 		& 	N/A	 		& 2		      	  &	N/A				  & N/A       		   &N/A\\ \cline{2-8}
+% 								& \multirow{2}{*}{Delay 4}	 & M..N & 	N/A	 		& 0.3-1.0044 ms   & N/A				  &	N/A       		   &N/A\\ \cline{3-8} 
+% 								&			   & d				 	& 	N/A	 		& 9				  & N/A				  &	N/A      		   &N/A\\ \cline{2-8}
+% 								& \multirow{2}{*}{Delay 5}	 & M..N & 	N/A	 		& 0.733-2.3436 ms & N/A				  &	N/A      		   &N/A\\ \cline{3-8} 
+% 								&			   & d			 		& 	N/A	 		& 21 			  &	N/A				  & N/A      		   &N/A\\ \hline
+% 	\multirow{12}{*}{TP-JOP} 	& \multicolumn{2}{|c|}{BCRT} 		&0.0028 ms 		& 0.0060 ms		  & 0.0011 ms		  & 0.0532 ms		   & 0.0292 ms\\ \cline{2-8}   
+% 								& \multicolumn{2}{|c|}{WCRT} 		&0.0329 ms 		& 0.0393 ms		  & 0.0361 ms		  & 0.5072 ms		   & 0.8388 ms\\ \cline{2-8} 
+% 								& \multirow{2}{*}{Delay 1}	 & M..N &50.3-600.3 ms 	& 2.4-15.6265 ms  & 1230-42317.8276 ms& 10000-95358.8578 ms& 10000-287757.9834 ms \\ \cline{3-8} 
+% 								&			   & d			 		&18209-18232 	& 398 			  & 1171429			  & 188015		       &343054\\ \cline{2-8}
+% 								& \multirow{2}{*}{Delay 2}	 & M..N & 	N/A 		& 1.667-10.8757 ms& N/A				  & N/A 			   &10000-287757.9834 ms\\ \cline{3-8} 
+% 								&			   & d			 		& 	N/A	 		& 277			  & N/A				  & N/A       		   &343054\\ \cline{2-8}
+% 								& \multirow{2}{*}{Delay 3}	 & M..N & 	N/A	 		& 0.05-0.3534 ms  & N/A				  & N/A       		   &N/A\\ \cline{3-8} 
+% 								&			   & d			 		& 	N/A	 		& 9		      	  &	N/A				  & N/A       		   &N/A\\ \cline{2-8}
+% 								& \multirow{2}{*}{Delay 4}	 & M..N & 	N/A	 		& 0.3-1.9631 ms   & N/A				  &	N/A       		   &N/A\\ \cline{3-8} 
+% 								&			   & d				 	& 	N/A	 		& 50			  & N/A				  &	N/A      		   &N/A\\ \cline{2-8}
+% 								& \multirow{2}{*}{Delay 5}	 & M..N & 	N/A	 		& 0.733-4.79 ms   & N/A				  &	N/A      		   &N/A\\ \cline{3-8} 
+% 								&			   & d			 		& 	N/A	 		& 122 			  &	N/A				  & N/A      		   &N/A\\ \cline{2-8}
+% 	\hline
+% \end{tabular}
+% }
+% \end{@twocolumnfalse}
+% ]
+% \end{table}
+\begin{figure}
+\centering
+	\includegraphics[trim=2cm 2cm 2cm 2cm,scale=0.5]{table2}
+\caption{Evaluation of logical delays \emph{d} for on various benchmark programs}\label{fig:comparison}
+\end{figure}
+%
 In this section, we present a set of SystemJ benchmark programs in which
-real-time requirements should be met.  We have carried out a set of
-experiments to obtain BCRT and WCRT of the benchmark programs on two
-execution platforms called Java Optimized Processor(JOP)
-\cite{jop:jnl:jsa2007} and TP-JOP \cite{6119095}. JOP is a hardware
-implementation of the JVM which enables real-time execution of Java
-programs by translating Java bytecodes into a sequence of JOP's native
-instructions called \emph{microcode} which is time-predictable. As
-SystemJ's default compilation target is Java source code, JOP is an
-excellent platform which enables us to analyze timing properties of
-SystemJ program. On the other hand, there is also an option where
-compiled code could be more tightly coupled to specific platforms such
-as TP-JOP, which execute SystemJ's kernel statements more
-efficiently. By utilizing our internal tools in conjunction with
-Worst-Case-Execution-Time (WCET) analyzer \cite{jop:jnl:jsa2007}
-provided by JOP tools, we were able to estimate BCRT and WCRT of our
-benchmark programs: (full-name?) HRTCS, Stepper motor controller (Motor)
-\cite{}, Robot and Access Environment Control System (AECS) \cite{}.
+real-time requirements should be met.
+We have carried out a set of experiments to obtain BCRT and WCRT of the
+benchmark programs on the execution platform called Java Optimized
+Processor(JOP) \cite{jop:jnl:jsa2007}. JOP is a hardware implementation of the
+JVM written in VHDL which enables real-time execution of Java programs by
+translating Java bytecodes into a sequence of JOP's native instructions called
+\emph{microcode} which is time-predictable. As SystemJ's default compilation
+target is Java source code, JOP is an excellent platform which enables us to
+analyze timing properties of SystemJ program.
 
-% HRTCS, as already illustrated in Section \ref{sec:intr-motiv}, tests
-% for an ability of one's responsiveness by generating green lights
-% between the real-time range \emph{M - N}. For AECS \ref{} we have
-% replaced the external timer with our delay constructs. Stepper motor
-% controller is originally introduced in \cite{Bourke2009a} which
-% converted into SystemJ.
+% On the other hand, there is also an option where compiled code could be more
+% tightly coupled to specific platforms such as TP-JOP, which execute SystemJ's
+% kernel statements more efficiently.
 
-As one can see in Table \ref{table:benchmark}, BCRT and WCRT of overall
-programs are smaller when they run on TP-JOP. For example, WCRT and BCRT
-of HRTCS are \(\times\)11.9 and \(\times\)3.4 smaller, respectively, for
-TP-JOP (0.0028, 0.0329 ms) compared to JOP (0.0334, 0.1120 ms). On the
-other hand, required logical delays \emph{d} are generally bigger on
-TP-JOP e.g. \(\times\)4.5 - \(\times\)5.9 and \(\times\)30.9 in Motor
-and Robot respectively. It is expected as their BCRT and WCRT
-differences are bigger on TP-JOP.  This also led to greater increase in
-minimum upper real-time bounds \emph{N} for TP-JOP in every example.  In
-AECS, there are two clock-domains using delay constructs that each has
-their own BCRT and WCRT. Again, individual BCRT and WCRT is smaller
-whereas \emph{d} is bigger on TP-JOP. One important property to note
-here, is that BCRT and WCRT of any clock-domains are invariant of
-\emph{d} as explained in Section \ref{sec:intr-real-time}. It is our
-fundamental assumption to find \emph{d} in our benchmark programs.
+By utilizing in-house tools in conjunction with Worst-Case-Execution-Time (WCET)
+analyzer \cite{jop:jnl:jsa2007} provided by JOP tools, we were able to estimate
+BCRT and WCRT of the following benchmark programs: (full-name?) HRTCS \cite{},
+Stepper motor controller (Motor) \cite{Bourke2009a}, Robot and Access Environment Control
+System (AECS) \cite{aecs_ispa}. We have also added a set of customized hardware counters
+to the original JOP design in order to collect numbers of clock cycles required
+for logical ticks of given SystemJ program. All examples except Robot are
+existing applications translated into pure SystemJ programs. The Robot example
+models a combination of robotic arms and conveyors which splits goods based on
+their volumetric sizes. Finally, garbage collector (GC) was disabled in all
+experiments to avoid unwanted side-effects such as lengthening clock-domain
+logical tick times. Whenever the GC triggers, experiment terminates. BCRT and
+WCRT were then calculated based on data collected until that point.
+
+As one can see in Figure \ref{fig:comparison}, BCRT and WCRT were calculated for
+all examples. Given the real-time ranges \mbox{\texttt{delay [M..N]}} provided
+by programmers, required logical delays \emph{d} were determined by applying the
+Algorithm \ref{alg:1}. In HRTCS, real-time delay of the range 50.3..200.3 (ms)
+is only satisfied when \emph{d} is between 1506 and 1787 (not shown in Figure).
+It is then compiler's job to statically choose one of the values between this
+range.
+
+However, it is not the case that given real-time delays in a particular
+application are always realizable on JOP. For instance, all other examples other
+than HRTCS are required to relax the upper bound for a given real-time delay in
+order to obtain a feasible number of \emph{d}. Therefore, Algorithm \ref{alg:2}
+is applied to those examples to determine the minimum upper real-time bound
+\emph{N} such that there exist a solution for \emph{D} in Algorithm \ref{alg:1}.
+Unlike in HRTCS, however, this algorithm gives a unique number for logical tick
+delay \emph{d} such that \emph{d} = Min(\emph{$S_2$}) = Max(\emph{$S_1$}).
+The compiler, therefore, will choose \emph{d} based on the newly computed
+\emph{N} for the examples Robot, Motor and AECS.
+
+
+% HRTCS, as already illustrated in Section \ref{sec:intr-motiv}, tests for an
+% ability of one's responsiveness by generating green lights between the
+% real-time range \emph{M - N}. For AECS \ref{} we have replaced the external
+% timer with our delay constructs. Stepper motor controller is originally
+% introduced in \cite{Bourke2009a} which converted into SystemJ.
+
+% As one can see in Figure \ref{fig:comparison}, BCRT and WCRT of overall programs
+% are smaller when they run on TP-JOP. For example, WCRT and BCRT of HRTCS are
+% \(\times\)11.9 and \(\times\)3.4 smaller, respectively, for TP-JOP (0.0028,
+% 0.0329 ms) compared to JOP (0.0334, 0.1120 ms). On the other hand, required
+% logical delays \emph{d} are generally bigger on TP-JOP e.g. \(\times\)4.5 -
+% \(\times\)5.9 and \(\times\)30.9 in Motor and Robot respectively. It is expected
+% as their BCRT and WCRT differences are bigger on TP-JOP.
+% This also led to greater increase in minimum upper real-time bounds \emph{N} for
+% TP-JOP in every example.
+% In AECS, there are two clock-domains using delay constructs that each has their
+% own BCRT and WCRT. Again, individual BCRT and WCRT is smaller whereas \emph{d}
+% is bigger on TP-JOP. One important property to note here, is that BCRT and WCRT
+% of any clock-domains are invariant of \emph{d} as explained in Section
+% \ref{sec:intr-real-time}. It is our fundamental assumption to find \emph{d} in
+% our benchmark programs.
+% >>>>>>> 4bffc4b1a43388f5ebf6cc737b9d3b246ee77dc7
 
 
 
