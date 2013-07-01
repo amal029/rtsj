@@ -15,7 +15,7 @@
     
 \begin{verbatim}
 { // Clock-domain 1
-while(1) {
+while(true) {
   trap(TRAP){
    // Abort if user touches the screen
    abort(TOUCH){
@@ -23,8 +23,8 @@ while(1) {
     || // synchronous parallel operator
     {
     //exit after any 
-    // where from 50 to 100 ms.
-    /*delay [50..100]ms;*/
+    // where from 50.3 to 200.3 ms.
+    delay (50.3 .. 200.3 ms);
     exit(TRAP); 
     }
    } do {send S(1);} // Send 1 if touched 
@@ -34,27 +34,27 @@ while(1) {
 }
 >< // asynchronous operator
 { // Clock-domain 2
-  while(1){ receive S;}
+  while(true){ receive S;}
   // do something with S
 }
 \end{verbatim}
   \end{scriptsize}
 \end{minipage}
-\caption{An example human response time collection system (HRTCS)}
+\caption{An example human responsiveness system (HRTCS)}
 % }
 % \end{center}
 \label{fig:1}
 \end{figure}
 
-Consider a simple machine used to test human response time and collects
+Consider a simple machine used to test human response time and collect
 this data for future research purposes. The machine switches on a green
-light on a touch screen for anywhere between \texttt{50ms} to
-\texttt{100ms}, if the user can touch this green light then she is
-successful and an integer \texttt{1} is sent to a database server, if
-unsuccessful a \texttt{0} is sent instead, this way a database of human
-responsiveness can easily be generated.
+light on a touch screen for anywhere between \texttt{50.3ms} to
+\texttt{200.3ms}, if the user can touch this green light then she is
+successful and an integer \texttt{1} is sent to a database, if
+unsuccessful a \texttt{0} is sent instead, Different statistics and
+analyses on human responsiveness can be based on collected data.
 
-The SystemJ~\cite{amal10} code for such a system is shown in
+The SystemJ psuedocode~\cite{amal10} code for such a system is shown in
 Figure~\ref{fig:1}. We use the SystemJ language in this paper first of
 all, because being a \textit{Globally Asynchronous Locally Synchronous}
 (GALS) language it helps us easily describe a larger class of systems
@@ -67,21 +67,13 @@ The SystemJ program is divided into two clock-domains, the first
 clock-domain continuously displays a green light (\texttt{GREEN\_LIGHT}
 signal) on the touch screen sensor and waits for the user to respond. If
 the user is able to touch the screen within the specified time of
-\texttt{50ms} to \texttt{100ms} a positive response is sent to the
-second clock-domain, which is interacting with a database (via CSP style
-channel communication via \texttt{S}) server in Java. The synchronous
-parallel operator \texttt{||} along with the \texttt{trap-exit}
-(exception mechanism) is used to make sure that the green light is
-switched on for only a specified delay. The 2 clock-domains are
-implemented using the asynchronous parallel \texttt{><} operator. All
-these constructs are described in~\cite{amal10} and
-Section~\ref{sec:background}.
-
-This SystemJ example is \textit{incomplete}, the \texttt{delay}
-specification, which models the non-deterministic delay between
-\texttt{0.5ms} and \texttt{100ms} does not work with the SystemJ compiler!
-In fact, there is no way to include such real-time specifications in the
-language itself.
+\texttt{50.3ms} to \texttt{200.3ms} a positive response is sent to the
+second clock-domain. All the SystemJ programming constructs used to
+implement this system are described in~\cite{amal10} and
+Table~\ref{tab:1} in Section~\ref{sec:background}. The delay
+speciﬁcation, which models the non-deterministic delay between 50.3ms
+and \texttt{200.3ms} is not supported in the current language and cannot
+be compiled with the current SystemJ compiler.
 
 %%% Local Variables: 
 %%% mode: latex

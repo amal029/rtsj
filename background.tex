@@ -55,76 +55,88 @@ etc) that make programming reactive systems easier. The \textit{Model of
   Computation} (MoC) of a simple SystemJ program is shown in
 Figure~\ref{fig:2}.
 
-\begin{figure}[bth]
-\centering
+SystemJ consists of entities called clock-domains (CD)s, each running at
+their individual pace, interacting with the environment via signals and
+with each other via channels and CSP~\cite{choa85} style
+rendezvous. Each CD has its own notion of logical time. CDs adheres to
+the \textit{perfect synchrony} hypothesis, i.e., all statements execute
+instantaneously in zero time. Only the \texttt{pause} statement consumes
+time, just like in Esterel~\cite{gber931}. Consider the SystemJ program
+in Figure~\ref{fig:2a}, it is waiting for an input signal producing
+logical ticks (see Figure~\ref{fig:2c}). Once \texttt{A} is received at
+tick 1 or 4, output \texttt{O} is emitted to the environment
+instantaneously.
+
+\subsection{Mapping logical time to physical time}
+\label{sec:mapping-logical-time}
+
+\begin{figure}[t!]
+% \centering
 \begin{SubFloat}{\label{fig:2a}Simple SystemJ program}%...verbatim subfigure
 \begin{minipage}[b]{0.3\linewidth}% a minipage to control the width...
+  \begin{scriptsize}
 \begin{verbatim}
+{
+int counter = 0;
 while(true){
  abort(A){
-  while(true)
-   pause;
+  while(true) pause; 
   emit O;
-  // do java computation
-}
+  if(counter != 0) { // do java computation leading to WCRT}
+  ++counter;
+  } // abort end
+ } // loop end
+} // SystemJ CD end
 \end{verbatim}%
+  \end{scriptsize}
 \end{minipage}%
 \end{SubFloat}
 \hspace{1.5cm}%
-\begin{SubFloat}[Black box]{\label{fig:2b}Logical time in SystemJ}%
-\includegraphics[scale=0.4]{moc}
-\end{SubFloat}%
+% \begin{SubFloat}[Black box]{\label{fig:2b}Logical time in SystemJ}%
+% \includegraphics[scale=0.4]{moc}
+% \end{SubFloat}%
+% \vspace{-10pt}
+
 \begin{SubFloat}{\label{fig:2c}Mapping to physical time}%
 % \includegraphics[scale=0.4]{phy.pdf_t}
-\scalebox{0.4}{\input{phy.pdf_t}}
+\scalebox{0.68}{\input{phy.pdf_t}}
 \end{SubFloat}%
 \caption{Simple SystemJ example and corresponding MoC}
 \label{fig:2}
 \end{figure}
 
-SystemJ consists of entities called clock-domains (CD)s, each running at
-their individual pace, interacting with the environment via signals and
-with each other via channels and CSP~\cite{pwel05} style
-rendezvous. Each CD adheres to the \textit{perfect synchrony}
-hypothesis, i.e., all statements execute instantaneously in zero
-time. Only the \texttt{pause} statement consumes time, just like in
-Esterel~\cite{gber931}. Consider the SystemJ program in
-Figure~\ref{fig:2a}, it is waiting for an input signal producing logical
-ticks (see Figure~\ref{fig:2b}). Once \texttt{A} is received at tick 4,
-output \texttt{O} is emitted to the environment instantaneously.
-
-\subsection{Mapping logical time to physical time}
-\label{sec:mapping-logical-time}
-
 The perfect synchrony hypothesis is ideal for programming the
-synchronous sub-set of SystemJ. But, the real-world is not that
-forgiving, execution of every \textit{micro-step} in the logical zero
-time, requires $\delta$ physical time. Time for a complete reaction to
-one or more input signal can thus be summarized as $\Delta = \Sigma
-(\delta)$. We call $\Delta$ the reaction time. Obviously, depending upon
-the amount of computation required, $\Delta$ can vary, hence, in order
-to satisfy the implicit restriction imposed by the synchrony hypothesis,
-no input event can be missed, one needs to calculate the \textit{Worst
-  Case Reaction Time} (WCRT) and the resultant WCRT needs to be smaller
-than the speed of the fastest input event, else the synchrony hypothesis
-is violated. A substantial amount of research for calculating the WCRT
-of synchronous programs~\cite{proop10,boldt07,wilhelm08} exists. We
-refer the reader to any of these research articles, since WCRT analysis
-is not the focus of this paper. The opposite of the WCRT is the
-\textit{Best Case Reaction Time} (BCRT), we denote the WCRT and BCRT in
-Figure~\ref{fig:2c} using \texttt{W} and \texttt{B},
-respectively. Figure~\ref{fig:2c} shows a continuously running physical
-clock (analogous to a clock in hardware), the numerical annotations on
-the rising edge of the clock mark the logical ticks from
-Figure~\ref{fig:2b}. The subscripts \texttt{s} and \texttt{e} for the
-numbers show the start and end of the logical ticks, respectively. The
-end of a logical tick and the start of the next logical tick happen
-together. Figure~\ref{fig:2c} clearly shows the mapping of the logical
-time to the physical time. As we can see due to Java computations
-(Figure~\ref{fig:2a}) the physical time between logical ticks 4 and 5 is
-2 clock cycles, while for the rest of the ticks it is just 1 clock
-cycle. This elasticity is inherent (and elegant) to both Esterel and
-SystemJ.
+synchronous sub-set of SystemJ. Unfortunately, every \textit{micro-step}
+requires real-time to compute. Formally, execution of every micro-step
+in the logical zero time, requires $\delta$ physical time. Time for a
+logical tick can thus be summarized as $\Delta = \mathcal{F} (\delta)$,
+where $\mathcal{F}$ is some function dependent upon the schedule. We
+call $\Delta$ the reaction time. Obviously, depending upon the amount of
+computation required and schedule, $\Delta$ can vary, hence, in order to
+satisfy the implicit restriction imposed by the synchrony hypothesis --
+no input event \textit{from the environment} can be missed -- one needs
+to calculate the \textit{Worst Case Reaction Time} (WCRT) and the
+resultant WCRT needs to be smaller than the time between any two
+consecutive events on any input, else the synchrony hypothesis is
+violated. Techniques for calculating the WCRT of synchronous
+programs~\cite{boldt07} exist and this analysis is not the focus of this
+paper. The opposite of the WCRT is the \textit{Best Case Reaction Time}
+(BCRT), we denote the WCRT and BCRT in Figure~\ref{fig:2c} using
+\texttt{W} and \texttt{B}, respectively. Figure~\ref{fig:2c} shows a
+continuously running physical clock (analogous to a clock in digital
+hardware), the numerical annotations on the rising edge of the clock
+mark the logical ticks from Figure~\ref{fig:2c}. The subscripts
+\texttt{s} and \texttt{e} for the numbers show the start and end of the
+logical ticks, respectively. The end of a logical tick and the start of
+the next logical tick happen together. Figure~\ref{fig:2c} shows the
+mapping of the logical time to the physical time. For example, the
+logical tick \texttt{1} starts at the first rising edge and completes at
+the second rising edge of the physical clock. Where as logical tick
+\texttt{4} starts at the $4^{th}$ rising edge, but finishes at the
+$6^{th}$ rising edge of the physical clock. This difference can be
+accounted for by the java computations required when signal \texttt{A}
+is input by the environment (see Figure~\ref{fig:2a}). This elasticity
+is inherent (and elegant) to both Esterel and SystemJ.
 
 % We now present a lemma with proof sketch (due to lack of space) that we
 % require for the rest of the paper and is special to SystemJ, being a

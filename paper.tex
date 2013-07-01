@@ -134,8 +134,14 @@ minus3pt\let\@listi\@listI}
 \setlength{\partopsep}{0pt}
 \usepackage[compact]{titlesec}
 \titlespacing{\section}{0pt}{*0}{*0}
-\titlespacing{\subsection}{0pt}{*0}{*0}
+\titlespacing{\subsection}{0pt}{*1}{*1}
 \titlespacing{\subsubsection}{0pt}{*0}{*0}
+% \usepackage[belowskip=-15pt,aboveskip=0pt]{caption}
+\setlength{\intextsep}{10pt plus 2pt minus 2pt}
+\setlength{\belowcaptionskip}{0pt}
+\setlength{\abovecaptionskip}{0pt}
+\setlength{\floatsep}{0pt}
+\setlength{\textfloatsep}{1pt}
 % REMOVE UNTIL HERE
 \begin{document}
 %date not printed
@@ -162,8 +168,17 @@ room for the final submission.\\
 \maketitle
 \thispagestyle{empty}
 
-{\small\textbf{Abstract---
- }}
+{\small\textbf{Abstract--- In this paper we introduce deterministic and
+    non-deterministic real-time delay into reactive GALS programming
+    languages and synchronous languages as their constituent part. The
+    language constructs that allow use of the real-time delay are
+    illustrated on the SystemJ GALS language. They allow system
+    designers to explicitly use, at the specification level, not only
+    logical time but also the real-time in order to control system
+    operation with elements of explicitly defined real-time. The
+    concepts are limited to the execution platforms that allow finding
+    shortest and longest periods of the logical clock of a GALS or
+    synchronous program.}}
 
 
 \input{introduction}
