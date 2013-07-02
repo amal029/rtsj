@@ -85,56 +85,58 @@
 % \emph{d} as explained in Section \ref{sec:intr-real-time}. It is our
 % fundamental assumption to find \emph{d} in our benchmark programs.
 % =======
-% \begin{table}[t]
-% \centering
-%\twocolumn[
-%\begin{@twocolumnfalse}
-%\caption{Benchmark programs using \texttt{delay} constructs} \label{table:benchmark}
-%\scalebox{0.85}{
-%\begin{tabular}{|c| c | c | c | c | c | c | c |}
-%	\cline{4-8}
-% 	\multicolumn{3}{c|}{}											& HRTCS 		& Motor 		  & Robot 			  & AECS/CD1  		   & AECS/CD2\\ \hline
-% 	\multirow{12}{*}{JOP} 		& \multicolumn{2}{|c|}{BCRT} 		&0.0334 ms 		& 0.0361 ms		  & 0.0325 ms		  & 0.1683 ms		   & 0.1881 ms\\ \cline{2-8}   
-% 								& \multicolumn{2}{|c|}{WCRT} 		&0.1120 ms 		& 0.1116 ms		  & 0.0601 ms		  & 0.7147 ms		   & 1.0115 ms\\ \cline{2-8} 
-% 								& \multirow{2}{*}{Delay 1}	 & M..N &50.3-200.3 ms 	& 2.4-7.4772 ms	  & 1230-2274.0263 ms & 10000-42473.2197 ms& 10000-53772.0045 ms \\ \cline{3-8} 
-% 								&			   & d			 		&1506-1787  	& 67 			  & 37861			  & 59427		       &53160\\ \cline{2-8}
-% 								& \multirow{2}{*}{Delay 2}	 & M..N & 	N/A 		& 1.667-5.2452 ms & N/A				  & N/A 			   &10000-53772.0045 ms\\ \cline{3-8} 
-% 								&			   & d			 		& 	N/A	 		& 47			  & N/A				  & N/A       		   &53160\\ \cline{2-8}
-% 								& \multirow{2}{*}{Delay 3}	 & M..N & 	N/A	 		& 0.05-0.2232 ms  & N/A				  & N/A       		   &N/A\\ \cline{3-8} 
-% 								&			   & d			 		& 	N/A	 		& 2		      	  &	N/A				  & N/A       		   &N/A\\ \cline{2-8}
-% 								& \multirow{2}{*}{Delay 4}	 & M..N & 	N/A	 		& 0.3-1.0044 ms   & N/A				  &	N/A       		   &N/A\\ \cline{3-8} 
-% 								&			   & d				 	& 	N/A	 		& 9				  & N/A				  &	N/A      		   &N/A\\ \cline{2-8}
-% 								& \multirow{2}{*}{Delay 5}	 & M..N & 	N/A	 		& 0.733-2.3436 ms & N/A				  &	N/A      		   &N/A\\ \cline{3-8} 
-% 								&			   & d			 		& 	N/A	 		& 21 			  &	N/A				  & N/A      		   &N/A\\ \hline
-% 	\multirow{12}{*}{TP-JOP} 	& \multicolumn{2}{|c|}{BCRT} 		&0.0028 ms 		& 0.0060 ms		  & 0.0011 ms		  & 0.0532 ms		   & 0.0292 ms\\ \cline{2-8}   
-% 								& \multicolumn{2}{|c|}{WCRT} 		&0.0329 ms 		& 0.0393 ms		  & 0.0361 ms		  & 0.5072 ms		   & 0.8388 ms\\ \cline{2-8} 
-% 								& \multirow{2}{*}{Delay 1}	 & M..N &50.3-600.3 ms 	& 2.4-15.6265 ms  & 1230-42317.8276 ms& 10000-95358.8578 ms& 10000-287757.9834 ms \\ \cline{3-8} 
+
+\begin{table}[t]
+ \centering
+  \twocolumn[
+\begin{@twocolumnfalse}
+\caption{Benchmark programs using \texttt{delay} constructs} \label{fig:comparison}
+\scalebox{0.85}{
+\begin{tabular}{| c | c | c | c | c | c | c |}
+	\cline{3-7}
+	\multicolumn{2}{c|}{}											& HRTCS 		& Motor 		  & Robot 			  & AECS/CD1  		   & AECS/CD2\\ \hline
+								 \multicolumn{2}{|c|}{BCRT} 		&0.0334 ms 		& 0.0361 ms		  & 0.0325 ms		  & 0.1683 ms		   & 0.1881 ms\\ \cline{1-7}
+								 \multicolumn{2}{|c|}{WCRT} 		&0.1120 ms 		& 0.1116 ms		  & 0.0601 ms		  & 0.7147 ms		   & 1.0115 ms\\ \cline{1-7}
+								 \multirow{2}{*}{Delay 1}	 & M..N &50.3-200.3 ms 	& 2.4-7.4772 ms	  & 1230-2274.0263 ms & 10000-42473.2197 ms& 10000-53772.0045 ms \\ \cline{2-7}
+											   & d			 		&1506-1787  	& 67 			  & 37861			  & 59427		       &53160\\ \cline{1-7}
+								 \multirow{2}{*}{Delay 2}	 & M..N & 	N/A 		& 1.667-5.2452 ms & N/A				  & N/A 			   &10000-53772.0045 ms\\ \cline{2-7}
+											   & d			 		& 	N/A	 		& 47			  & N/A				  & N/A       		   &53160\\ \cline{1-7}
+								 \multirow{2}{*}{Delay 3}	 & M..N & 	N/A	 		& 0.05-0.2232 ms  & N/A				  & N/A       		   &N/A\\ \cline{2-7}
+											   & d			 		& 	N/A	 		& 2		      	  &	N/A				  & N/A       		   &N/A\\ \cline{1-7}
+								 \multirow{2}{*}{Delay 4}	 & M..N & 	N/A	 		& 0.3-1.0044 ms   & N/A				  &	N/A       		   &N/A\\ \cline{2-7}
+											   & d				 	& 	N/A	 		& 9				  & N/A				  &	N/A      		   &N/A\\ \cline{1-7}
+								 \multirow{2}{*}{Delay 5}	 & M..N & 	N/A	 		& 0.733-2.3436 ms & N/A				  &	N/A      		   &N/A\\ \cline{2-7}
+											   & d			 		& 	N/A	 		& 21 			  &	N/A				  & N/A      		   &N/A\\ \hline
+% 	\multirow{12}{*}{TP-JOP} 	& \multicolumn{2}{|c|}{BCRT} 		&0.0028 ms 		& 0.0060 ms		  & 0.0011 ms		  & 0.0532 ms		   & 0.0292 ms\\ \cline{2-8}
+% 								& \multicolumn{2}{|c|}{WCRT} 		&0.0329 ms 		& 0.0393 ms		  & 0.0361 ms		  & 0.5072 ms		   & 0.8388 ms\\ \cline{2-8}
+% 								& \multirow{2}{*}{Delay 1}	 & M..N &50.3-600.3 ms 	& 2.4-15.6265 ms  & 1230-42317.8276 ms& 10000-95358.8578 ms& 10000-287757.9834 ms \\ \cline{3-8}
 % 								&			   & d			 		&18209-18232 	& 398 			  & 1171429			  & 188015		       &343054\\ \cline{2-8}
-% 								& \multirow{2}{*}{Delay 2}	 & M..N & 	N/A 		& 1.667-10.8757 ms& N/A				  & N/A 			   &10000-287757.9834 ms\\ \cline{3-8} 
+% 								& \multirow{2}{*}{Delay 2}	 & M..N & 	N/A 		& 1.667-10.8757 ms& N/A				  & N/A 			   &10000-287757.9834 ms\\ \cline{3-8}
 % 								&			   & d			 		& 	N/A	 		& 277			  & N/A				  & N/A       		   &343054\\ \cline{2-8}
-% 								& \multirow{2}{*}{Delay 3}	 & M..N & 	N/A	 		& 0.05-0.3534 ms  & N/A				  & N/A       		   &N/A\\ \cline{3-8} 
+% 								& \multirow{2}{*}{Delay 3}	 & M..N & 	N/A	 		& 0.05-0.3534 ms  & N/A				  & N/A       		   &N/A\\ \cline{3-8}
 % 								&			   & d			 		& 	N/A	 		& 9		      	  &	N/A				  & N/A       		   &N/A\\ \cline{2-8}
-% 								& \multirow{2}{*}{Delay 4}	 & M..N & 	N/A	 		& 0.3-1.9631 ms   & N/A				  &	N/A       		   &N/A\\ \cline{3-8} 
+% 								& \multirow{2}{*}{Delay 4}	 & M..N & 	N/A	 		& 0.3-1.9631 ms   & N/A				  &	N/A       		   &N/A\\ \cline{3-8}
 % 								&			   & d				 	& 	N/A	 		& 50			  & N/A				  &	N/A      		   &N/A\\ \cline{2-8}
-% 								& \multirow{2}{*}{Delay 5}	 & M..N & 	N/A	 		& 0.733-4.79 ms   & N/A				  &	N/A      		   &N/A\\ \cline{3-8} 
+% 								& \multirow{2}{*}{Delay 5}	 & M..N & 	N/A	 		& 0.733-4.79 ms   & N/A				  &	N/A      		   &N/A\\ \cline{3-8}
 % 								&			   & d			 		& 	N/A	 		& 122 			  &	N/A				  & N/A      		   &N/A\\ \cline{2-8}
 % 	\hline
-% \end{tabular}
-% }
-% \end{@twocolumnfalse}
-% ]
-% \end{table}
+		\end{tabular}
+		}
+  \end{@twocolumnfalse}
+  ]
+\end{table}
 
-\begin{figure}
-\centering
-	\includegraphics[trim=2cm 2cm 2cm 2cm,scale=0.5]{table2}
-        \caption{Evaluation of logical delays \emph{d} for on various
-          benchmark programs}\label{fig:comparison}
-\end{figure}
-%
+% \begin{figure}
+% \centering
+% 	\includegraphics[trim=2cm 2cm 2cm 2cm,scale=0.5]{table2}
+%         \caption{Evaluation of logical delays \emph{d} for on various
+%           benchmark programs}\label{fig:comparison}
+% \end{figure}
+
+
 We have carried out a number of experiments on a set of applications
 with real-time constraints. The benchmark set is shown in
-Figure~\ref{fig:comparison}. HRCTS is the human response system
+Table~\ref{fig:comparison}. HRCTS is the human response system
 described in Figure~\ref{fig:1}. AECS (Access and Environmental Control
 System) is an application that controls an intelligent room environment
 described in~\cite{aecs_ispa}. Motor is a stepper motor controller
@@ -147,7 +149,7 @@ are synchronous programs with 1 and 5 delay statements,
 respectively. All these examples are written in the SystemJ
 language. Finally, except for HRCTS all other examples have exact (and
 deterministic) delay requirements. These delay requirements are shown in
-Figure~\ref{fig:comparison} (\texttt{M..N}).
+Table~\ref{fig:comparison} (\texttt{M..N}).
 
 % In this section, we present a set of SystemJ benchmark programs in which
 % real-time requirements should be met. We have carried out a set of
@@ -173,7 +175,7 @@ provided by the JOP design framework. We disable the \textit{Garbage
   Collector} (GC) in all experiments to avoid unwanted side-effects such
 as lengthening clock-domain logical tick times.
 
-As one can see in Figure \ref{fig:comparison}, BCRT and WCRT were
+As one can see in Table \ref{fig:comparison}, BCRT and WCRT were
 calculated for all examples. Given the real-time \mbox{\texttt{delay
     (M..N)}} provided by programmers, required logical delay \texttt{d}
 was determined by applying Algorithm~\ref{alg:1}. In HRTCS, real-time

@@ -4,6 +4,7 @@
 *.dvi
 *.log
 .project
+.settings
 .texlipse
 paper.synctex.gz
 tmp
