@@ -22,10 +22,9 @@ while(true) {
     {sustain GREEN_LIGHT;}
     || // synchronous parallel operator
     {
-    //exit after any 
-    // where from 50.3 to 200.3 ms.
-    delay (50.3 .. 200.3 ms);
-    exit(TRAP); 
+     //exit after any where from 50.3 to 200.3 ms.
+     delay (50.3 .. 200.3 ms);
+     exit(TRAP); 
     }
    } do {send S(1);} // Send 1 if touched 
   } do {send S(0);} // Else Send 0
@@ -34,8 +33,7 @@ while(true) {
 }
 >< // asynchronous operator
 { // Clock-domain 2
-  while(true){ receive S;}
-  // do something with S
+  while(true){ receive S; // do something with S}
 }
 \end{verbatim}
   \end{scriptsize}
@@ -48,14 +46,14 @@ while(true) {
 
 Consider a simple machine used to test human response time and collect
 this data for future research purposes. The machine switches on a green
-light on a touch screen for anywhere between \texttt{50.3ms} to
-\texttt{200.3ms}, if the user can touch this green light then she is
-successful and an integer \texttt{1} is sent to a database, if
-unsuccessful a \texttt{0} is sent instead, Different statistics and
-analyses on human responsiveness can be based on collected data.
+light on a touch screen for anywhere between 50.3 ms to 200.3 ms, if the
+user can touch this green light then she is successful and an integer
+\texttt{1} is sent to a database, if unsuccessful a \texttt{0} is sent
+instead, Different statistics and analyses on human responsiveness can
+be based on collected data.
 
-The SystemJ psuedocode~\cite{amal10} code for such a system is shown in
-Figure~\ref{fig:1}. We use the SystemJ language in this paper first of
+The SystemJ psuedocode~\cite{amal10} for such a system is shown in
+Figure~\ref{fig:1}. We use the SystemJ language in this paper, first of
 all, because being a \textit{Globally Asynchronous Locally Synchronous}
 (GALS) language it helps us easily describe a larger class of systems
 (like HRTCS in Figure~\ref{fig:1}) compared to purely synchronous
@@ -66,14 +64,14 @@ is equally applicable to the synchronous sub-set.
 The SystemJ program is divided into two clock-domains, the first
 clock-domain continuously displays a green light (\texttt{GREEN\_LIGHT}
 signal) on the touch screen sensor and waits for the user to respond. If
-the user is able to touch the screen within the specified time of
-\texttt{50.3ms} to \texttt{200.3ms} a positive response is sent to the
-second clock-domain. All the SystemJ programming constructs used to
-implement this system are described in~\cite{amal10} and
-Table~\ref{tab:1} in Section~\ref{sec:background}. The delay
-speciﬁcation, which models the non-deterministic delay between 50.3ms
-and \texttt{200.3ms} is not supported in the current language and cannot
-be compiled with the current SystemJ compiler.
+the user is able to touch the screen within the specified time of 50.3
+ms to 200.3 ms a positive response is sent to the second
+clock-domain. All the SystemJ programming constructs used to implement
+this system are described in~\cite{amal10} and Table~\ref{tab:1} in
+Section~\ref{sec:background}. The delay speciﬁcation, which models the
+non-deterministic delay between 50.3 ms and 200.3 ms is not supported in
+the current language and cannot be compiled with the current SystemJ
+compiler. We introduce real-time \texttt{delay} statements in SystemJ.
 
 %%% Local Variables: 
 %%% mode: latex

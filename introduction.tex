@@ -7,30 +7,29 @@ continuously respond to input from their environment. These languages
 have been successfully used in programming a plethora of systems such as
 fly-by-wire in Airbus~\cite{eairbus}, security surveillance
 systems~\cite{amal121}, etc.  Usually these systems also need to meet
-real-time constraints enforced by the environment.  Yet, the languages
-used to program these systems do not support describing real-time
-constructs as first class language constructs.  For example, one cannot
-describe a simple real-time delay (postponement) of an operation for 0.2
-ms. These languages are based on formal semantics, essential for the
-formal reasoning about and verification of correctness of functional
-properties of the developed programs, but leave nonfunctional properties
-such as timing behavior as an implementation
-detail~\cite{boldt07}. Arguably, rightly so, because physical time
-cannot be incorporated without information about the underlying
-execution platform.  But, one can still reason in terms of logical
-time. These languages support discrete logic clock rather than a
-discrete physical (real-time) clock. The real-time period of the
-discrete logic clock (also referred to as a logic tick) is not fixed and
-it is determined by the responsiveness of the program to the input
+real-time constraints enforced by the environment. Yet, these languages
+do not support describing real-time statements as first class language
+constructs.  For example, one cannot describe a simple real-time delay
+(postponement) of an operation for 0.2 ms. These languages are based on
+formal semantics, essential for the formal reasoning about and
+verification of correctness of functional properties of the developed
+programs, but leave nonfunctional properties such as timing behavior as
+an implementation detail~\cite{boldt07}. Arguably, rightly so, because
+physical time cannot be incorporated without information about the
+underlying execution platform.  But, one can still reason in terms of
+logical time. These languages support discrete logical clock rather than
+a discrete physical (real-time) clock. The real-time period of the
+discrete logical clock (also referred to as a logical tick) is not fixed
+and it is determined by the responsiveness of the program to the input
 signals. Unlike a discrete physical clock, which has fixed real-time
-period, the period of the logic clock is elastic. Although the timing
-model with logic clock has worked well for reactive synchronous
+period, the period of the logical clock is elastic. Although the timing
+model with logical clock has worked well for reactive synchronous/GALS
 languages in designing discrete systems, there is a need to introduce
 real-time since, often, implementation models are in the continuous or
 discrete real-time domain~\cite{DBLP:journals/pieee/SifakisTY03}.
-Moreover, adding timing capabilities as the ﬁrst class language
-constructs create additional opportunity for formally verifying
-functional and non-functional requirements before system deployment.
+Moreover, adding timing capabilities as first class language constructs
+create additional opportunity for formally verifying functional and
+non-functional requirements before system deployment.
 
 \input{motivation}
 
@@ -39,13 +38,13 @@ time contributions of the paper are: (1) delays allow real-time based
 synchronization between concurrent behaviors, (2) delays model relays on
 the use of relative instead of absolute time, i.e., a delay in selected
 time units is counted from the currently executing SystemJ statement and
-(3) delays allow certain behaviours to having real-time features, while
-the other behaviours use only logical time and (4) real-time delay does
-not affect the model of logical time in SystemJ program as long as the
-amount of delay is within boundaries that can be determined statically
-by program analysis. All these as well as semantics of the delay
-construct are discussed and illustrated in the remaining part of the
-paper. Our contributions can be further refined as follows:
+(3) delays allow mixing behaviors with real-time features and others
+with only logical time and (4) real-time delay does not affect the model
+of logical time in SystemJ program as long as the amount of delay is
+within boundaries that can be determined statically by program
+analysis. All these as well as semantics of the delay construct are
+discussed and illustrated in the remaining part of the paper. Our
+contributions can be further refined as follows:
 \begin{enumerate*}
 \item Real-time is modeled in the $\mathbb{Q}^{>0}$ domain of numbers,
   i.e., non-negative rational numbers.
@@ -53,7 +52,7 @@ paper. Our contributions can be further refined as follows:
     maximal-parallelism}. \textit{Non-maximal parallelism:} There are
   not always sufficient resources for processes to execute, so
   effectively processes are allocated and scheduled with different
-  optimization criteria -- reducing computation time, reduced power
+  optimization criteria -- reducing computation time, reducing power
   consumption, etc. This allocation and scheduling is an integral part
   of any language compilation and needs to be considered when
   introducing real-time delays.
@@ -66,7 +65,7 @@ paper. Our contributions can be further refined as follows:
   languages. \textit{Deterministic delay:} is the ability to specify a
   single \textit{real-time} delay. \textit{Non-deterministic delay:} is
   the ability to specify a range, of real-time values for a delay
-  statement, e.g., Figure~\ref{fig:1}.
+  statement, e.g., delay statement in Figure~\ref{fig:1}.
 \end{enumerate*}
 
 The rest of the paper is arranged as follows:

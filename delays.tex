@@ -1,7 +1,7 @@
 \section{Introducing real-time in SystemJ}
 \label{sec:intr-real-time}
 
-We introduce a single \textit{derived} (consisting of kernel constructs)
+We introduce a single \textit{derived} (built from kernel constructs)
 statement called \mbox{\texttt{delay (M..N)}} in the SystemJ language
 for real-time control. The resolution of the delay statement is of
 secondary concern and is dependent upon the execution platform.
@@ -110,17 +110,17 @@ maps these calculated values to a set of equidistant integer points
 logical ticks running at the WCRT and the BCRT, respectively that
 satisfy the real-time delay requirements. The intersection of these two
 sets gives all the logical ticks that satisfy the real-time requirements
-invariant of the reaction time and its elasticity.
+invariant of the logical time and its elasticity.
 
 Let us revisit our motivating example to illustrate the algorithm. From
-Figure~\ref{fig:1} we know that $M$ is 50.3ms and $N$ is 200.3ms,
-respectively. Let the WCRT and BCRT be: 0.112ms and 0.0334ms,
+Figure~\ref{fig:1} we know that $M$ is 50.3 ms and $N$ is 200.3 ms,
+respectively. Let the WCRT and BCRT be: 0.112 ms and 0.0334 ms,
 respectively. Thus, the algorithm proceeds as follows:
 
 \begin{enumerate*}
 \item $l_1 \leftarrow \lceil 50.3/0.112 \rceil$ and $u_1 \leftarrow
   \lfloor 200.3/0.112 \rfloor$. $l_1 = 450$ and $u_1 = 1788$. We first
-  calculate the logical ticks that are always running at the WCRT
+  calculate the logical ticks that are always running at the WCRT and
   satisfy the required real-time delay.
 \item $l_2 \leftarrow \lceil 50.3/0.0334 \rceil$ and $u_2 \leftarrow
   \lfloor 200.3/0.0334 \rfloor$. $l_1 = 1506$ and $u_1 = 5997$. We do
@@ -130,7 +130,7 @@ respectively. Thus, the algorithm proceeds as follows:
   logical ticks that running at the WCRT and BCRT, respectively always
   satisfy the required real-time constraints.
 \item $D = S_1 \cap S_2$, $D = [1506,1788]$. Finally, the intersection
-  of the two sets gives the set $D$ from which we can pick up any value
+  of the two sets gives the set $D$ from which we can choose any value
   for \texttt{d}.
 \end{enumerate*}
 
@@ -138,12 +138,12 @@ The resultant value for \texttt{d} gives the number of logical ticks,
 which can run at any physical clock-speed, bounded by the BCRT and the
 WCRT of the program and still result in the desired real-time delay. We
 think this is an elegant solution, because the technique provides
-hard-real time guarantee while preserving the essence of synchronous and
-GALS programming prescribed by SystemJ and Esterel style
-languages. Moreover, this technique considers non maximal-parallelism,
-i.e., the delays in logical ticks is calculated after scheduling of CDs
-or synchronous programs has been performed. To our knowledge we are the
-first to do so.
+hard-real time guarantees while preserving the essence (elastic logical
+tick) of synchronous and GALS programming prescribed by SystemJ and
+Esterel style languages. Moreover, this technique considers non
+maximal-parallelism, i.e., the delays in logical ticks is calculated
+after scheduling of CDs or synchronous programs has been performed. To
+our knowledge we are the first to do so.
 
 \subsection{Extending the technique to variants of \texttt{delay}}
 \label{sec:extend-tehcn-vari}
@@ -170,7 +170,7 @@ possible in case of \texttt{delay(M)}). In such a case, we automatically
 \paragraph{Relaxation of the upper real-time bound}
 \label{sec:over-appr-relax}
 
-The relaxation algorithm is shown in Algorithm~\ref{alg:2}.
+The relaxation technique is shown in Algorithm~\ref{alg:2}.
   
 \begin{algorithm}[t!]
   \begin{minipage}{1.0\linewidth}
@@ -218,9 +218,10 @@ the GALS (and its sub-set synchronous) programming model.
 \subsubsection{Non-deterministic time}
 \label{sec:non-determ-time}
 
-Many real-world systems require non-deterministic timing constructs. One
-of them is our motivating example -- the human response time
-system. 
+Many real-world systems require non-deterministic timing
+constructs. Where the exact real-time delay is not known or should not
+be known apriori. One such system is our motivating example -- the human
+response time system.
 
 % Another is a printer-spooler example borrowed from timed
 % CSP~\cite{Schneider:1999:CRT:555233}. The spooler and printer need to
@@ -232,7 +233,7 @@ system.
 % \begin{scriptsize}
   
 % \begin{verbatim}
-% {await (job); delay(2..10 ms);  //SPOOLER CD
+% {await (job); delay (2..10 ms);  //SPOOLER CD
 %  send mid(job) delay (1ms);}
 % ><
 % {receive mid; delay(1..30 ms); //PRINTER CD
@@ -249,7 +250,7 @@ as:
 % \begin{scriptsize}
 \begin{verbatim}
 // timeout after 1ms.
-trap(T){{await(A);}||{delay((1..1)ms);exit(T);}}
+trap(T){{await(A);}||{delay(1..1 ms);exit(T);}}
 \end{verbatim}
 % \end{scriptsize}
 
@@ -291,19 +292,19 @@ suspend{S} {emit START_TIMER(10); await (TIMER);
 
 As identified in~\cite{Bourke2009a} the \texttt{suspend} does not play
 well with the external timer. The above program sends a signal to an
-external timer and waits for 10ms to pass by. Consider what happens when
-signals \texttt{S} and \texttt{TIMER} occur in the same logical tick,
-the \texttt{await} statement is never executed and hence, we enter a
-deadlock. Such problems are completely avoided in our technique, because
-we convert the real-time delays into logical delays (\texttt{pause}
-constructs), which interact well with preemption.
+external timer and waits for 10 ms to pass by. Consider what happens
+when signals \texttt{S} and \texttt{TIMER} occur in the same logical
+tick, the \texttt{await} statement is never executed (due to suspend)
+and hence, we enter a deadlock. Such problems are completely avoided in
+our technique, because we convert the real-time delays into logical
+delays (\texttt{pause} constructs), which interact well with preemption.
 
 \subsubsection{Interaction of channel communication and delays}
 \label{sec:inter-chann-comm}
 
 Channels, used for communication between reactions in asynchronously
 running CDs, are an addition in the SystemJ language. Like interaction
-of preemption and delays, conversion of rela-time delays to logical
+of preemption and delays, conversion of real-time delays to logical
 ticks also interacts well with channel rendezvous, because the semantics
 of interaction are well defined~\cite{amal10}. More importantly, we need
 to consider the interplay of channel communication and WCRT/BCRT
