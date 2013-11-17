@@ -136,10 +136,10 @@
 
 We have carried out a number of experiments on a set of applications
 with real-time constraints. The benchmark set is shown in
-Table~\ref{fig:comparison}. HRCTS is the human response system
-described in Figure~\ref{fig:1}. AECS (Access and Environmental Control
-System) is an application that controls an intelligent room environment
-described in~\cite{aecs_ispa}. Motor is a stepper motor controller
+Table~\ref{fig:comparison}. HRCTS is the human response system described
+in Figure~\ref{fig:1}. AECS (Access and Environmental Control System) is
+an application that controls an intelligent room environment described
+in~\cite{aecs_ispa}. Motor is a stepper motor controller
 from~\cite{Bourke2009a}. Robot is an industrial automation application
 that consists of two manufacturing belts and a robotic arm that splits
 goods according to their volumes. HRCTS consists of 2 CDs, but only one
@@ -147,9 +147,9 @@ with real-time delays. AECS also has 2 CDs; CD1 consist of a single
 delay statement, while CD2 has 2 delay statements. Robot and Motor both
 are synchronous programs with 1 and 5 delay statements,
 respectively. All these examples are written in the SystemJ
-language. Finally, except for HRCTS all other examples have exact (and
-deterministic) delay requirements. These delay requirements are shown in
-Table~\ref{fig:comparison} (\texttt{M..N}).
+language. The requirement to have deterministic or non-deterministic
+delays varies between each benchmark. These delay requirements are shown
+in Table~\ref{fig:comparison} (\texttt{M..N}).
 
 % In this section, we present a set of SystemJ benchmark programs in which
 % real-time requirements should be met. We have carried out a set of
@@ -171,9 +171,14 @@ We use the \textit{Java Optimized Processor}
 implements the JVM specification in hardware directly, and has been
 shown to be real-time amenable. We statically estimate the WCRT and BCRT
 of these benchmark applications using the real-time analysis tools
-provided by the JOP design framework. We disable the \textit{Garbage
-  Collector} (GC) in all experiments to avoid unwanted side-effects such
-as lengthening clock-domain logical tick times.
+provided by the JOP design framework. The \textit{Safety Critical Java}
+(SCJ) specification we use for real-time analysis avoids garbage
+collection (GC) and hence, GC overheads and unpredictability are
+completely avoided.
+
+% We disable the \textit{Garbage Collector} (GC) in all experiments to
+% avoid unwanted side-effects such as lengthening clock-domain logical
+% tick times.
 
 As one can see in Table \ref{fig:comparison}, BCRT and WCRT were
 calculated for all examples. Given the real-time \mbox{\texttt{delay
@@ -182,18 +187,18 @@ was determined by applying Algorithm~\ref{alg:1}. In HRTCS, real-time
 delay of the range 50.3..200.3 (ms) is only satisfied when \emph{d} is
 between 1506 and 1787 (as shown previously in
 Section~\ref{sec:intr-real-time}~\ref{sec:find-logic-delay}).  It is
-then compiler's job to statically choose one of the values between this
+then compiler's job to statically choose one of the values in this
 range.
 
-The upper bound \texttt{N} needed to be relaxed for all examples other
-than HRCTS to obtain a feasible \texttt{d}. Therefore, Algorithm
-\ref{alg:2} is applied to those examples to determine the minimum upper
-real-time bound \emph{N} such that there exist a solution for \emph{D}
-in Algorithm \ref{alg:1}.  Unlike in HRTCS, however, this algorithm
-gives a unique number for logical tick delay \emph{d} such that \emph{d}
-= Min(\emph{$S_2$}) = Max(\emph{$S_1$}).  The compiler, therefore, will
-choose \emph{d} based on the newly computed \emph{N} for the examples:
-Robot, Motor and AECS.
+% The upper bound \texttt{N} needed to be relaxed for all examples other
+% than HRCTS to obtain a feasible \texttt{d}. Therefore,
+Algorithm \ref{alg:2} is applied to those examples, where relaxation was
+required, to determine the minimum upper real-time bound \emph{N} such
+that there exist a solution for \emph{D} in Algorithm \ref{alg:1}. This
+algorithm gives a unique number for logical tick delay \emph{d} such
+that \emph{d} = Min(\emph{$S_2$}) = Max(\emph{$S_1$}).  The compiler,
+therefore, will choose \emph{d} based on the newly computed \emph{N} for
+the examples: Robot, Motor and AECS.
 
 
 % HRTCS, as already illustrated in Section \ref{sec:intr-motiv}, tests for an

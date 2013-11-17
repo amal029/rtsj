@@ -6,7 +6,7 @@ languages used for designing and implementing reactive systems, which
 continuously respond to input from their environment. These languages
 have been successfully used in programming a plethora of systems such as
 fly-by-wire in Airbus~\cite{eairbus}, security surveillance
-systems~\cite{amal121}, etc.  Usually these systems also need to meet
+systems~\cite{amal121}, etc. Usually these systems also need to meet
 real-time constraints enforced by the environment. Yet, these languages
 do not support describing real-time statements as first class language
 constructs.  For example, one cannot describe a simple real-time delay
@@ -35,19 +35,19 @@ non-functional requirements before system deployment.
 
 The major motivations for introducing delay mechanism and at the same
 time contributions of the paper are: (1) delays allow real-time based
-synchronization between concurrent behaviors, (2) delays model relays on
-the use of relative instead of absolute time, i.e., a delay in selected
-time units is counted from the currently executing SystemJ statement and
-(3) delays allow mixing behaviors with real-time features and others
-with only logical time and (4) real-time delay does not affect the model
-of logical time in SystemJ program as long as the amount of delay is
-within boundaries that can be determined statically by program
+synchronization between concurrent behaviors, (2) delay model relies on
+the use of relative instead of absolute real-time, i.e., a delay in
+selected time units is counted from the currently executing SystemJ
+statement (3) delays allow mixing behaviors with real-time features and
+others with only logical time and (4) real-time delay does not affect
+the model of logical time in SystemJ program as long as the amount of
+delay is within boundaries that can be determined statically by program
 analysis. All these as well as semantics of the delay construct are
 discussed and illustrated in the remaining part of the paper. Our
 contributions can be further refined as follows:
 \begin{enumerate*}
 \item Real-time is modeled in the $\mathbb{Q}^{>0}$ domain of numbers,
-  i.e., non-negative rational numbers.
+ i.e., non-negative rational numbers.
 \item We consider the property of \textit{non
     maximal-parallelism}. \textit{Non-maximal parallelism:} There are
   not always sufficient resources for processes to execute, so
@@ -62,8 +62,8 @@ contributions can be further refined as follows:
 %   optimization phases of the compiler at all.
 \item We are the first, to our knowledge, to allow specification of both
   deterministic and non-deterministic real-time in GALS and synchronous
-  languages. \textit{Deterministic delay:} is the ability to specify a
-  single \textit{real-time} delay. \textit{Non-deterministic delay:} is
+  languages. \textit{Deterministic delay:} is the ability to specify an
+  exact \textit{real-time} delay. \textit{Non-deterministic delay:} is
   the ability to specify a range, of real-time values for a delay
   statement, e.g., delay statement in Figure~\ref{fig:1}.
 \end{enumerate*}

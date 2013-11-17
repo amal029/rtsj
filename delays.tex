@@ -4,7 +4,8 @@
 We introduce a single \textit{derived} (built from kernel constructs)
 statement called \mbox{\texttt{delay (M..N)}} in the SystemJ language
 for real-time control. The resolution of the delay statement is of
-secondary concern and is dependent upon the execution platform.
+secondary concern and is dependent upon the execution platform. 
+
 
 \subsection{Semantics of the delay statement}
 \label{sec:semant-delay-stat}
@@ -61,11 +62,10 @@ The fundamental observation is that real-time is converted into logical
 time via the \texttt{pause} construct. The rewrite basically maps the
 physical notion of time back to the elegant logical notion of time. The
 rewrite \textit{delays} a certain number of logical ticks, before
-proceeding to the next statement. The number of logical ticks
-\texttt{``d''} to \textit{delay} (Figure~\ref{fig:3}) is determined by
-the compiler statically at compile time. The value of \texttt{d} is
-intricately tied with the WCRT and BCRT of the program and hence the
-execution platform.
+proceeding to the next statement. The number of logical ticks \texttt{d}
+to \textit{delay} (Figure~\ref{fig:3}) is determined by the compiler
+statically at compile time. The value of \texttt{d} is intricately tied
+with the WCRT and BCRT of the program and hence the execution platform.
 
 \subsection{Finding the logical delay \texttt{d}}
 \label{sec:find-logic-delay}
@@ -104,8 +104,8 @@ gives us the number of individual logical ticks required to delay the CD
 $ceil$ when dividing $M$ and $floor$ when dividing $N$ to make sure that
 the resultant values are integers (in domain $\mathbb{N}^{>0}$) and
 these functions guarantee that the resultant logical ticks result in
-real-time delays between the required range $M-N$. Next, a function $F$
-maps these calculated values to a set of equidistant integer points
+real-time delays between the required range $[M,N]$. Next, a function
+$F$ maps these calculated values to a set of equidistant integer points
 (values) separated by a unit value -- these points represent all the
 logical ticks running at the WCRT and the BCRT, respectively that
 satisfy the real-time delay requirements. The intersection of these two
@@ -125,7 +125,7 @@ respectively. Thus, the algorithm proceeds as follows:
 \item $l_2 \leftarrow \lceil 50.3/0.0334 \rceil$ and $u_2 \leftarrow
   \lfloor 200.3/0.0334 \rfloor$. $l_1 = 1506$ and $u_1 = 5997$. We do
   the same for the BCRT case.
-\item $S_1 = [450..1788]$ and $S_2 =[1506,5997]$. We then map the
+\item $S_1 = [450,1788]$ and $S_2 =[1506,5997]$. We then map the
   resultant bounds to linear points. Sets $S_1$ and $S_2$ represent
   logical ticks that running at the WCRT and BCRT, respectively always
   satisfy the required real-time constraints.
@@ -138,10 +138,10 @@ The resultant value for \texttt{d} gives the number of logical ticks,
 which can run at any physical clock-speed, bounded by the BCRT and the
 WCRT of the program and still result in the desired real-time delay. We
 think this is an elegant solution, because the technique provides
-hard-real time guarantees while preserving the essence (elastic logical
-tick) of synchronous and GALS programming prescribed by SystemJ and
-Esterel style languages. Moreover, this technique considers non
-maximal-parallelism, i.e., the delays in logical ticks is calculated
+real-time guarantees while preserving the essence (elastic logical tick)
+of synchronous and GALS programming prescribed by SystemJ and Esterel
+style languages. Moreover, this technique considers non
+maximal-parallelism, i.e., the delay in logical ticks is calculated
 after scheduling of CDs or synchronous programs has been performed. To
 our knowledge we are the first to do so.
 
@@ -164,8 +164,10 @@ two sets to get the value of \texttt{d}. It is possible (and often
 likely, as suggested by our experiments in
 Section~\ref{sec:experimental-results}) that the resultant set $D$ is
 empty (also possible in the case of \texttt{delay(M..N)}, but never
-possible in case of \texttt{delay(M)}). In such a case, we automatically
-\textit{relax} the upper bound of the \texttt{delay} statement.
+possible in case of \texttt{delay(M)}). Note that $S_1$ and $S_2$ can
+never be empty sets and will always contain at minimum a single
+element. In such a case, we automatically \textit{relax} the upper bound
+of the \texttt{delay} statement.
 
 \paragraph{Relaxation of the upper real-time bound}
 \label{sec:over-appr-relax}
@@ -178,7 +180,7 @@ The relaxation technique is shown in Algorithm~\ref{alg:2}.
     \KwData{$S_2$, $D$, WCRT}
     \KwResult{d}
     \If {$D = \emptyset$} {
-      let $j_{0}$ be the first element of set $S_2$, s.t., $|S_2|=Q$\;
+      let $j_{0}$ be the first element of set $S_2$\;
       \ShowLn let $N \leftarrow WCRT \times j_0$\;
       let $d \leftarrow j_0$\;
     }
@@ -190,23 +192,54 @@ The relaxation technique is shown in Algorithm~\ref{alg:2}.
 \end{algorithm}
 
 
-This algorithm results in the smallest relaxation required for the
-real-time delay to be satisfied. The algorithm takes as input the WCRT
-and set $S_2$, recall that set $S_2$ represents the logical ticks
-required to satisfy the real-time requirement at the BCRT. We take the
-very first value from set $S_2$ and multiply it with the WCRT to get the
-relaxation $N$. The first element of set $S_2$ is returned as the
-logical tick delay \texttt{d}.
+This algorithm results in the \underline{smallest} relaxation required
+for the real-time delay to be satisfied. The algorithm takes as input
+the WCRT and set $S_2$, recall that set $S_2$ represents the logical
+ticks required to satisfy the real-time requirement at the BCRT. We take
+the very first value from set $S_2$ and multiply it with the WCRT to get
+the relaxation $N$. The first element of set $S_2$ is returned as the
+logical tick delay \texttt{d}. The fundamental observation is that we
+have to delay for a minimum of $M$ units of real-time, hence,
+under-approximation is out of question. We can still over-approximate,
+but to reduce the resultant error, we should over-approximate by least
+possible value, which is the lower bound of set $S_2$. Thus, the lower
+bound is considered to be the only element shared between the two sets
+$S_1$ and $S_2$ and accordingly, the upper real-time bound is relaxed by
+the multiplication of WCRT and the first element of set $S_2$.
 
-The fundamental observation is that we have to delay for a minimum of
-$M$ units of real-time, hence, under-approximation is out of
-question. We can still over-approximate, but to reduce the resultant
-error, we should over-approximate by least possible value, which is the
-lower bound of set $S_2$. Thus, the lower bound is considered to be the
-only element shared between the two sets $S_1$ and $S_2$ and
-accordingly, the upper real-time bound is relaxed by the multiplication
-of WCRT and the first element of set $S_2$.
+For example, assume $BCRT=5$ and $WCRT=100$, with a required delay of
+$(200..200)$. Algorithm~\ref{alg:1}, results in $D$ being an empty set,
+since $S_1=[2]$ and $S_2=[40]$, respectively. In such a case, the
+resultant relaxation is: $40 \times 100$ using Algorithm~\ref{alg:2},
+which results in a time of $4000$ units. Such large over-approximations
+can be avoided by breaking the critical paths (worst case ticks) in the
+program (by inserting pause constructs), just like in hardware design,
+which is very \textit{unsurprising} considering Esterel has its origins
+in hardware.
 
+\subsection{The compiler flow}
+\label{sec:systemj-tool-chain}
+
+\begin{figure}[t!]
+  \centering
+  \includegraphics[scale=0.5]{./tool}
+  \caption{The tool-chain flow of SystemJ compiler with delays}
+  \label{fig:4}
+\end{figure}
+
+The interaction of the low-level execution platform and the described
+high-level technique of introducing real-time delays in the SystemJ
+language is shown in Figure~\ref{fig:4}. We use static-analysis
+techniques to find out the WCRT/BCRT of the programs automatically after
+rewrites and standard compiler optimizations. We require timing
+analyzable platforms, in our case \textit{Java Optimized Processor}
+(JOP)~\cite{jop:jnl:jsa2007}. Moreover, since algorithms~\ref{alg:1}
+and~\ref{alg:2} are performed after scheduling for different constraints
+such as faster execution time, or reduced power consumption, we,
+inherently satisfy the criteria of exploiting non-maximal
+parallelism. The low-level analysis guarantees a precise WCRT/BCRT for
+the logical tick, which is then used for calculating $d$ in
+Figure~\ref{fig:3}.
 
 \subsection{Programming using the delay construct}
 \label{sec:progr-using-delay}
@@ -223,24 +256,6 @@ constructs. Where the exact real-time delay is not known or should not
 be known apriori. One such system is our motivating example -- the human
 response time system.
 
-% Another is a printer-spooler example borrowed from timed
-% CSP~\cite{Schneider:1999:CRT:555233}. The spooler and printer need to
-% synchronize using channels. The printer might be unable to print
-% depending upon the paper tray, similarly, spooler might take sometime
-% to send the job depending upon its size. Such real-time constraints
-% can be modeled in SystemJ as below:
-
-% \begin{scriptsize}
-  
-% \begin{verbatim}
-% {await (job); delay (2..10 ms);  //SPOOLER CD
-%  send mid(job) delay (1ms);}
-% ><
-% {receive mid; delay(1..30 ms); //PRINTER CD
-%  emit print(#mid);}
-% \end{verbatim}
-% \end{scriptsize}
-
 \subsubsection{Timeout}
 \label{sec:timeout}
 
@@ -250,7 +265,8 @@ as:
 % \begin{scriptsize}
 \begin{verbatim}
 // timeout after 1ms.
-trap(T){{await(A);}||{delay(1..1 ms);exit(T);}}
+trap(T){{await(A);}||
+        {delay(1..1 ms);exit(T);}}
 \end{verbatim}
 % \end{scriptsize}
 
@@ -285,19 +301,19 @@ using external timers as in~\cite{rsh94}.
 
 % \begin{scriptsize}
 \begin{verbatim}
-suspend{S} {emit START_TIMER(10); await (TIMER); 
- emit O1;}
+suspend(S) {emit START_TIMER(10); 
+            await (TIMER);emit O1;}
 \end{verbatim}
 % \end{scriptsize}
 
-As identified in~\cite{Bourke2009a} the \texttt{suspend} does not play
-well with the external timer. The above program sends a signal to an
-external timer and waits for 10 ms to pass by. Consider what happens
-when signals \texttt{S} and \texttt{TIMER} occur in the same logical
-tick, the \texttt{await} statement is never executed (due to suspend)
-and hence, we enter a deadlock. Such problems are completely avoided in
-our technique, because we convert the real-time delays into logical
-delays (\texttt{pause} constructs), which interact well with preemption.
+As identified in~\cite{Bourke2009a} \texttt{suspend} does not play well
+with the external timer. The above program sends a signal to an external
+timer and waits for 10 ms to pass by. Consider what happens when signals
+\texttt{S} and \texttt{TIMER} occur in the same logical tick, the
+\texttt{await} statement is never executed (due to suspend) and hence,
+we enter a deadlock. Such problems are completely avoided in our
+technique, because we convert the real-time delays into logical delays
+(\texttt{pause} constructs), which interact well with preemption.
 
 \subsubsection{Interaction of channel communication and delays}
 \label{sec:inter-chann-comm}

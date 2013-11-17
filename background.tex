@@ -49,16 +49,18 @@
 \end{table}
 
 Table~\ref{tab:1} presents the SystemJ kernel statements used to program
-the control flow. The data flow is programmed in Java. A number of
-derived statements also exist (e.g., \texttt{sustain}, \texttt{await},
-etc) that make programming reactive systems easier. The \textit{Model of
-  Computation} (MoC) of a simple SystemJ program is shown in
-Figure~\ref{fig:2}.
+the control flow. The data flow is programmed in the safe subset of
+Java~\cite{scj2013} amenable to formal verification and timing analysis,
+while avoiding all the pitfalls of programming in 'C' style languages. A
+number of derived statements also exist (e.g., \texttt{sustain},
+\texttt{await}, etc) that make programming reactive systems easier. The
+\textit{Model of Computation} (MoC) of a simple SystemJ program is shown
+in Figure~\ref{fig:2}.
 
 SystemJ consists of entities called \textit{Clock Domains} (CD)s, each
 running at their individual pace, interacting with the environment via
 signals and with each other via channels and CSP~\cite{choa85} style
-rendezvous. Each CD has its own notion of logical time. CDs adheres to
+rendezvous. Each CD has its own notion of logical time. CDs adhere to
 the \textit{perfect synchrony} hypothesis, i.e., all statements execute
 instantaneously in zero time. Only the \texttt{pause} statement consumes
 time, just like in Esterel~\cite{gber931}. Consider the SystemJ program
@@ -79,12 +81,12 @@ instantaneously.
 {
 int counter = 0;
 while(true){
- abort(A){
+ abort(immediate A){
   while(true) pause; 
+ } // abort end
   emit O;
-  if(counter != 0) { // do java computation leading to WCRT}
+  if(counter != 0) { // java computation leading to WCRT}
   ++counter;
-  } // abort end
  } // loop end
 } // SystemJ CD end
 \end{verbatim}%
@@ -132,9 +134,9 @@ end of a logical tick and the start of the next logical tick happen
 together. Figure~\ref{fig:2c} shows the mapping of the logical time to
 the physical time. For example, the logical tick \texttt{1} starts at
 the first rising edge and completes at the second rising edge of the
-physical clock. Where as logical tick \texttt{4} starts at the $4^{th}$
+physical clock, whereas logical tick \texttt{4} starts at the $4^{th}$
 rising edge, but finishes at the $6^{th}$ rising edge of the physical
-clock. This difference can be accounted for by the java computations
+clock. This difference can be accounted for by the Java computations
 required when signal \texttt{A} is input by the environment (see
 Figure~\ref{fig:2a}). This elasticity is inherent (and elegant) to both
 Esterel and SystemJ.
