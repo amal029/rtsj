@@ -139,17 +139,61 @@ with real-time constraints. The benchmark set is shown in
 Table~\ref{fig:comparison}. HRCTS is the human response system described
 in Figure~\ref{fig:1}. AECS (Access and Environmental Control System) is
 an application that controls an intelligent room environment described
-in~\cite{aecs_ispa}. Motor is a stepper motor controller
-from~\cite{Bourke2009a}. Robot is an industrial automation application
-that consists of two manufacturing belts and a robotic arm that splits
-goods according to their volumes. HRCTS consists of 2 CDs, but only one
-with real-time delays. AECS also has 2 CDs; CD1 consist of a single
-delay statement, while CD2 has 2 delay statements. Robot and Motor both
-are synchronous programs with 1 and 5 delay statements,
-respectively. All these examples are written in the SystemJ
-language. The requirement to have deterministic or non-deterministic
-delays varies between each benchmark. These delay requirements are shown
-in Table~\ref{fig:comparison} (\texttt{M..N}).
+in~\cite{aecs_ispa}. The system interacts with two external timers
+through input/output signals in order to measure how long the entrance
+door to the room is being opened and time the illegal presence (e.g.
+intruder) that is being detected. The program has been modified such
+that the delay constructs are used instead of external timers as shown
+in~\ref{delaycode}.
+
+
+\begin{figure}[h!]
+	\begin{SubFloat}{\label{delaycode:a}sss}
+		\centering
+		\begin{minipage}[b]{0.3\linewidth}
+			\footnotesize
+\begin{verbatim}
+emit TimerTriggered;
+trap(T){
+  abort(DoorOpened){
+    await(TimeOut);
+    exit(T); 
+  }
+}
+\end{verbatim}
+		\end{minipage}
+	\end{SubFloat}
+\hspace{1cm}%
+	\begin{SubFloat}{\label{delaycode:b}sss}
+		\centering
+		\begin{minipage}[b]{0.3\linewidth}
+			\footnotesize
+\begin{verbatim}
+// No emit statement
+trap(T){
+  abort(DoorOpened){
+    delay(2.4 .. 7.4772 ms);
+    exit(T);  
+  }
+}
+\end{verbatim}
+		\end{minipage}
+	\end{SubFloat}
+\caption{www}
+\label{delaycode}
+\end{figure}
+
+
+Motor is a stepper motor controller from~\cite{Bourke2009a}. Robot is an
+industrial automation application that consists of two manufacturing
+belts and a robotic arm that splits goods according to their volumes.
+HRCTS consists of 2 CDs, but only one with real-time delays. AECS also
+has 2 CDs; CD1 consist of a single delay statement, while CD2 has 2
+delay statements. Robot and Motor both are synchronous programs with 1
+and 5 delay statements, respectively. All these examples are written in
+the SystemJ language. The requirement to have deterministic or
+non-deterministic delays varies between each benchmark. These delay
+requirements are shown in Table~\ref{fig:comparison} (\texttt{M..N}).
 
 % In this section, we present a set of SystemJ benchmark programs in which
 % real-time requirements should be met. We have carried out a set of
