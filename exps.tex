@@ -172,6 +172,7 @@ expires, it notifies back to the system through the input signal
 \texttt{TimeOut} which is polled at the \texttt{await} statement. With
 the new delay constructs, those timers are not necessary and delays can
 be expressed directly in the code as shown in Figure~\ref{delaycode:b}.
+
 \begin{figure}[h!]
 	\begin{SubFloat}{\label{delaycode:a}}
 		\centering
@@ -207,20 +208,20 @@ trap(T){
 \caption{Replacing external timer with delay construct}
 \label{delaycode}
 \end{figure}
+
 Motor is a stepper motor controller from~\cite{Bourke2009a}, used for
 producing monochrome images on paper by applying a correct application
 of current to the print head (a row of resistors). In this example,
 duration of current applied to the print head is controlled based on
-feedback logic where delays are expressed in real-time Esterel
-constructs. We have rewritten the program in SystemJ with our delay
-construct and compare between desired and relaxed delay according to
-WCRT and BCRT of the program. Printer is an example from [], which
-models a printer and a spooler in timed CSP. Their operation is rather
-simple: as soon as the spooler receives a print job, passes it to the
-printer through channel for processing. The example demonstrates that by
-specifying delay bounds (e.g. 1 to 5 time units) between two subsequent
-behaviors, the job is passed along the channel as soon as both processes
-become ready.
+feedback logic using real-time delays which are expressed in Esterel
+constructs. We have rewritten the program in SystemJ and compared
+between desired and relaxed delay according to WCRT and BCRT of the
+program.  Printer is an example from [], which models a printer and a
+spooler in timed CSP. Their operation is rather simple: as soon as the
+spooler receives a print job, passes it to the printer through channel
+for processing. The example demonstrates that by specifying delay bounds
+(e.g. 1 to 5 time units) between two subsequent behaviors, the job is
+passed along the channel as soon as both processes become ready.
 
 %Robot is an industrial automation application that consists of two
 %manufacturing belts and a robotic arm that splits goods according to
@@ -229,16 +230,18 @@ become ready.
 HRTCS consists of 2 CDs, but only one with real-time delays. AECS also
 has 2 CDs; CD1 consist of a single delay statement, while CD2 has 2
 delay statements. In this case, as explained previously, delay
-statements replaced the external timers and corresponding interface
-signals. The system triggers an alarm after 10 seconds of detection of
-an intruder or generates a beep sound when an entrance door is being
-opened for the same amount of time. For Printer, each spooler and
-printer process is mapped to a single clock-domain. Spooler CD sends a
-job to the Printer CD between [] to [] ms after receiving it from the
+statements replace the external timers and corresponding interface
+signals. The system triggers an alarm 10 seconds after detection of an
+intruder or generates a beep sound when an entrance door is being opened
+for the same amount of time. In Printer, each spooler and printer
+process is mapped to a single clock-domain. Spooler CD sends a job to
+the Printer CD between [] to [] ms after receiving it from the
 enviornment (e.g. a user). On the other hand, Printer CD notifies
 environment that it starts printing between [] to [] ms once it receives
 the job from the Spooler CD. Actual print job is started between [] to
-[] after the notification. Lastly, Motor is a synchronous program with 5
+[] after the notification. In this example, bounded delay ensures that
+both channel communication and print job should occur within the
+specified amount of time. Lastly, Motor is a synchronous program with 5
 delay statements where they controls amount of current into the stepper
 motor coils. 
 
@@ -281,25 +284,27 @@ Table~\ref{fig:comparison}.
 % avoid unwanted side-effects such as lengthening clock-domain logical
 % tick times.
 
-As one can see in Table \ref{fig:comparison}, BCRT and WCRT were
-calculated for all examples. Given the real-time \mbox{\texttt{delay
-(M..N)}} provided by programmers, required logical delay \texttt{d} was
-determined by applying Algorithm~\ref{alg:1}. In HRTCS, real-time delay
-of the range 50.3..200.3 (ms) is only satisfied when \emph{d} is between
-1506 and 1787 (as shown previously in
+%As one can see in Table \ref{fig:comparison}, 
+As a first step, BCRT and WCRT were calculated for all examples. Given
+the real-time \mbox{\texttt{delay (M..N)}} provided by programmers,
+required logical delay \texttt{d} was determined by applying
+Algorithm~\ref{alg:1}. In HRTCS, real-time delay of the range
+50.3..200.3 (ms) is only satisfied when \emph{d} is between 1506 and
+1787 (as shown previously in
 Section~\ref{sec:intr-real-time}~\ref{sec:find-logic-delay}).  It is
 then compiler's job to statically choose one of the values in this
 range.
 
 % The upper bound \texttt{N} needed to be relaxed for all examples other
 % than HRTCS to obtain a feasible \texttt{d}. Therefore,
-Algorithm \ref{alg:2} is applied to those examples, where relaxation was
-required, to determine the minimum upper real-time bound \emph{N} such
-that there exist a solution for \emph{D} in Algorithm \ref{alg:1}. This
-algorithm gives a unique number for logical tick delay \emph{d} such
-that \emph{d} = Min(\emph{$S_2$}) = Max(\emph{$S_1$}).  The compiler,
-therefore, will choose \emph{d} based on the newly computed \emph{N} for
-the examples: Printer, Motor and AECS.
+On the other hand, Algorithm \ref{alg:2} is applied to those examples,
+where relaxation was required, to determine the minimum upper real-time
+bound \emph{N} such that there exist a solution for \emph{D} in
+Algorithm \ref{alg:1}. This algorithm gives a unique number for logical
+tick delay \emph{d} such that \emph{d} = Min(\emph{$S_2$}) =
+Max(\emph{$S_1$}).  The compiler, therefore, will choose \emph{d} based
+on the newly computed \emph{N} for the examples: Printer, Motor and
+AECS.
 
 
 % HRTCS, as already illustrated in Section \ref{sec:intr-motiv}, tests for an
