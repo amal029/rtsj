@@ -90,27 +90,30 @@
 \begin{table}[t]
 	\small
 	\centering
-	\caption{Program specification}
+	\caption{An overview of the benchmark programs}
 	\label{fig:benchlist}
 	\scalebox{0.9}{
-\begin{tabular}{cccc}
+		\begin{tabular}{llp{0.5cm}p{1cm}}
 \toprule
-\emph{Benchmark}       & \emph{Required delays} & \emph{\# of CDs} & 
+\emph{Benchmark}       & \emph{Delay constructs used in each CD} & \emph{\# of CDs} & 
 \emph{Lines of code}        
 \\ \midrule
-HRTCS                  & 50.3-200.3 ms & 2                  & 56
+HRTCS                  & \texttt{delay(50.3..200.3 ms)} ($CD1$) & 2                  & 56
 \\ \midrule
-\multirow{5}{*}{Motor} & 2.4 ms        & \multirow{5}{*}{1} & \multirow{5}{*}{116} \\ 
-                       & 1.667 ms      &                    &                      \\ 
-                       & 0.05 ms       &                    &                      \\ 
-                       & 0.3 ms        &                    &                      \\ 
-											 & 0.733 ms      &                    &
+\multirow{5}{*}{Motor} & \texttt{delay(2.4..2.4 ms)}        & \multirow{5}{*}{1} & \multirow{5}{*}{116} \\ 
+											 & \texttt{delay(1.667..1.667 ms)}      &                    &                      \\ 
+											 & \texttt{delay(0.05..0.05 ms)}       &                    &                      \\ 
+											 & \texttt{delay(0.3..0.3 ms)}        &                    &                      \\ 
+											 & \texttt{delay(0.733..0.733 ms)}      &                    &
 \\ \midrule
-Printer                & TBC           & 2                  & 39
+\multirow{3}{*}{Printer}
+& \texttt{delay(2.7..10.6 ms)} ($CD1$)      & \multirow{3}{*}{2}        & \multirow{3}{*}{39} \\
+& \texttt{delay(1.2..30.3 ms)} ($CD2$)		  &														&											\\
+& \texttt{delay(5.6..100.2 ms)} ($CD2$)     &														&											
 \\ \midrule
-AECS/CD1               & 10000 ms      & -                  & 144
-\\ \midrule
-AECS/CD2               & 10000 ms      & -                  & 123
+\multirow{2}{*}{AECS} & \texttt{delay(10000 ms)} ($CD1$) 
+& \multirow{2}{*}{2} & \multirow{2}{*}{267} \\
+& \texttt{delay(10000..10000 ms)} ($CD2$) & &
 \\ \bottomrule
 \end{tabular}
 }
@@ -126,26 +129,43 @@ AECS/CD2               & 10000 ms      & -                  & 123
 	\caption{Actual delays obtained for \texttt{delay} constructs in the
 benchmark programs based on their BCRT and WCRT}
 \label{fig:comparison}
-\begin{tabular}{ c  c  c  c  c  c  c }
+\begin{tabular}{ c c l l l l l l }
 	\toprule
-	\multicolumn{2}{c}{}											& \emph{HRTCS} 		&
-	\emph{Motor} 		  & \emph{Robot} 			  & \emph{AECS/CD1}   &
-	\emph{AECS/CD2} \\ \midrule
-	\multicolumn{2}{c}{\emph{BCRT}} 		&0.0334 ms 		& 0.0361 ms		  &
-	0.0325 ms		  & 0.1683 ms		   & 0.1881 ms\\ \cmidrule(r){1-7}
-	\multicolumn{2}{c}{\emph{WCRT}} 		&0.1120 ms 		& 0.1116 ms		  &
-	0.0601 ms		  & 0.7147 ms		   & 1.0115 ms\\ \cmidrule(r){1-7}
-								 \multirow{2}{*}{Delay 1}	 & M..N &50.3-200.3 ms 	& 2.4-7.4772 ms	  & 1230-2274.0263 ms & 10000-42473.2197 ms& 10000-53772.0045 ms \\ \cmidrule(r){2-7}
-											   & d			 		&1506-1787  	& 67 			  & 37861			  & 59427		       &53160\\ \cmidrule(r){1-7}
-								 \multirow{2}{*}{Delay 2}	 & M..N & 	N/A 		& 1.667-5.2452 ms & N/A				  & N/A 			   &10000-53772.0045 ms\\ \cmidrule(r){2-7}
-											   & d			 		& 	N/A	 		& 47			  & N/A				  & N/A       		   &53160\\ \cmidrule(r){1-7}
-								 \multirow{2}{*}{Delay 3}	 & M..N & 	N/A	 		& 0.05-0.2232 ms  & N/A				  & N/A       		   &N/A\\ \cmidrule(r){2-7}
-											   & d			 		& 	N/A	 		& 2		      	  &	N/A				  & N/A       		   &N/A\\ \cmidrule(r){1-7}
-								 \multirow{2}{*}{Delay 4}	 & M..N & 	N/A	 		& 0.3-1.0044 ms   & N/A				  &	N/A       		   &N/A\\ \cmidrule(r){2-7}
-											   & d				 	& 	N/A	 		& 9				  & N/A				  &	N/A      		   &N/A\\ \cmidrule(r){1-7}
-								 \multirow{2}{*}{Delay 5}	 & M..N & 	N/A	 		& 0.733-2.3436 ms & N/A				  &	N/A      		   &N/A\\ \cmidrule(r){2-7}
-											   & d			 		& 	N/A	 		& 21 			  &	N/A
-												 & N/A      		   &N/A\\ \bottomrule
+	\multicolumn{2}{c}{} & \emph{HRTCS} & \emph{Motor} & \emph{Printer/CD1} &
+	\emph{Printer/CD2} & \emph{AECS/CD1} &	\emph{AECS/CD2} \\ 
+	\midrule
+	\multicolumn{2}{c}{\emph{BCRT}}	& 0.0334 ms	& 0.0361 ms & 0.009613 ms &
+	0.0263 ms & 0.1683 ms & 0.1881 ms\\ 
+	\cmidrule(r){1-8}
+	\multicolumn{2}{c}{\emph{WCRT}} &0.1120 ms & 0.1116 ms & 0.0603 ms
+	& 0.0491 ms & 0.8148 ms & 1.0115 ms\\ 
+	\cmidrule(r){1-8}
+
+	\multirow{2}{*}{Delay 1} & M..N & 50.3-200.3 ms	& 2.4-8.4882 ms	  &
+	2.7-16.9378 ms & 1.2-30.3 ms & 10000-42483.2198 ms& 10000-53882.0045 ms \\
+	\cmidrule(r){2-8}
+	& d &1506-1888 & 68 & 281 & 46-617 & 59428 &53160\\ 
+	\cmidrule(r){1-8}
+	\multirow{2}{*}{Delay 2} & M..N & N/A & 1.668-5.2452 ms & N/A &
+	5.6-100.2 ms & N/A &10000-53882.0045 ms\\ 
+	\cmidrule(r){2-8}
+	& d & N/A & 48 & N/A & 213-2041 & N/A &53160\\ 
+	\cmidrule(r){1-8}
+	\multirow{2}{*}{Delay 3} & M..N & N/A & 0.05-0.2232 ms & N/A & N/A & N/A
+	&N/A\\ 
+	\cmidrule(r){2-8}
+	& d & N/A & 2 & N/A & N/A & N/A &N/A\\ 
+	\cmidrule(r){1-8}
+	\multirow{2}{*}{Delay 4} & M..N & N/A & 0.3-1.0044 ms & N/A & N/A & N/A
+	&N/A\\ 
+	\cmidrule(r){2-8}
+	& d & N/A & 9 & N/A & N/A & N/A &N/A\\ 
+	\cmidrule(r){1-8}
+	\multirow{2}{*}{Delay 5} & M..N & N/A & 0.833-2.3436 ms & N/A & N/A & N/A
+	&N/A\\ 
+	\cmidrule(r){2-8}
+	& d & N/A & 21 & N/A
+	& N/A & N/A &N/A\\ \bottomrule
 \end{tabular}
 \end{@twocolumnfalse}
 ]
@@ -154,7 +174,8 @@ benchmark programs based on their BCRT and WCRT}
 
 We have carried out a number of experiments on a set of applications
 with real-time constraints. The characteristics of the benchmark set
-including delay specifications are shown in Table~\ref{fig:benchlist}. 
+including required real-time delays and program sizes are shown in
+Table~\ref{fig:benchlist}. 
 
 HRTCS is the human response system described in
 Section~\ref{sec:motivating-example}. AECS (Access and Environmental
@@ -198,7 +219,7 @@ trap(T){
 // No emit statement
 trap(T){
   abort(DoorOpened){
-    delay(2.4 ms);
+    delay(10000 ms);
     exit(T);  
   }
 }
@@ -211,17 +232,17 @@ trap(T){
 
 Motor is a stepper motor controller from~\cite{Bourke2009a}, used for
 producing monochrome images on paper by applying a correct application
-of current to the print head (a row of resistors). In this example,
-duration of current applied to the print head is controlled based on
-feedback logic using real-time delays which are expressed in Esterel
-constructs. We have rewritten the program in SystemJ and compared
-between desired and relaxed delay according to WCRT and BCRT of the
-program.  Printer is an example from [], which models a printer and a
-spooler in timed CSP. Their operation is rather simple: as soon as the
-spooler receives a print job, passes it to the printer through channel
-for processing. The example demonstrates that by specifying delay bounds
-(e.g. 1 to 5 time units) between two subsequent behaviors, the job is
-passed along the channel as soon as both processes become ready.
+of current to a print head (a row of resistors). In this example,
+duration of current applied is controlled by the feedback logic using
+real-time delays which are expressed in Esterel constructs. We have
+rewritten the program in SystemJ and compared between desired and
+relaxed delays according to WCRT and BCRT of the program. Printer is an
+example from [], which models a printer and a spooler in timed CSP.
+Their operation is rather simple: as soon as the spooler receives a
+print job, passes it to the printer through a channel where actual
+printing process take place. The example demonstrates that by specifying
+delay bounds (e.g. 1 to 5 time units) on receiving and sending channel
+ends data exchange will occur as soon as both processes become ready.
 
 %Robot is an industrial automation application that consists of two
 %manufacturing belts and a robotic arm that splits goods according to
@@ -230,7 +251,7 @@ passed along the channel as soon as both processes become ready.
 HRTCS consists of 2 CDs, but only one with real-time delays. AECS also
 has 2 CDs; CD1 consist of a single delay statement, while CD2 has 2
 delay statements. In this case, as explained previously, delay
-statements replace the external timers and corresponding interface
+statements replace the external timers and corresponding interface (I/O)
 signals. The system triggers an alarm 10 seconds after detection of an
 intruder or generates a beep sound when an entrance door is being opened
 for the same amount of time. In Printer, each spooler and printer
@@ -274,26 +295,29 @@ of these benchmark applications using the real-time analysis tools
 provided by the JOP design framework. The \textit{Safety Critical Java}
 (SCJ) specification we use for real-time analysis avoids garbage
 collection (GC) and hence, GC overheads and unpredictability are
-completely avoided. Note that only HRTCS and Printer have
-non-deterministic delays (\texttt{M..N}) as their program specification
-where others use exact delays (\texttt{M}). The actual delay after
-applying relaxation for the upper real-time bound is shown in
-Table~\ref{fig:comparison}.
+completely avoided. 
 
 % We disable the \textit{Garbage Collector} (GC) in all experiments to
 % avoid unwanted side-effects such as lengthening clock-domain logical
 % tick times.
 
-%As one can see in Table \ref{fig:comparison}, 
+Table~\ref{fig:comparison} shows the result of our algorithm applied to
+each benchmark program. Note that we allowed the compiler to find the
+minimum upper real-time bounds for all delay constructs, e.g. bounded
+(\texttt{M..N}) or exact (\texttt{M..M}) delays, when it fails to find a
+feasible solution. However, a user can prohibit this behavior through
+configuration that such case is an error.
+
 As a first step, BCRT and WCRT were calculated for all examples. Given
 the real-time \mbox{\texttt{delay (M..N)}} provided by programmers,
-required logical delay \texttt{d} was determined by applying
+required logical delay \textit{d} was determined by applying
 Algorithm~\ref{alg:1}. In HRTCS, real-time delay of the range
 50.3..200.3 (ms) is only satisfied when \emph{d} is between 1506 and
 1787 (as shown previously in
-Section~\ref{sec:intr-real-time}~\ref{sec:find-logic-delay}).  It is
-then compiler's job to statically choose one of the values in this
-range.
+Section~\ref{sec:intr-real-time}~\ref{sec:find-logic-delay}). Similarly,
+Printer/CD2 satisfies real-time ranges of 1.2..30.3 (ms) and 5.6..100.2
+(ms) when \emph{d} is 46..617 and 213..2041 respectively. It is then
+compiler's job to statically choose one of the values in this range.
 
 % The upper bound \texttt{N} needed to be relaxed for all examples other
 % than HRTCS to obtain a feasible \texttt{d}. Therefore,
@@ -303,7 +327,7 @@ bound \emph{N} such that there exist a solution for \emph{D} in
 Algorithm \ref{alg:1}. This algorithm gives a unique number for logical
 tick delay \emph{d} such that \emph{d} = Min(\emph{$S_2$}) =
 Max(\emph{$S_1$}).  The compiler, therefore, will choose \emph{d} based
-on the newly computed \emph{N} for the examples: Printer, Motor and
+on the newly computed \emph{N} for the examples: Printer/CD1, Motor and
 AECS.
 
 
@@ -336,17 +360,3 @@ AECS.
 %%% mode: latex
 %%% TeX-master: "paper"
 %%% End: 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
