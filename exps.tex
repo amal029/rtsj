@@ -302,11 +302,11 @@ completely avoided.
 % tick times.
 
 Table~\ref{fig:comparison} shows the result of our algorithm applied to
-each benchmark program. Note that we allowed the compiler to find the
-minimum upper real-time bounds for all delay constructs, e.g. bounded
-(\texttt{M..N}) or exact (\texttt{M..M}) delays, when it fails to find a
-feasible solution. However, a user can prohibit this behavior through
-configuration that such case is an error.
+each benchmark program. Note that we allowed the compiler to relax the
+upper real-time bounds even for bounded (\texttt{M..N}) or exact
+(\texttt{M..M}) delays when it fails to find a feasible solution.
+However, a user can prohibit this behavior through configuration that
+such case is an error.
 
 As a first step, BCRT and WCRT were calculated for all examples. Given
 the real-time \mbox{\texttt{delay (M..N)}} provided by programmers,
