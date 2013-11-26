@@ -333,53 +333,53 @@ AECS.
 
 \subsection{Improving results}
 
-Previous results shows that the compiler was only able to find
-\textit{d} for HRTCS and Printer/CD2 without relaxing upper bound.
-Figure~\ref{fig:graph} shows the accuracy of our result by comparing
-differences between programmer specified upper bounds and the actual
-bounds obtained from our algorithm.
+The previous results show that HRTCS and Printer/CD2 were the only
+examples that the compiler was able to find \textit{d} without relaxing
+upper bound of \texttt{delay}. Figure~\ref{fig:graph} shows the accuracy
+of our result by comparing differences between programmer specified
+upper bounds and the actual bounds obtained from our algorithm.
 
 \begin{figure}[h!]
 	\centering
-	\begin{tikzpicture}[scale=0.95]
-	\begin{groupplot}[group style={group size=2 by 3,
-			xlabels at=edge bottom,
-			ylabels at=edge left,
-		},
-			footnotesize,ybar,xtick=data,
+\begin{tikzpicture}[scale=0.9]
+	\begin{axis}[
+			ybar,xtick=data,
 			symbolic x
-			coords={HRTCS,Motor,Printer/CD1,Printer/CD2,AECS/CD1,AECS/CD2},
-			height=3.3cm,
+			coords={HRTCS,Printer/CD1,Printer/CD2,AECS/CD1,AECS/CD2},
+			height=5cm,
+			width=9.5cm,
+%      xlabel=Benchmark,
+			x tick label style={rotate=45,font=\footnotesize},
+			ylabel=Difference factor,
+		]
+			\addplot coordinates {(HRTCS,1)(Printer/CD1,1.6)(Printer/CD2,1)(AECS/CD1,4.25)(AECS/CD2,4.25)};
+			\addplot coordinates {(Printer/CD2, 1)(AECS/CD2, 4.25)};
+	\end{axis}
+\end{tikzpicture}
+\begin{tikzpicture}[scale=0.9]
+	\begin{axis}[
+			ybar,xtick=data,
+			symbolic x
+			coords={Motor},
+			height=5cm,
+			width=9.5cm,
 			xlabel=Benchmark,
-			ylabel style={text width=1.4cm},
+			xlabel shift={4pt},
 			ylabel=Difference factor,
 			legend style={
 				anchor=north,
-				at={(-0.15,-3.9)},
+				at={(0.45,-0.44)},
 				legend columns=-1,
 			}
 %      nodes near coords
 		]
-			\nextgroupplot
-			\addplot coordinates {(HRTCS,1)};
-			\nextgroupplot
 			\addplot coordinates {(Motor, 3.54)};
 			\addplot coordinates {(Motor, 3.15)};
 			\addplot coordinates {(Motor, 4.46)};
 			\addplot coordinates {(Motor, 3.35)};
 			\addplot coordinates {(Motor, 2.81)};
 			\legend{Delay1,Delay2,Delay3,Delay4,Delay5}
-			\nextgroupplot
-			\addplot coordinates {(Printer/CD1, 1.6)};
-			\nextgroupplot
-			\addplot coordinates {(Printer/CD2, 1)};
-			\addplot coordinates {(Printer/CD2, 1)};
-			\nextgroupplot
-			\addplot coordinates {(AECS/CD1, 4.25)};
-			\nextgroupplot
-			\addplot coordinates {(AECS/CD2, 4.25)};
-			\addplot coordinates {(AECS/CD2, 4.25)};
-	\end{groupplot}
+	\end{axis}
 \end{tikzpicture}
 \caption{Accuracy of the results}
 \label{fig:graph}
