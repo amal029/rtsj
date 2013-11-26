@@ -237,12 +237,13 @@ duration of current applied is controlled by the feedback logic using
 real-time delays which are expressed in Esterel constructs. We have
 rewritten the program in SystemJ and compared between desired and
 relaxed delays according to WCRT and BCRT of the program. Printer is an
-example from [], which models a printer and a spooler in timed CSP.
-Their operation is rather simple: as soon as the spooler receives a
-print job, passes it to the printer through a channel where actual
-printing process take place. The example demonstrates that by specifying
-delay bounds (e.g. 1 to 5 time units) on receiving and sending channel
-ends data exchange will occur as soon as both processes become ready.
+example from~\cite{Schneider:1999:CRT:555233}, which models a printer and
+a spooler in timed CSP.  Their operation is rather simple: as soon as
+the spooler receives a print job, passes it to the printer through a
+channel where actual printing process take place. The example
+demonstrates that by specifying delay bounds (e.g. 1 to 5 time units) on
+receiving and sending channel ends data exchange will occur as soon as
+both processes become ready.
 
 %Robot is an industrial automation application that consists of two
 %manufacturing belts and a robotic arm that splits goods according to
@@ -256,15 +257,15 @@ signals. The system triggers an alarm 10 seconds after detection of an
 intruder or generates a beep sound when an entrance door is being opened
 for the same amount of time. In Printer, each spooler and printer
 process is mapped to a single clock-domain. Spooler CD sends a job to
-the Printer CD between [] to [] ms after receiving it from the
+the Printer CD between 2.7 to 10.6 ms after receiving it from the
 enviornment (e.g. a user). On the other hand, Printer CD notifies
-environment that it starts printing between [] to [] ms once it receives
-the job from the Spooler CD. Actual print job is started between [] to
-[] after the notification. In this example, bounded delay ensures that
-both channel communication and print job should occur within the
-specified amount of time. Lastly, Motor is a synchronous program with 5
-delay statements where they controls amount of current into the stepper
-motor coils. 
+environment that it starts printing between 1.2 to 30.3 ms once it
+receives the job from the Spooler CD. Actual print job is started
+between 5.6 to 100.2 ms after the notification. In this example, bounded
+delay ensures that both channel communication and print job should occur
+within the specified amount of time. Lastly, Motor is a synchronous
+program with 5 delay statements where they controls amount of current
+into the stepper motor coils. 
 
 %All these examples are written in
 %the SystemJ language. The requirement to have deterministic or
@@ -326,10 +327,63 @@ where relaxation was required, to determine the minimum upper real-time
 bound \emph{N} such that there exist a solution for \emph{D} in
 Algorithm \ref{alg:1}. This algorithm gives a unique number for logical
 tick delay \emph{d} such that \emph{d} = Min(\emph{$S_2$}) =
-Max(\emph{$S_1$}).  The compiler, therefore, will choose \emph{d} based
+Max(\emph{$S_1$}). The compiler, therefore, will choose \emph{d} based
 on the newly computed \emph{N} for the examples: Printer/CD1, Motor and
 AECS.
 
+\subsection{Improving results}
+
+Previous results shows that the compiler was only able to find
+\textit{d} for HRTCS and Printer/CD2 without relaxing upper bound.
+Figure~\ref{fig:graph} shows the accuracy of our result by comparing
+differences between programmer specified upper bounds and the actual
+bounds obtained from our algorithm.
+
+\begin{figure}[h!]
+	\centering
+	\begin{tikzpicture}[scale=0.95]
+	\begin{groupplot}[group style={group size=2 by 3,
+			xlabels at=edge bottom,
+			ylabels at=edge left,
+		},
+			footnotesize,ybar,xtick=data,
+			symbolic x
+			coords={HRTCS,Motor,Printer/CD1,Printer/CD2,AECS/CD1,AECS/CD2},
+			height=3.3cm,
+			xlabel=Benchmark,
+			ylabel style={text width=1.4cm},
+			ylabel=Difference factor,
+			legend style={
+				anchor=north,
+				at={(-0.15,-3.9)},
+				legend columns=-1,
+			}
+%      nodes near coords
+		]
+			\nextgroupplot
+			\addplot coordinates {(HRTCS,1)};
+			\nextgroupplot
+			\addplot coordinates {(Motor, 3.54)};
+			\addplot coordinates {(Motor, 3.15)};
+			\addplot coordinates {(Motor, 4.46)};
+			\addplot coordinates {(Motor, 3.35)};
+			\addplot coordinates {(Motor, 2.81)};
+			\legend{Delay1,Delay2,Delay3,Delay4,Delay5}
+			\nextgroupplot
+			\addplot coordinates {(Printer/CD1, 1.6)};
+			\nextgroupplot
+			\addplot coordinates {(Printer/CD2, 1)};
+			\addplot coordinates {(Printer/CD2, 1)};
+			\nextgroupplot
+			\addplot coordinates {(AECS/CD1, 4.25)};
+			\nextgroupplot
+			\addplot coordinates {(AECS/CD2, 4.25)};
+			\addplot coordinates {(AECS/CD2, 4.25)};
+	\end{groupplot}
+\end{tikzpicture}
+\caption{Accuracy of the results}
+\label{fig:graph}
+\end{figure}
 
 % HRTCS, as already illustrated in Section \ref{sec:intr-motiv}, tests for an
 % ability of one's responsiveness by generating green lights between the
