@@ -348,19 +348,29 @@ upper bounds and the actual bounds obtained from our algorithm.
 			coords={HRTCS,Printer/CD1,Printer/CD2,AECS/CD1,AECS/CD2},
 			height=5cm,
 			width=9.5cm,
+			minor y tick num=1,
+			ymajorgrids=true,
+			ytick={0,...,5},
 %      xlabel=Benchmark,
 			x tick label style={rotate=45,font=\footnotesize},
 			ylabel=Difference factor,
 		]
-			\addplot coordinates {(HRTCS,1)(Printer/CD1,1.6)(Printer/CD2,1)(AECS/CD1,4.25)(AECS/CD2,4.25)};
-			\addplot coordinates {(Printer/CD2, 1)(AECS/CD2, 4.25)};
+			\addplot coordinates
+			{(HRTCS,1)(Printer/CD1,1.6)(Printer/CD2,1)(AECS/CD1,4.25)(AECS/CD2,5.39)};
+			\addplot coordinates {(Printer/CD2, 1)(AECS/CD2, 5.39)};
 	\end{axis}
 \end{tikzpicture}
 \begin{tikzpicture}[scale=0.9]
 	\begin{axis}[
 			ybar,xtick=data,
-			symbolic x
-			coords={Motor},
+			symbolic x coords={Motor},
+			ytick={0,...,5},
+			ymin={1.5},
+			minor y tick num=1,
+			ymajorgrids=true,
+%      extra y ticks={2.5},
+%      extra y tick labels={asdf},
+%      extra y tick style={grid=major},
 			height=5cm,
 			width=9.5cm,
 			xlabel=Benchmark,
@@ -384,6 +394,17 @@ upper bounds and the actual bounds obtained from our algorithm.
 \caption{Accuracy of the results}
 \label{fig:graph}
 \end{figure}
+
+There are two main reasons that influence size of the relaxation: 1)
+execution speed of a target platform 2) and the nature of the program
+which runs on that specific platform. As one can easily speculate, clock
+frequency of the processor directly impacts on the value of WCRT. On the
+other hand, programmer can write a program such that large data
+computation in a single tick increases WCRT of the program. Assuming we
+do not change the architecture of the execution platform (i.e. JOP), the
+difference factor can only be reduced by modifying the benchmark
+programs by dividing the single longest tick, that corresponds to WCRT,
+into a number of smaller ticks.
 
 % HRTCS, as already illustrated in Section \ref{sec:intr-motiv}, tests for an
 % ability of one's responsiveness by generating green lights between the
