@@ -3,7 +3,7 @@
 
 We dedicate this section to discuss the details of the delay semantics,
 the dependence on time analyzable platforms, and the various uses and
-programming paradigms that can be built using the $delay(M..N)$
+programming paradigms that can be built using the \texttt{delay (M..N)}
 construct.
 
 \subsection{Programming using the delay construct}
@@ -21,7 +21,7 @@ All three delay constructs are useful for programming real systems. % The
 Many real-world systems require non-deterministic timing
 constructs. Where the exact real-time delay is not known or should not
 be known apriori. One such system is our motivating example -- the human
-response time system (HRCTS) another one we presented was a real
+response time system (HRCTS). Another one we presented was a real
 printer-spooler embedded controller in
 Section~\ref{sec:experimental-results}.
 
@@ -42,7 +42,7 @@ trap(T){{await(A);}||
 In the above case, the program waits for signal \texttt{A} from the
 environment for \textit{at\_least} \texttt{1 ms}, but it may wait longer
 if other reactions/CDs are scheduled for execution. This second form of
-delay statement us very useful for low priority tasks.
+delay statement is very useful for programming low priority tasks.
 
 \subsubsection{Periodic reactions}
 \label{sec:periodic-reactions}
@@ -57,9 +57,9 @@ while(true) { delay ((1..1)ms); emit S;
 
 The above program will emit signal \texttt{S} every \texttt{1 ms}. A
 periodic reaction (or CD) requires special consideration, like any other
-real-time periodic task. One should be aware of the interaction delays
-and other \texttt{pause} constructs in the body of the reaction (or
-CD). For example, consider the (perceived) periodic program and its
+real-time periodic task. One should be aware of the interaction of
+delays and other \texttt{pause} constructs in the body of the reaction
+(or CD). For example, consider the (perceived) periodic program and its
 rewrite below.
 
 \begin{verbatim}
@@ -84,7 +84,7 @@ The system designer needs to be aware that just introducing a delay
 construct does not make the reaction (or CD) periodic. The program on
 the left does \textit{not} emit signal \texttt{S} every \texttt{1 ms},
 because of the extra \texttt{pause} statement. Introducing additional
-pauses introduces more logical ticks consequently increasing the
+pauses introduces more logical ticks, consequently increasing the
 real-time delay.
 
 \subsection{Need for a time analyzable platform -- interaction of
@@ -95,9 +95,9 @@ As mentioned previously, the proposed solution might need
 over-approximation techniques (Algorithm~\ref{alg:2}) to guarantee
 timing requirements (cf. Section~\ref{sec:extend-tehcn-vari}). This
 might give the readers an impression that timer based solution proposed
-for standard real-time operating systems can be utilized for
-GALS/synchronous programs as well. This is a fallacy. Bourke et
-al~\cite{Bourke2009a} have investigated exactly this technique
+for standard real-time operating systems should be utilized for
+GALS/synchronous programs. This is a fallacy. Bourke et
+al~\cite{Bourke2009a} have investigated this technique
 unsuccessfully. We elaborate upon the interplay of timers and reactivity
 to make the problem of using timers explicit.
 
@@ -107,11 +107,7 @@ preemption semantics of reactive languages. Previous attempts at
 incorporating delays (using external timers) have only been partially
 successful, because of the complex interplay between real-time and
 preemption. Consider the simple example below, which models real-time
-using external timers as in~\cite{rsh94}. Furthermore, synchronous/GALS
-languages have always been targeted at real-time analyzable platforms
-and constrained
-environments~\cite{DBLP:journals/pieee/SifakisTY03,boldt07}, one can use
-our technique within such a setting with ease.
+using external timers as in~\cite{rsh94}. 
 
 % \begin{scriptsize}
 \begin{verbatim}
@@ -128,6 +124,10 @@ timer and waits for 10 ms to pass by. Consider what happens when signals
 we enter a deadlock. Such problems are completely avoided in our
 technique, because we convert the real-time delays into logical delays
 (\texttt{pause} constructs), which interact well with preemption.
+Furthermore, synchronous/GALS languages have always been targeted at
+real-time analyzable platforms and constrained
+environments~\cite{DBLP:journals/pieee/SifakisTY03,boldt07}, one can use
+our technique within such a setting with ease.
 
 \subsection{Other semantic discussion}
 \label{sec:other-semant-dissc}
@@ -147,11 +147,11 @@ communication. % The response time to input signals \textit{is} though!
 % But, we are unconcerned with the response time, analysis in this paper
 % and it remains a future research avenue.
 
-\subsubsection{Interaction of synchronous parallelism and delay}
-\label{sec:inter-synchr-parall}
+% \subsubsection{Interaction of synchronous parallelism and delay}
+% \label{sec:inter-synchr-parall}
 
-{\color{red}Maybe we should talk about how the control flow in other
-  reactions and CDs is not affected by the delay statement.}
+% {\color{red}Maybe we should talk about how the control flow in other
+%   reactions and CDs is not affected by the delay statement.}
 
 
 

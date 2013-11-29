@@ -86,67 +86,32 @@
 % fundamental assumption to find \emph{d} in our benchmark programs.
 % =======
 
-{\renewcommand{\arraystretch}{0.9}
-\begin{table}[t]
-	\small
-	\centering
-	\caption{An overview of the benchmark programs}
-	\label{fig:benchlist}
-	\scalebox{0.9}{
-		\begin{tabular}{llp{0.5cm}p{1cm}}
-\toprule
-\emph{Benchmark}       & \emph{Delay constructs used in each CD} & \emph{\# of CDs} & 
-\emph{Lines of code}        
-\\ \midrule
-HRTCS                  & \texttt{delay(50.3..200.3 ms)} ($CD1$) & 2                  & 56
-\\ \midrule
-\multirow{5}{*}{Motor} & \texttt{delay(2.4..2.4 ms)}        & \multirow{5}{*}{1} & \multirow{5}{*}{116} \\ 
-											 & \texttt{delay(1.667..1.667 ms)}      &                    &                      \\ 
-											 & \texttt{delay(0.05..0.05 ms)}       &                    &                      \\ 
-											 & \texttt{delay(0.3..0.3 ms)}        &                    &                      \\ 
-											 & \texttt{delay(0.733..0.733 ms)}      &                    &
-\\ \midrule
-\multirow{3}{*}{Printer}
-& \texttt{delay(2.7..10.6 ms)} ($CD1$)      & \multirow{3}{*}{2}        & \multirow{3}{*}{39} \\
-& \texttt{delay(1.2..30.3 ms)} ($CD2$)		  &														&											\\
-& \texttt{delay(5.6..100.2 ms)} ($CD2$)     &														&											
-\\ \midrule
-\multirow{2}{*}{AECS} & \texttt{delay(10000 ms)} ($CD1$) 
-& \multirow{2}{*}{2} & \multirow{2}{*}{267} \\
-& \texttt{delay(10000..10000 ms)} ($CD2$) & &
-\\ \bottomrule
-\end{tabular}
-}
-\vspace{-20pt}
-\end{table}
-}
-
-
 
 We have carried out a number of experiments on a set of applications
 with real-time constraints. The characteristics of the benchmark set
 including required real-time delays and program sizes are shown in
 Table~\ref{fig:benchlist}.
 
+
 HRTCS is the human response system described in
 Section~\ref{sec:motivating-example}. AECS (Access and Environmental
 Control System) is an application that controls an intelligent room
-environment described in~\cite{aecs_ispa}.  The system interacts with
-two external timers through input/output signals in order to measure how
-long the entrance door to the room is being opened and time the illegal
-presence (e.g. intruder) that is being detected. The program has been
-modified such that the delay constructs are used instead of external
-timers as shown in Figure~\ref{delaycode}. In the original AECS, the
-system needed to trigger external timer by emitting the output signal in
-order to wait for a specific amount of time (e.g.
+environment described in~\cite{aecs_ispa}. The system interacts with two
+external timers through input/output signals in order to measure how
+long the entrance door to the room is being opened to detect intruders.
+The program has been modified such that the delay constructs are used
+instead of external timers as shown in Figure~\ref{delaycode}. In the
+original AECS, the system needed to trigger external timer by emitting
+the output signal in order to wait for a specific amount of time (e.g.
 \texttt{TimerTriggered} in Figure~\ref{delaycode:a}). When the timer
-expires, it notifies back to the system through the input signal
-\texttt{TimeOut} which is polled at the \texttt{await} statement. With
-the new delay constructs, those timers are not necessary and delays can
-be expressed directly in the code as shown in Figure~\ref{delaycode:b}.
+expires, it notifies the system through the input signal
+\texttt{TimeOut}, which is polled using the \texttt{await}
+statement. With the new delay constructs, these timers are not necessary
+and delays can be expressed directly in the code as shown in
+Figure~\ref{delaycode:b}.
 
 \begin{figure}[h!]
-  \begin{SubFloat}{\label{delaycode:a}}
+  \begin{SubFloat}{\label{delaycode:a}Original program}
     \centering
     \begin{minipage}[b]{0.3\linewidth}
       \scriptsize
@@ -162,7 +127,7 @@ trap(T){
     \end{minipage}
   \end{SubFloat}
   \hspace{1cm}%
-  \begin{SubFloat}{\label{delaycode:b}}
+  \begin{SubFloat}{\label{delaycode:b}Program with delay constructs}
     \centering
     \begin{minipage}[b]{0.5\linewidth}
       \scriptsize
@@ -184,17 +149,14 @@ trap(T){
 Motor is a stepper motor controller from~\cite{Bourke2009a}, used for
 producing monochrome images on paper by applying a correct application
 of current to a print head (a row of resistors). In this example,
-duration of current applied is controlled by the feedback logic using
-real-time delays which are expressed in Esterel constructs. We have
-rewritten the program in SystemJ and compared between desired and
-relaxed delays according to WCRT and BCRT of the program. Printer is an
-example from~\cite{Schneider:1999:CRT:555233}, which models a printer and
-a spooler in timed CSP.  Their operation is rather simple: as soon as
-the spooler receives a print job, passes it to the printer through a
-channel where actual printing process take place. The example
-demonstrates that by specifying delay bounds (e.g. 1 to 5 time units) on
-receiving and sending channel ends data exchange will occur as soon as
-both processes become ready.
+duration of the current applied is controlled by the feedback logic
+using real-time delays, which are expressed using reactive
+constructs. Printer is an example from~\cite{Schneider:1999:CRT:555233},
+which models a printer and a spooler in timed CSP.  Their operation is
+rather simple: as soon as the spooler receives a print job, passes it to
+the printer through a channel where actual printing process take
+place. This example along with HRCTS demonstrates the use of
+non-deterministic delays.
 
 %Robot is an industrial automation application that consists of two
 %manufacturing belts and a robotic arm that splits goods according to
@@ -206,17 +168,17 @@ delay statements. In this case, as explained previously, delay
 statements replace the external timers and corresponding interface (I/O)
 signals. The system triggers an alarm 10 seconds after detection of an
 intruder or generates a beep sound when an entrance door is being opened
-for the same amount of time. In Printer, each spooler and printer
-process is mapped to a single clock-domain. Spooler CD sends a job to
-the Printer CD between 2.7 to 10.6 ms after receiving it from the
-enviornment (e.g. a user). On the other hand, Printer CD notifies
+for the same amount of time. In the Printer example, spooler and printer
+processes are mapped to separate CDs. Spooler CD sends a job to the
+Printer CD between 2.7 to 10.6 ms after receiving it from the
+environment (e.g. a user). On the other hand, Printer CD notifies
 environment that it starts printing between 1.2 to 30.3 ms once it
 receives the job from the Spooler CD. Actual print job is started
 between 5.6 to 100.2 ms after the notification. In this example, bounded
 delay ensures that both channel communication and print job should occur
 within the specified amount of time. Lastly, Motor is a synchronous
-program with 5 delay statements where they controls amount of current
-into the stepper motor coils. 
+program with 5 delay statements that control the amount of current
+applied to the stepper motor coils.
 
 %All these examples are written in
 %the SystemJ language. The requirement to have deterministic or
@@ -256,9 +218,9 @@ completely avoided.
 Table~\ref{fig:comparison} shows the result of our algorithm applied to
 each benchmark program. Note that we allowed the compiler to relax the
 upper real-time bounds even for bounded (\texttt{M..N}) or exact
-(\texttt{M..M}) delays when it fails to find a feasible solution.
-However, a user can prohibit this behavior through configuration that
-such case is an error.
+(\texttt{M..M}) delays when it failed to find a feasible solution.
+However, a user can prohibit such behavior using compiler switch as
+described in Section~\ref{sec:tool-chain-flow}.
 
 As a first step, BCRT and WCRT were calculated for all examples. Given
 the real-time \mbox{\texttt{delay (M..N)}} provided by programmers,
@@ -266,16 +228,16 @@ required logical delay \textit{d} was determined by applying
 Algorithm~\ref{alg:1}. In HRTCS, real-time delay of the range
 50.3..200.3 (ms) is only satisfied when \emph{d} is between 1506 and
 1787 (as shown previously in
-Section~\ref{sec:intr-real-time}~\ref{sec:find-logic-delay}). Similarly,
-Printer/CD2 satisfies real-time ranges of 1.2..30.3 (ms) and 5.6..100.2
-(ms) when \emph{d} is 46..617 and 213..2041 respectively. It is then
-compiler's job to statically choose one of the values in this range.
+Section~\ref{sec:find-logic-delay}). Similarly, Printer/CD2 satisfies
+real-time ranges of 1.2..30.3 (ms) and 5.6..100.2 (ms) when \emph{d} is
+46..617 and 213..2041, respectively. It is then the compiler's job to
+statically choose one of the values in this range.
 
 % The upper bound \texttt{N} needed to be relaxed for all examples other
 % than HRTCS to obtain a feasible \texttt{d}. Therefore,
 On the other hand, Algorithm \ref{alg:2} is applied to those examples,
 where relaxation was required, to determine the minimum upper real-time
-bound \emph{N} such that there exist a solution for \emph{D} in
+bound \emph{N} such that there exists a solution for \emph{D} in
 Algorithm \ref{alg:1}. This algorithm gives a unique number for logical
 tick delay \emph{d} such that \emph{d} = Min(\emph{$S_2$}) =
 Max(\emph{$S_1$}). The compiler, therefore, will choose \emph{d} based
@@ -287,8 +249,9 @@ AECS.
 The previous results show that HRTCS and Printer/CD2 were the only
 examples that the compiler was able to find \textit{d} without relaxing
 upper bound of \texttt{delay}. Figure~\ref{fig:graph} shows the accuracy
-of our result by comparing differences between programmer specified
-upper bounds and the actual bounds obtained from our algorithm.
+of our results by comparing differences between programmer specified
+upper bounds (Table~\ref{fig:benchlist}) and the actual bounds obtained
+using our techniques (Table~\ref{fig:comparison}).
 
 \begin{figure}[h!]
 	\centering
@@ -346,16 +309,16 @@ upper bounds and the actual bounds obtained from our algorithm.
 \label{fig:graph}
 \end{figure}
 
-There are two main reasons that influence size of the relaxation: 1)
-execution speed of a target platform 2) and the nature of the program
-which runs on that specific platform. As one can easily speculate, clock
-frequency of the processor directly impacts on the value of WCRT. On the
-other hand, programmer can write a program such that large data
-computation in a single tick increases WCRT of the program. Assuming we
-do not change the architecture of the execution platform (i.e. JOP), the
-difference factor can only be reduced by modifying the benchmark
-programs by dividing the single longest tick, that corresponds to WCRT,
-into a number of smaller ticks.
+There are two influential factors in determining the relaxation: 1)
+execution speed of a target platform and 2) the nature of the program
+that runs on this platform. Clock frequency of the processor directly
+impacts the value of WCRT. On the other hand, programmer can write a
+program such that large data computations in a single logical tick
+increase WCRT of the program. Assuming we do not change the architecture
+of the execution platform (i.e. JOP), the difference factor can only be
+reduced by modifying the benchmark programs such that the critical paths
+are broken up using \texttt{pause} constructs, thereby reducing the
+WCRT.
 
 % HRTCS, as already illustrated in Section \ref{sec:intr-motiv}, tests for an
 % ability of one's responsiveness by generating green lights between the
@@ -379,7 +342,40 @@ into a number of smaller ticks.
 % \ref{sec:intr-real-time}. It is our fundamental assumption to find \emph{d} in
 % our benchmark programs.
 % >>>>>>> 4bffc4b1a43388f5ebf6cc737b9d3b246ee77dc7
-
+{\renewcommand{\arraystretch}{0.9}
+\begin{table}[t]
+	\small
+	\centering
+	\caption{An overview of the benchmark programs}
+	\label{fig:benchlist}
+	\scalebox{0.9}{
+		\begin{tabular}{llp{0.5cm}p{1cm}}
+\toprule
+\emph{Benchmark}       & \emph{Delay constructs used in each CD} & \emph{\# of CDs} & 
+\emph{Lines of code}        
+\\ \midrule
+HRTCS                  & \texttt{delay(50.3..200.3 ms)} ($CD1$) & 2                  & 56
+\\ \midrule
+\multirow{5}{*}{Motor} & \texttt{delay(2.4..2.4 ms)}        & \multirow{5}{*}{1} & \multirow{5}{*}{116} \\ 
+											 & \texttt{delay(1.667..1.667 ms)}      &                    &                      \\ 
+											 & \texttt{delay(0.05..0.05 ms)}       &                    &                      \\ 
+											 & \texttt{delay(0.3..0.3 ms)}        &                    &                      \\ 
+											 & \texttt{delay(0.733..0.733 ms)}      &                    &
+\\ \midrule
+\multirow{3}{*}{Printer}
+& \texttt{delay(2.7..10.6 ms)} ($CD1$)      & \multirow{3}{*}{2}        & \multirow{3}{*}{39} \\
+& \texttt{delay(1.2..30.3 ms)} ($CD2$)		  &														&											\\
+& \texttt{delay(5.6..100.2 ms)} ($CD2$)     &														&											
+\\ \midrule
+\multirow{2}{*}{AECS} & \texttt{delay(10000 ms)} ($CD1$) 
+& \multirow{2}{*}{2} & \multirow{2}{*}{267} \\
+& \texttt{delay(10000..10000 ms)} ($CD2$) & &
+\\ \bottomrule
+\end{tabular}
+}
+\vspace{-20pt}
+\end{table}
+}
 
 {\renewcommand{\arraystretch}{0.6}
 \begin{table}[t!]

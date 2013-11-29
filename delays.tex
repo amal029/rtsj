@@ -37,16 +37,16 @@ We also introduce two variants of the derived statement \texttt{delay}.
 \end{enumerate*}
 
 Figure~\ref{fig:5} pictorially represents the semantics of these delay
-constructs. The construct $delay (M..N)$ requires that once executed the
-control-flow suspends execution for \textit{at\_least} $M$ units and
-\textit{at\_most} $N$ units, depicted as bounded box in
-Figure~\ref{fig:5}. There is no upper bound for the second delay form
-$delay(M)$, which requires that the control-flow suspends for
-\textit{at\_least} $M$ units, but the following statement can be
-executed after some countable delay, depicted with the unbounded box in
-Figure~\ref{fig:5}. Finally, $delay(M..M)$, requires that there is an
-\textit{exact} delay of $M$ units, i.e., the control-flow suspends
-execution for \textit{at\_least} and \textit{at\_most} $M$ units.
+constructs. The construct \texttt{delay (M..N)} requires that upon
+execution the control-flow is suspended for \textit{at least} $M$ units
+and \textit{at most} $N$ units, depicted as bounded box in
+Figure~\ref{fig:5}. There is no upper bound for the second delay variant
+\texttt{delay(M)}, which requires that the control-flow suspends for
+\textit{at least} $M$ units, but the following statement can be executed
+after some countable delay, depicted with the unbounded box in
+Figure~\ref{fig:5}. Finally, \texttt{delay (M..M)} requires that there
+is an \textit{exact} delay of $M$ units, i.e., the control-flow suspends
+execution for \textit{at least} and \textit{at most} $M$ units.
 
 \subsection{Rewriting the \texttt{delay} statement}
 \label{sec:rewr-delay-stat}
@@ -216,7 +216,7 @@ ticks required to satisfy the real-time requirement at the BCRT. We take
 the very first value from set $S_2$ and multiply it with the WCRT to get
 the relaxation $N$. The first element of set $S_2$ is returned as the
 logical tick delay \texttt{d}. The fundamental observation is that we
-have to delay for a minimum of $M$ units of real-time, hence,
+have to delay for at least $M$ units of real-time, hence,
 under-approximation is out of question. We can still over-approximate,
 but to reduce the resultant error, we should over-approximate by least
 possible value, which is the lower bound of set $S_2$. Thus, the lower
@@ -230,9 +230,9 @@ since $S_1=[2]$ and $S_2=[40]$, respectively. In such a case, the
 resultant relaxation is: $40 \times 100$ using Algorithm~\ref{alg:2},
 which results in a time of $4000$ units. Such large over-approximations
 can be avoided by breaking the critical paths (worst case ticks) in the
-program (by inserting pause constructs), just like in hardware design,
-which is very \textit{unsurprising} considering Esterel has its origins
-in hardware.
+program (by inserting \texttt{pause} constructs), just like in hardware
+design, which is very \textit{unsurprising} considering Esterel has its
+origins in hardware.
 
 \subsection{The tool-chain flow}
 \label{sec:tool-chain-flow}
@@ -240,8 +240,8 @@ in hardware.
 \begin{figure}[h!]
   \centering
   \includegraphics[scale=0.45]{./tool.pdf}
-  \label{fig:4}
   \caption{The tool-chain flow of SystemJ compiler with delays}
+  \label{fig:4}
 \end{figure}
 
 The interaction of the low-level execution platform and the described
@@ -259,14 +259,13 @@ the logical tick, which is then used for calculating $d$ in
 Figure~\ref{fig:3}.
 
 Our compiler has a switch that enables over-approximation as described
-in Section~\ref{sec:extend-tehcn-vari} if the delay requirements are not
-met. If this compiler switch is not enabled the compiler simply outputs
-an error indicating the relaxation required. The system designer can
-then either set the compiler switch of change the program by shortening
-the critical path by introducing \texttt{pause} constructs. We show how
-introducing \texttt{pause} constructs can help meet timing requirements
-explicitly, using examples, later on in
-Section~\ref{sec:experimental-results}.
+in Section~\ref{sec:extend-tehcn-vari} provided the delay requirements
+are not met. If this compiler switch is not enabled, the compiler simply
+outputs an error indicating the relaxation required. The system designer
+can then either set the compiler switch or change the program by
+shortening the critical path by introducing \texttt{pause}
+constructs. We show how introducing \texttt{pause} constructs can help
+reduce the WCRT in Section~\ref{sec:experimental-results}.
 
 %%% Local Variables: 
 %%% mode: latex
