@@ -19,16 +19,16 @@ while(true) {
   trap(TRAP){
    // Abort if user touches the screen
    abort(TOUCH){
-    {sustain GREEN_LIGHT;}
+    {sustain GREEN_LIGHT;} //reaction R1
     || // synchronous parallel operator
     {
      //exit after any where from 50.3 to 200.3 ms.
-     delay (50.3 .. 200.3 ms);
+     delay (50.3 .. 200.3 ms); 
      exit(TRAP); 
-    }
+    } // reaction R2
    } do {send S(1);} // Send 1 if touched 
   } do {send S(0);} // Else Send 0
-  pause; // only construct to consume time
+  pause; // only construct to consume logical time
  }
 }
 >< // asynchronous operator

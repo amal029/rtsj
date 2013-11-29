@@ -10,6 +10,14 @@ secondary concern and is dependent upon the execution platform.
 \subsection{Semantics of the delay statement}
 \label{sec:semant-delay-stat}
 
+\begin{figure}[t!]
+  \centering
+  \includegraphics[scale=0.6]{./sem}
+  \caption{Pictorial representation of the semantics of the delay
+    statement and its variants}
+  \label{fig:5}
+\end{figure}
+
 Given a SystemJ program: \texttt{delay (M..N); p}, where $M \in
 \mathbb{Q}^{>0}$ and $N \in \mathbb{Q}^{>0}$, statement $p$ is executed
 after real-time delay of $\tau$ units, such that, $M \leq \tau \leq N$.
@@ -28,8 +36,17 @@ We also introduce two variants of the derived statement \texttt{delay}.
   delay is exact.
 \end{enumerate*}
 
-The aforementioned variants are special cases of the general case
-\texttt{delay (M..N)}.
+Figure~\ref{fig:5} pictorially represents the semantics of these delay
+constructs. The construct $delay (M..N)$ requires that once executed the
+control-flow suspends execution for \textit{at\_least} $M$ units and
+\textit{at\_most} $N$ units, depicted as bounded box in
+Figure~\ref{fig:5}. There is no upper bound for the second delay form
+$delay(M)$, which requires that the control-flow suspends for
+\textit{at\_least} $M$ units, but the following statement can be
+executed after some countable delay, depicted with the unbounded box in
+Figure~\ref{fig:5}. Finally, $delay(M..M)$, requires that there is an
+\textit{exact} delay of $M$ units, i.e., the control-flow suspends
+execution for \textit{at\_least} and \textit{at\_most} $M$ units.
 
 \subsection{Rewriting the \texttt{delay} statement}
 \label{sec:rewr-delay-stat}
@@ -217,14 +234,14 @@ program (by inserting pause constructs), just like in hardware design,
 which is very \textit{unsurprising} considering Esterel has its origins
 in hardware.
 
-\subsection{The compiler flow}
-\label{sec:systemj-tool-chain}
+\subsection{The tool-chain flow}
+\label{sec:tool-chain-flow}
 
-\begin{figure}[t!]
+\begin{figure}[h!]
   \centering
-  \includegraphics[scale=0.5]{./tool}
-  \caption{The tool-chain flow of SystemJ compiler with delays}
+  \includegraphics[scale=0.45]{./tool.pdf}
   \label{fig:4}
+  \caption{The tool-chain flow of SystemJ compiler with delays}
 \end{figure}
 
 The interaction of the low-level execution platform and the described
@@ -241,94 +258,15 @@ parallelism. The low-level analysis guarantees a precise WCRT/BCRT for
 the logical tick, which is then used for calculating $d$ in
 Figure~\ref{fig:3}.
 
-\subsection{Programming using the delay construct}
-\label{sec:progr-using-delay}
-
-In this section we provide a number of examples to show the different
-types of real-time programming paradigms that can be incorporated into
-the GALS (and its sub-set synchronous) programming model.
-
-\subsubsection{Non-deterministic time}
-\label{sec:non-determ-time}
-
-Many real-world systems require non-deterministic timing
-constructs. Where the exact real-time delay is not known or should not
-be known apriori. One such system is our motivating example -- the human
-response time system.
-
-\subsubsection{Timeout}
-\label{sec:timeout}
-
-There are many instances when one would like to wait on an input from
-environment for only a specified amount of time. This can be programmed
-as:
-% \begin{scriptsize}
-\begin{verbatim}
-// timeout after 1ms.
-trap(T){{await(A);}||
-        {delay(1..1 ms);exit(T);}}
-\end{verbatim}
-% \end{scriptsize}
-
-\subsubsection{Periodic reactions}
-\label{sec:periodic-reactions}
-
-A reaction, or a whole CD, can be programmed to run periodically like
-so:
-
-% \begin{scriptsize}
-\begin{verbatim}
-while(true) { delay ((1..1)ms); emit S; 
- //do something }
-\end{verbatim}
-% \end{scriptsize}
-A periodic reaction (or CD) requires special consideration. Since the
-delay statement is converted into \texttt{pause} constructs. One should
-not introduce extra \texttt{pause} constructs when building periodic
-reactions (or CDs). This is essential since introducing additional
-pauses would introduce more logical ticks.
-
-\subsubsection{Interaction of preemption and delays}
-\label{sec:inter-preempt-delays}
-
-Preemption plays an important role in reactive languages. One needs to
-carefully consider the interplay of \texttt{delay} semantics with the
-preemption semantics of reactive languages. Previous attempts at
-incorporating delays (using external timers) have only been partially
-successful, because of the complex interplay between real-time and
-preemption. Consider the simple example below, which models real-time
-using external timers as in~\cite{rsh94}.
-
-% \begin{scriptsize}
-\begin{verbatim}
-suspend(S) {emit START_TIMER(10); 
-            await (TIMER);emit O1;}
-\end{verbatim}
-% \end{scriptsize}
-
-As identified in~\cite{Bourke2009a} \texttt{suspend} does not play well
-with the external timer. The above program sends a signal to an external
-timer and waits for 10 ms to pass by. Consider what happens when signals
-\texttt{S} and \texttt{TIMER} occur in the same logical tick, the
-\texttt{await} statement is never executed (due to suspend) and hence,
-we enter a deadlock. Such problems are completely avoided in our
-technique, because we convert the real-time delays into logical delays
-(\texttt{pause} constructs), which interact well with preemption.
-
-\subsubsection{Interaction of channel communication and delays}
-\label{sec:inter-chann-comm}
-
-Channels, used for communication between reactions in asynchronously
-running CDs, are an addition in the SystemJ language. Like interaction
-of preemption and delays, conversion of real-time delays to logical
-ticks also interacts well with channel rendezvous, because the semantics
-of interaction are well defined~\cite{amal10}. More importantly, we need
-to consider the interplay of channel communication and WCRT/BCRT
-analysis. Since, channel communication does not stop logical time
-(see~\cite{amal10}) WCRT/BCRT are unaffected by channel
-communication. % The response time to input signals \textit{is} though!
-% But, we are unconcerned with the response time, analysis in this paper
-% and it remains a future research avenue.
+Our compiler has a switch that enables over-approximation as described
+in Section~\ref{sec:extend-tehcn-vari} if the delay requirements are not
+met. If this compiler switch is not enabled the compiler simply outputs
+an error indicating the relaxation required. The system designer can
+then either set the compiler switch of change the program by shortening
+the critical path by introducing \texttt{pause} constructs. We show how
+introducing \texttt{pause} constructs can help meet timing requirements
+explicitly, using examples, later on in
+Section~\ref{sec:experimental-results}.
 
 %%% Local Variables: 
 %%% mode: latex

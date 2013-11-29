@@ -121,61 +121,12 @@ HRTCS                  & \texttt{delay(50.3..200.3 ms)} ($CD1$) & 2             
 \end{table}
 }
 
-{\renewcommand{\arraystretch}{0.6}
-\begin{table}[t]
-\twocolumn[
-\centering
-\begin{@twocolumnfalse}
-	\caption{Actual delays obtained for \texttt{delay} constructs in the
-benchmark programs based on their BCRT and WCRT}
-\label{fig:comparison}
-\begin{tabular}{ c c l l l l l l }
-	\toprule
-	\multicolumn{2}{c}{} & \emph{HRTCS} & \emph{Motor} & \emph{Printer/CD1} &
-	\emph{Printer/CD2} & \emph{AECS/CD1} &	\emph{AECS/CD2} \\ 
-	\midrule
-	\multicolumn{2}{c}{\emph{BCRT}}	& 0.0334 ms	& 0.0361 ms & 0.009613 ms &
-	0.0263 ms & 0.1683 ms & 0.1881 ms\\ 
-	\cmidrule(r){1-8}
-	\multicolumn{2}{c}{\emph{WCRT}} &0.1120 ms & 0.1116 ms & 0.0603 ms
-	& 0.0491 ms & 0.8148 ms & 1.0115 ms\\ 
-	\cmidrule(r){1-8}
 
-	\multirow{2}{*}{Delay 1} & M..N & 50.3-200.3 ms	& 2.4-8.4882 ms	  &
-	2.7-16.9378 ms & 1.2-30.3 ms & 10000-42483.2198 ms& 10000-53882.0045 ms \\
-	\cmidrule(r){2-8}
-	& d &1506-1888 & 68 & 281 & 46-617 & 59428 &53160\\ 
-	\cmidrule(r){1-8}
-	\multirow{2}{*}{Delay 2} & M..N & N/A & 1.668-5.2452 ms & N/A &
-	5.6-100.2 ms & N/A &10000-53882.0045 ms\\ 
-	\cmidrule(r){2-8}
-	& d & N/A & 48 & N/A & 213-2041 & N/A &53160\\ 
-	\cmidrule(r){1-8}
-	\multirow{2}{*}{Delay 3} & M..N & N/A & 0.05-0.2232 ms & N/A & N/A & N/A
-	&N/A\\ 
-	\cmidrule(r){2-8}
-	& d & N/A & 2 & N/A & N/A & N/A &N/A\\ 
-	\cmidrule(r){1-8}
-	\multirow{2}{*}{Delay 4} & M..N & N/A & 0.3-1.0044 ms & N/A & N/A & N/A
-	&N/A\\ 
-	\cmidrule(r){2-8}
-	& d & N/A & 9 & N/A & N/A & N/A &N/A\\ 
-	\cmidrule(r){1-8}
-	\multirow{2}{*}{Delay 5} & M..N & N/A & 0.833-2.3436 ms & N/A & N/A & N/A
-	&N/A\\ 
-	\cmidrule(r){2-8}
-	& d & N/A & 21 & N/A
-	& N/A & N/A &N/A\\ \bottomrule
-\end{tabular}
-\end{@twocolumnfalse}
-]
-\end{table}
-}
 
 We have carried out a number of experiments on a set of applications
 with real-time constraints. The characteristics of the benchmark set
 including required real-time delays and program sizes are shown in
-Table~\ref{fig:benchlist}. 
+Table~\ref{fig:benchlist}.
 
 HRTCS is the human response system described in
 Section~\ref{sec:motivating-example}. AECS (Access and Environmental
@@ -195,10 +146,10 @@ the new delay constructs, those timers are not necessary and delays can
 be expressed directly in the code as shown in Figure~\ref{delaycode:b}.
 
 \begin{figure}[h!]
-	\begin{SubFloat}{\label{delaycode:a}}
-		\centering
-		\begin{minipage}[b]{0.3\linewidth}
-			\scriptsize
+  \begin{SubFloat}{\label{delaycode:a}}
+    \centering
+    \begin{minipage}[b]{0.3\linewidth}
+      \scriptsize
 \begin{verbatim}
 emit TimerTriggered;
 trap(T){
@@ -208,13 +159,13 @@ trap(T){
   }
 }
 \end{verbatim}
-		\end{minipage}
-	\end{SubFloat}
-\hspace{1cm}%
-	\begin{SubFloat}{\label{delaycode:b}}
-		\centering
-		\begin{minipage}[b]{0.5\linewidth}
-			\scriptsize
+    \end{minipage}
+  \end{SubFloat}
+  \hspace{1cm}%
+  \begin{SubFloat}{\label{delaycode:b}}
+    \centering
+    \begin{minipage}[b]{0.5\linewidth}
+      \scriptsize
 \begin{verbatim}
 // No emit statement
 trap(T){
@@ -430,6 +381,56 @@ into a number of smaller ticks.
 % >>>>>>> 4bffc4b1a43388f5ebf6cc737b9d3b246ee77dc7
 
 
+{\renewcommand{\arraystretch}{0.6}
+\begin{table}[t!]
+\twocolumn[
+\centering
+\begin{@twocolumnfalse}
+	\caption{Actual delays obtained for \texttt{delay} constructs in the
+benchmark programs based on their BCRT and WCRT}
+\begin{tabular}{ c c l l l l l l }
+	\toprule
+	\multicolumn{2}{c}{} & \emph{HRTCS} & \emph{Motor} & \emph{Printer/CD1} &
+	\emph{Printer/CD2} & \emph{AECS/CD1} &	\emph{AECS/CD2} \\ 
+	\midrule
+	\multicolumn{2}{c}{\emph{BCRT}}	& 0.0334 ms	& 0.0361 ms & 0.009613 ms &
+	0.0263 ms & 0.1683 ms & 0.1881 ms\\ 
+	\cmidrule(r){1-8}
+	\multicolumn{2}{c}{\emph{WCRT}} &0.1120 ms & 0.1116 ms & 0.0603 ms
+	& 0.0491 ms & 0.8148 ms & 1.0115 ms\\ 
+	\cmidrule(r){1-8}
+
+	\multirow{2}{*}{Delay 1} & M..N & 50.3-200.3 ms	& 2.4-8.4882 ms	  &
+	2.7-16.9378 ms & 1.2-30.3 ms & 10000-42483.2198 ms& 10000-53882.0045 ms \\
+	\cmidrule(r){2-8}
+	& d &1506-1888 & 68 & 281 & 46-617 & 59428 &53160\\ 
+	\cmidrule(r){1-8}
+	\multirow{2}{*}{Delay 2} & M..N & N/A & 1.668-5.2452 ms & N/A &
+	5.6-100.2 ms & N/A &10000-53882.0045 ms\\ 
+	\cmidrule(r){2-8}
+	& d & N/A & 48 & N/A & 213-2041 & N/A &53160\\ 
+	\cmidrule(r){1-8}
+	\multirow{2}{*}{Delay 3} & M..N & N/A & 0.05-0.2232 ms & N/A & N/A & N/A
+	&N/A\\ 
+	\cmidrule(r){2-8}
+	& d & N/A & 2 & N/A & N/A & N/A &N/A\\ 
+	\cmidrule(r){1-8}
+	\multirow{2}{*}{Delay 4} & M..N & N/A & 0.3-1.0044 ms & N/A & N/A & N/A
+	&N/A\\ 
+	\cmidrule(r){2-8}
+	& d & N/A & 9 & N/A & N/A & N/A &N/A\\ 
+	\cmidrule(r){1-8}
+	\multirow{2}{*}{Delay 5} & M..N & N/A & 0.833-2.3436 ms & N/A & N/A & N/A
+	&N/A\\ 
+	\cmidrule(r){2-8}
+	& d & N/A & 21 & N/A
+	& N/A & N/A &N/A\\ \bottomrule
+\end{tabular}
+\label{fig:comparison}
+\end{@twocolumnfalse}
+]
+\end{table}
+}
 
 %%% Local Variables: 
 %%% mode: latex

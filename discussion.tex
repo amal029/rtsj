@@ -1,0 +1,161 @@
+\section{Discussion -- addressing perceived limitations}
+\label{sec:disc-perc-limit}
+
+We dedicate this section to discuss the details of the delay semantics,
+the dependence on time analyzable platforms, and the various uses and
+programming paradigms that can be built using the $delay(M..N)$
+construct.
+
+\subsection{Programming using the delay construct}
+\label{sec:progr-using-delay}
+
+All three delay constructs are useful for programming real systems. % The
+% first form of the delay construct $delay(M..N)$ is used to program
+% non-determinism like in the HRCTS system and a real printer-spooler
+% embedded system, etc. The second form is useful for programming low
+% priority periodic tasks.
+
+\subsubsection{Non-deterministic time}
+\label{sec:non-determ-time}
+
+Many real-world systems require non-deterministic timing
+constructs. Where the exact real-time delay is not known or should not
+be known apriori. One such system is our motivating example -- the human
+response time system (HRCTS) another one we presented was a real
+printer-spooler embedded controller in
+Section~\ref{sec:experimental-results}.
+
+\subsubsection{Timeout}
+\label{sec:timeout}
+
+There are many instances when one would like to wait on an input from
+environment for only a specified amount of time. This can be programmed
+as:
+% \begin{scriptsize}
+\begin{verbatim}
+// timeout after 1ms.
+trap(T){{await(A);}||
+        {delay(1 ms);exit(T);}}
+\end{verbatim}
+% \end{scriptsize}
+
+In the above case, the program waits for signal \texttt{A} from the
+environment for \textit{at\_least} \texttt{1 ms}, but it may wait longer
+if other reactions/CDs are scheduled for execution. This second form of
+delay statement us very useful for low priority tasks.
+
+\subsubsection{Periodic reactions}
+\label{sec:periodic-reactions}
+
+The third form, is useful for hard-real time guarantees, e.g., a
+reaction, or a whole CD, can be programmed to run periodically like so:
+
+\begin{verbatim}
+while(true) { delay ((1..1)ms); emit S; 
+ //do something }
+\end{verbatim}
+
+The above program will emit signal \texttt{S} every \texttt{1 ms}. A
+periodic reaction (or CD) requires special consideration, like any other
+real-time periodic task. One should be aware of the interaction delays
+and other \texttt{pause} constructs in the body of the reaction (or
+CD). For example, consider the (perceived) periodic program and its
+rewrite below.
+
+\begin{verbatim}
+while(true) {      while(true) {
+ delay(1..1 ms);    while(true) { 
+ //extra pause
+ pause;              trap(T) {
+ emit S;              int x = 0;
+}                     while(true) {
+                       x = x + 1;
+                       pause;
+                       if (x == d)exit(T);
+                      }
+                    }
+                    //extra pause
+                    pause;
+                    emit S;
+                   }
+\end{verbatim}
+
+The system designer needs to be aware that just introducing a delay
+construct does not make the reaction (or CD) periodic. The program on
+the left does \textit{not} emit signal \texttt{S} every \texttt{1 ms},
+because of the extra \texttt{pause} statement. Introducing additional
+pauses introduces more logical ticks consequently increasing the
+real-time delay.
+
+\subsection{Need for a time analyzable platform -- interaction of
+  preemption and delays}
+\label{sec:inter-preempt-delays}
+
+As mentioned previously, the proposed solution might need
+over-approximation techniques (Algorithm~\ref{alg:2}) to guarantee
+timing requirements (cf. Section~\ref{sec:extend-tehcn-vari}). This
+might give the readers an impression that timer based solution proposed
+for standard real-time operating systems can be utilized for
+GALS/synchronous programs as well. This is a fallacy. Bourke et
+al~\cite{Bourke2009a} have investigated exactly this technique
+unsuccessfully. We elaborate upon the interplay of timers and reactivity
+to make the problem of using timers explicit.
+
+Preemption plays an important role in reactive languages. One needs to
+carefully consider the interplay of \texttt{delay} semantics with the
+preemption semantics of reactive languages. Previous attempts at
+incorporating delays (using external timers) have only been partially
+successful, because of the complex interplay between real-time and
+preemption. Consider the simple example below, which models real-time
+using external timers as in~\cite{rsh94}. Furthermore, synchronous/GALS
+languages have always been targeted at real-time analyzable platforms
+and constrained
+environments~\cite{DBLP:journals/pieee/SifakisTY03,boldt07}, one can use
+our technique within such a setting with ease.
+
+% \begin{scriptsize}
+\begin{verbatim}
+suspend(S) {emit START_TIMER(10); 
+            await (TIMER);emit O1;}
+\end{verbatim}
+% \end{scriptsize}
+
+As identified in~\cite{Bourke2009a} \texttt{suspend} does not play well
+with the external timer. The above program sends a signal to an external
+timer and waits for 10 ms to pass by. Consider what happens when signals
+\texttt{S} and \texttt{TIMER} occur in the same logical tick, the
+\texttt{await} statement is never executed (due to suspend) and hence,
+we enter a deadlock. Such problems are completely avoided in our
+technique, because we convert the real-time delays into logical delays
+(\texttt{pause} constructs), which interact well with preemption.
+
+\subsection{Other semantic discussion}
+\label{sec:other-semant-dissc}
+
+\subsubsection{Interaction of channel communication and delays}
+\label{sec:inter-chann-comm}
+
+Channels, used for communication between reactions in asynchronously
+running CDs, are an addition in the SystemJ language. Like interaction
+of preemption and delays, conversion of real-time delays to logical
+ticks also interacts well with channel rendezvous, because the semantics
+of interaction are well defined~\cite{amal10}. More importantly, we need
+to consider the interplay of channel communication and WCRT/BCRT
+analysis. Since, channel communication does not stop logical time
+(see~\cite{amal10}) WCRT/BCRT are unaffected by channel
+communication. % The response time to input signals \textit{is} though!
+% But, we are unconcerned with the response time, analysis in this paper
+% and it remains a future research avenue.
+
+\subsubsection{Interaction of synchronous parallelism and delay}
+\label{sec:inter-synchr-parall}
+
+{\color{red}Maybe we should talk about how the control flow in other
+  reactions and CDs is not affected by the delay statement.}
+
+
+
+%%% Local Variables: 
+%%% mode: latex
+%%% TeX-master: "paper"
+%%% End: 
