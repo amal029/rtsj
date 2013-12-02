@@ -32,12 +32,14 @@ There are many instances when one would like to wait on an input from
 environment for only a specified amount of time. This can be programmed
 as:
 % \begin{scriptsize}
+{\small
 \begin{verbatim}
 // timeout after 1ms.
 trap(T){{await(A);}||
         {delay(1 ms);exit(T);}}
 \end{verbatim}
 % \end{scriptsize}
+}
 
 In the above case, the program waits for signal \texttt{A} from the
 environment for \textit{at\_least} \texttt{1 ms}, but it may wait longer
@@ -50,10 +52,12 @@ delay statement is very useful for programming low priority tasks.
 The third form, is useful for hard-real time guarantees, e.g., a
 reaction, or a whole CD, can be programmed to run periodically like so:
 
+{\small
 \begin{verbatim}
 while(true) { delay ((1..1)ms); emit S; 
  //do something }
 \end{verbatim}
+}
 
 The above program will emit signal \texttt{S} every \texttt{1 ms}. A
 periodic reaction (or CD) requires special consideration, like any other
@@ -62,6 +66,7 @@ delays and other \texttt{pause} constructs in the body of the reaction
 (or CD). For example, consider the (perceived) periodic program and its
 rewrite below.
 
+{\small
 \begin{verbatim}
 while(true) {      while(true) {
  delay(1..1 ms);    while(true) { 
@@ -79,6 +84,7 @@ while(true) {      while(true) {
                     emit S;
                    }
 \end{verbatim}
+}
 
 The system designer needs to be aware that just introducing a delay
 construct does not make the reaction (or CD) periodic. The program on
@@ -110,10 +116,12 @@ preemption. Consider the simple example below, which models real-time
 using external timers as in~\cite{rsh94}. 
 
 % \begin{scriptsize}
+{\small
 \begin{verbatim}
 suspend(S) {emit START_TIMER(10); 
             await (TIMER);emit O1;}
 \end{verbatim}
+}
 % \end{scriptsize}
 
 As identified in~\cite{Bourke2009a} \texttt{suspend} does not play well

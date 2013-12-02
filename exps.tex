@@ -1,46 +1,7 @@
 
 \section{Experimental results}
 \label{sec:experimental-results}
-% <<<<<<< HEAD
-% \begin{table}[t]
-%   \centering
-%   \twocolumn[
 
-%   \begin{@twocolumnfalse}
-%     \caption{Benchmark programs using \texttt{delay} constructs} \label{table:benchmark}
-%     \scalebox{0.85}{
-%       \begin{tabular}{|c| c | c | c | c | c | c | c |}
-% 	\cline{4-8}
-% 	\multicolumn{3}{c|}{}											& HRTCS 		& Motor 		  & Robot 			  & AECS/CD1  		   & AECS/CD2\\ \hline
-% 	\multirow{12}{*}{JOP} 		& \multicolumn{2}{|c|}{BCRT} 		&0.0334 ms 		& 0.0361 ms		  & 0.0325 ms		  & 0.1683 ms		   & 0.1881 ms\\ \cline{2-8}   
-%         & \multicolumn{2}{|c|}{WCRT} 		&0.1120 ms 		& 0.1116 ms		  & 0.0601 ms		  & 0.7147 ms		   & 1.0115 ms\\ \cline{2-8} 
-%         & \multirow{2}{*}{Delay 1}	 & M..N &50.3-200.3 ms 	& 2.4-7.4772 ms	  & 1230-2274.0263 ms & 10000-42473.2197 ms& 10000-53772.0045 ms \\ \cline{3-8} 
-%         &			   & d			 		&1506-1787  	& 67 			  & 37861			  & 59427		       &53160\\ \cline{2-8}
-%         & \multirow{2}{*}{Delay 2}	 & M..N & 	N/A 		& 1.667-5.2452 ms & N/A				  & N/A 			   &10000-53772.0045 ms\\ \cline{3-8} 
-%         &			   & d			 		& 	N/A	 		& 47			  & N/A				  & N/A       		   &53160\\ \cline{2-8}
-%         & \multirow{2}{*}{Delay 3}	 & M..N & 	N/A	 		& 0.05-0.2232 ms  & N/A				  & N/A       		   &N/A\\ \cline{3-8} 
-%         &			   & d			 		& 	N/A	 		& 2		      	  &	N/A				  & N/A       		   &N/A\\ \cline{2-8}
-%         & \multirow{2}{*}{Delay 4}	 & M..N & 	N/A	 		& 0.3-1.0044 ms   & N/A				  &	N/A       		   &N/A\\ \cline{3-8} 
-%         &			   & d				 	& 	N/A	 		& 9				  & N/A				  &	N/A      		   &N/A\\ \cline{2-8}
-%         & \multirow{2}{*}{Delay 5}	 & M..N & 	N/A	 		& 0.733-2.3436 ms & N/A				  &	N/A      		   &N/A\\ \cline{3-8} 
-%         &			   & d			 		& 	N/A	 		& 21 			  &	N/A				  & N/A      		   &N/A\\ \hline
-% 	\multirow{12}{*}{TP-JOP} 	& \multicolumn{2}{|c|}{BCRT} 		&0.0028 ms 		& 0.0060 ms		  & 0.0011 ms		  & 0.0532 ms		   & 0.0292 ms\\ \cline{2-8}   
-%         & \multicolumn{2}{|c|}{WCRT} 		&0.0329 ms 		& 0.0393 ms		  & 0.0361 ms		  & 0.5072 ms		   & 0.8388 ms\\ \cline{2-8} 
-%         & \multirow{2}{*}{Delay 1}	 & M..N &50.3-600.3 ms 	& 2.4-15.6265 ms  & 1230-42317.8276 ms& 10000-95358.8578 ms& 10000-287757.9834 ms \\ \cline{3-8} 
-%         &			   & d			 		&18209-18232 	& 398 			  & 1171429			  & 188015		       &343054\\ \cline{2-8}
-%         & \multirow{2}{*}{Delay 2}	 & M..N & 	N/A 		& 1.667-10.8757 ms& N/A				  & N/A 			   &10000-287757.9834 ms\\ \cline{3-8} 
-%         &			   & d			 		& 	N/A	 		& 277			  & N/A				  & N/A       		   &343054\\ \cline{2-8}
-%         & \multirow{2}{*}{Delay 3}	 & M..N & 	N/A	 		& 0.05-0.3534 ms  & N/A				  & N/A       		   &N/A\\ \cline{3-8} 
-%         &			   & d			 		& 	N/A	 		& 9		      	  &	N/A				  & N/A       		   &N/A\\ \cline{2-8}
-%         & \multirow{2}{*}{Delay 4}	 & M..N & 	N/A	 		& 0.3-1.9631 ms   & N/A				  &	N/A       		   &N/A\\ \cline{3-8} 
-%         &			   & d				 	& 	N/A	 		& 50			  & N/A				  &	N/A      		   &N/A\\ \cline{2-8}
-%         & \multirow{2}{*}{Delay 5}	 & M..N & 	N/A	 		& 0.733-4.79 ms   & N/A				  &	N/A      		   &N/A\\ \cline{3-8} 
-%         &			   & d			 		& 	N/A	 		& 122 			  &	N/A				  & N/A      		   &N/A\\ \cline{2-8}
-% 	\hline
-%       \end{tabular}
-%     }
-%   \end{@twocolumnfalse}
-%   ]
 
 % \end{table}
 % In this section, we present a set of SystemJ benchmark programs in which
@@ -91,7 +52,85 @@ We have carried out a number of experiments on a set of applications
 with real-time constraints. The characteristics of the benchmark set
 including required real-time delays and program sizes are shown in
 Table~\ref{fig:benchlist}.
+{\renewcommand{\arraystretch}{0.9}
+\begin{table}[h!]
+	\small
+	\centering
+	\caption{An overview of the benchmark programs}
+	\label{fig:benchlist}
+	\scalebox{0.9}{
+		\begin{tabular}{llp{0.5cm}p{1cm}}
+\toprule
+\emph{Benchmark}       & \emph{Delay constructs used in each CD} & \emph{\# of CDs} & 
+\emph{Lines of code}        
+\\ \midrule
+HRTCS                  & \texttt{delay(50.3..200.3 ms)} ($CD1$) & 2                  & 56
+\\ \midrule
+\multirow{5}{*}{Motor} & \texttt{delay(2.4..2.4 ms)}        & \multirow{5}{*}{1} & \multirow{5}{*}{116} \\ 
+											 & \texttt{delay(1.667..1.667 ms)}      &                    &                      \\ 
+											 & \texttt{delay(0.05..0.05 ms)}       &                    &                      \\ 
+											 & \texttt{delay(0.3..0.3 ms)}        &                    &                      \\ 
+											 & \texttt{delay(0.733..0.733 ms)}      &                    &
+\\ \midrule
+\multirow{3}{*}{Printer}
+& \texttt{delay(2.7..10.6 ms)} ($CD1$)      & \multirow{3}{*}{2}        & \multirow{3}{*}{39} \\
+& \texttt{delay(1.2..30.3 ms)} ($CD2$)		  &														&											\\
+& \texttt{delay(5.6..100.2 ms)} ($CD2$)     &														&											
+\\ \midrule
+\multirow{2}{*}{AECS} & \texttt{delay(10000 ms)} ($CD1$) 
+& \multirow{2}{*}{2} & \multirow{2}{*}{267} \\
+& \texttt{delay(10000..10000 ms)} ($CD2$) & &
+\\ \bottomrule
+\end{tabular}
+}
+\end{table}
+}
+{\renewcommand{\arraystretch}{0.6}
+\begin{table*}[t!]
+\centering
+	\caption{Actual delays obtained for \texttt{delay} constructs in the
+benchmark programs based on their BCRT and WCRT}
+\begin{tabular}{ c c l l l l l l }
+	\toprule
+	\multicolumn{2}{c}{} & \emph{HRTCS} & \emph{Motor} & \emph{Printer/CD1} &
+	\emph{Printer/CD2} & \emph{AECS/CD1} &	\emph{AECS/CD2} \\ 
+	\midrule
+	\multicolumn{2}{c}{\emph{BCRT}}	& 0.0.0396 ms	& 0.0425 ms & 0.0190 ms &
+	0.0263 ms & 0.1784 ms & 0.1284 ms\\ 
+	\cmidrule(r){1-8}
+	\multicolumn{2}{c}{\emph{WCRT}} &0.1152 ms & 0.1096 ms & 0.0647 ms
+	& 0.0491 ms & 0.3476 ms & 0.2991 ms\\ 
+	\cmidrule(r){1-8}
 
+	\multirow{2}{*}{Delay 1} & M..N & 50.3-200.3 ms	& 2.4-6.2493 ms	  &
+	2.7-10.6 ms & 1.2-30.3 ms & 10000-19484.3481 ms& 10000-23278.2752 ms \\
+	\cmidrule(r){2-8}
+	& d &1272-1739 & 57 & 143-163 & 46-617 & 56062 &77844\\ 
+	\cmidrule(r){1-8}
+	\multirow{2}{*}{Delay 2} & M..N & N/A & 1.668-4.3855 ms & N/A &
+	5.6-100.2 ms & N/A &10000-23278.2752 ms\\ 
+	\cmidrule(r){2-8}
+	& d & N/A & 40 & N/A & 213-2041 & N/A &53160\\ 
+	\cmidrule(r){1-8}
+	\multirow{2}{*}{Delay 3} & M..N & N/A & 0.05-0.2193 ms & N/A & N/A & N/A
+	&N/A\\ 
+	\cmidrule(r){2-8}
+	& d & N/A & 2 & N/A & N/A & N/A &N/A\\ 
+	\cmidrule(r){1-8}
+	\multirow{2}{*}{Delay 4} & M..N & N/A & 0.3-0.8771 ms & N/A & N/A & N/A
+	&N/A\\ 
+	\cmidrule(r){2-8}
+	& d & N/A & 8 & N/A & N/A & N/A &N/A\\ 
+	\cmidrule(r){1-8}
+	\multirow{2}{*}{Delay 5} & M..N & N/A & 0.733-1.9735 ms & N/A & N/A & N/A
+	&N/A\\ 
+	\cmidrule(r){2-8}
+	& d & N/A & 18 & N/A
+	& N/A & N/A &N/A\\ \bottomrule
+\end{tabular}
+\label{fig:comparison}
+\end{table*}
+}
 
 HRTCS is the human response system described in
 Section~\ref{sec:motivating-example}. AECS (Access and Environmental
@@ -226,12 +265,13 @@ As a first step, BCRT and WCRT were calculated for all examples. Given
 the real-time \mbox{\texttt{delay (M..N)}} provided by programmers,
 required logical delay \textit{d} was determined by applying
 Algorithm~\ref{alg:1}. In HRTCS, real-time delay of the range
-50.3..200.3 (ms) is only satisfied when \emph{d} is between 1506 and
-1787 (as shown previously in
-Section~\ref{sec:find-logic-delay}). Similarly, Printer/CD2 satisfies
-real-time ranges of 1.2..30.3 (ms) and 5.6..100.2 (ms) when \emph{d} is
-46..617 and 213..2041, respectively. It is then the compiler's job to
-statically choose one of the values in this range.
+50.3..200.3 (ms) is only satisfied when \emph{d} is between 1272 and
+1739 (as shown previously in Section~\ref{sec:find-logic-delay}). Delay
+2.7..10.6 (ms) is satisfied in Printer/CD1 with \emph{d} of 143..163.
+Similarly, Printer/CD2 satisfies real-time ranges of 1.2..30.3 (ms) and
+5.6..100.2 (ms) when \emph{d} is 46..617 and 213..2041, respectively. It
+is then the compiler's job to statically choose one of the values in
+this range.
 
 % The upper bound \texttt{N} needed to be relaxed for all examples other
 % than HRTCS to obtain a feasible \texttt{d}. Therefore,
@@ -241,84 +281,147 @@ bound \emph{N} such that there exists a solution for \emph{D} in
 Algorithm \ref{alg:1}. This algorithm gives a unique number for logical
 tick delay \emph{d} such that \emph{d} = Min(\emph{$S_2$}) =
 Max(\emph{$S_1$}). The compiler, therefore, will choose \emph{d} based
-on the newly computed \emph{N} for the examples: Printer/CD1, Motor and
-AECS.
+on the newly computed \emph{N} for the examples: Motor and AECS.
 
 \subsection{Improving results}
 
-The previous results show that HRTCS and Printer/CD2 were the only
-examples that the compiler was able to find \textit{d} without relaxing
-upper bound of \texttt{delay}. Figure~\ref{fig:graph} shows the accuracy
-of our results by comparing differences between programmer specified
-upper bounds (Table~\ref{fig:benchlist}) and the actual bounds obtained
-using our techniques (Table~\ref{fig:comparison}).
+The previous results show that HRTCS and Printer were the only examples
+that the compiler was able to find \textit{d} without relaxing upper
+bound of \texttt{delay}. 
+This is because there are two influential factors in
+determining the relaxation: 1) execution speed of a target platform and 
+%Figure~\ref{fig:graph} shows the accuracy
+%of our results by comparing differences between programmer specified
+%upper bounds (Table~\ref{fig:benchlist}) and the actual bounds obtained
+%using our techniques (Table~\ref{fig:comparison}).
+2) the nature of the program that runs on this platform. Clock frequency
+of the processor directly impacts the value of WCRT. On the other hand,
+programmer can write a program such that large data (or control)
+computations in a single logical tick increase WCRT of the program.
+Assuming we do not change the architecture of the execution platform
+(i.e. JOP), the size of relaxation can only be reduced by modifying the
+benchmark programs such that the critical paths are broken up using
+\texttt{pause} constructs, thereby reducing the WCRT.
+Figure~\ref{fig:improv} shows segments of code from AECS whose WCRT is
+reduced by such technique.
 
 \begin{figure}[h!]
 	\centering
-\begin{tikzpicture}[scale=0.9]
-	\begin{axis}[
-			ybar,xtick=data,
-			symbolic x
-			coords={HRTCS,Printer/CD1,Printer/CD2,AECS/CD1,AECS/CD2},
-			height=5cm,
-			width=9.5cm,
-			minor y tick num=1,
-			ymajorgrids=true,
-			ytick={0,...,5},
+	\begin{SubFloat}{\label{fig:improv-a}Original program}
+    \begin{minipage}[b]{0.3\linewidth}
+			\scriptsize
+\begin{verbatim}
+present(EntryRequest)
+  id = #EntryRequest;
+else
+  id = #ExitRequest;
+if(E.isValiedRequest(id)){
+  // code ..
+}
+\end{verbatim}
+\end{minipage}
+\end{SubFloat}
+  \hspace{1cm}%
+  \begin{SubFloat}{\label{fig:improv-b}Program with reduced WCRT}
+    \centering
+    \begin{minipage}[b]{0.35\linewidth}
+      \scriptsize
+\begin{verbatim}
+present(EntryRequest)
+  id = #EntryRequest;
+else
+  id = #ExitRequest;
+pause; // Inserting pause
+if(E.isValiedRequest(id)){
+  // code ..
+}
+\end{verbatim}
+		\end{minipage}
+	\end{SubFloat}
+	\caption{Improving WCRT by shortening a critical path}
+	\label{fig:improv}
+\end{figure}
+
+In Figure~\ref{fig:improv-a}, the program simply checks for the id of a
+person entering or exiting an intelligent room through the signals
+called \texttt{EntryRequest} and \texttt{ExitRequest}, and verifies the
+id using data logic written in Java (\texttt{isValidRequest}). We
+identified this execution path caused lengthening the WCRT of the
+program. In this case, we divide two consequtive statements, i.e.
+\texttt{present} and \texttt{if}, by inserting \texttt{pause} such that
+each of these statement is executed in two different ticks. The same
+technique is applied to Motor example to reduce WCRT of the program.
+Note that we can also optimize algorithms of the data computations used
+in each Java method to reduce WCRT. However it is out of scope of this
+paper, hence not discussed here.
+
+The result of the upper bound relaxation with reduced WCRT is shown in
+Figure~\ref{fig:graph}. As one can see from the Figure, the upper bounds
+for delay statements in AECS/CD2 has been decreased by 11.81\% which is
+higher than all those in Motor which ranges from 7.54 to 8.05\%. It is
+because AECS has relatively a large amount of data computation while
+Motor is a completely control-dominated program. Therefore, the result
+shows that the size of the relaxation depends on how designers write
+their program as well as types of the application (i.e. data or control
+dominated).
+
+%For AECS/CD2, the upper bound has been reduced
+%by 11.81\%, whereas for Motor, the reduced size ranges from 7.54 to
+%8.05\% for each delay statement.  
+
+\begin{figure}[ht!]
+	\centering
+%\begin{tikzpicture}[scale=0.9]
+%  \begin{axis}[
+%      ybar,xtick=data,
+%      symbolic x
+%      coords={AECS/CD2},
+%      height=5cm,
+%      width=9.5cm,
+%      minor y tick num=1,
+%      yminorgrids=true,
+%      ymajorgrids=true,
 %      xlabel=Benchmark,
-			x tick label style={rotate=45,font=\footnotesize},
-			ylabel=Difference factor,
-		]
-			\addplot coordinates
-			{(HRTCS,1)(Printer/CD1,1.6)(Printer/CD2,1)(AECS/CD1,4.25)(AECS/CD2,5.39)};
-			\addplot coordinates {(Printer/CD2, 1)(AECS/CD2, 5.39)};
-	\end{axis}
-\end{tikzpicture}
+%      ylabel=Percentage reduction,
+%    ]
+%      \addplot coordinates
+%      {(AECS/CD2, 11.82)};
+%  \end{axis}
+%\end{tikzpicture}
 \begin{tikzpicture}[scale=0.9]
 	\begin{axis}[
 			ybar,xtick=data,
-			symbolic x coords={Motor},
-			ytick={0,...,5},
-			ymin={1.5},
+			symbolic x coords={Motor,AECS/CD2},
+			ytick={0,1,...,12},
+			ymin={6},
 			minor y tick num=1,
+			enlarge x limits=0.5,
+			enlarge y limits=0.1,
+			yminorgrids=true,
 			ymajorgrids=true,
-%      extra y ticks={2.5},
-%      extra y tick labels={asdf},
-%      extra y tick style={grid=major},
-			height=5cm,
+			height=7cm,
 			width=9.5cm,
 			xlabel=Benchmark,
 			xlabel shift={4pt},
-			ylabel=Difference factor,
+			ylabel=Percentage reduction (\%),
 			legend style={
 				anchor=north,
-				at={(0.45,-0.44)},
+				at={(0.45,-0.29)},
 				legend columns=-1,
 			}
-%      nodes near coords
 		]
-			\addplot coordinates {(Motor, 3.54)};
-			\addplot coordinates {(Motor, 3.15)};
-			\addplot coordinates {(Motor, 4.46)};
-			\addplot coordinates {(Motor, 3.35)};
-			\addplot coordinates {(Motor, 2.81)};
+			\addplot coordinates {(Motor, 8.05) (AECS/CD2, 11.82)};
+			\addplot coordinates {(Motor, 8.00)};
+			\addplot coordinates {(Motor, 6.42)};
+			\addplot coordinates {(Motor, 7.53)};
+			\addplot coordinates {(Motor, 7.89)};
 			\legend{Delay1,Delay2,Delay3,Delay4,Delay5}
 	\end{axis}
 \end{tikzpicture}
-\caption{Accuracy of the results}
+\caption{Reduction in upper bound relaxation with improved WCRT}
 \label{fig:graph}
 \end{figure}
 
-There are two influential factors in determining the relaxation: 1)
-execution speed of a target platform and 2) the nature of the program
-that runs on this platform. Clock frequency of the processor directly
-impacts the value of WCRT. On the other hand, programmer can write a
-program such that large data computations in a single logical tick
-increase WCRT of the program. Assuming we do not change the architecture
-of the execution platform (i.e. JOP), the difference factor can only be
-reduced by modifying the benchmark programs such that the critical paths
-are broken up using \texttt{pause} constructs, thereby reducing the
-WCRT.
 
 % HRTCS, as already illustrated in Section \ref{sec:intr-motiv}, tests for an
 % ability of one's responsiveness by generating green lights between the
@@ -342,91 +445,8 @@ WCRT.
 % \ref{sec:intr-real-time}. It is our fundamental assumption to find \emph{d} in
 % our benchmark programs.
 % >>>>>>> 4bffc4b1a43388f5ebf6cc737b9d3b246ee77dc7
-{\renewcommand{\arraystretch}{0.9}
-\begin{table}[t]
-	\small
-	\centering
-	\caption{An overview of the benchmark programs}
-	\label{fig:benchlist}
-	\scalebox{0.9}{
-		\begin{tabular}{llp{0.5cm}p{1cm}}
-\toprule
-\emph{Benchmark}       & \emph{Delay constructs used in each CD} & \emph{\# of CDs} & 
-\emph{Lines of code}        
-\\ \midrule
-HRTCS                  & \texttt{delay(50.3..200.3 ms)} ($CD1$) & 2                  & 56
-\\ \midrule
-\multirow{5}{*}{Motor} & \texttt{delay(2.4..2.4 ms)}        & \multirow{5}{*}{1} & \multirow{5}{*}{116} \\ 
-											 & \texttt{delay(1.667..1.667 ms)}      &                    &                      \\ 
-											 & \texttt{delay(0.05..0.05 ms)}       &                    &                      \\ 
-											 & \texttt{delay(0.3..0.3 ms)}        &                    &                      \\ 
-											 & \texttt{delay(0.733..0.733 ms)}      &                    &
-\\ \midrule
-\multirow{3}{*}{Printer}
-& \texttt{delay(2.7..10.6 ms)} ($CD1$)      & \multirow{3}{*}{2}        & \multirow{3}{*}{39} \\
-& \texttt{delay(1.2..30.3 ms)} ($CD2$)		  &														&											\\
-& \texttt{delay(5.6..100.2 ms)} ($CD2$)     &														&											
-\\ \midrule
-\multirow{2}{*}{AECS} & \texttt{delay(10000 ms)} ($CD1$) 
-& \multirow{2}{*}{2} & \multirow{2}{*}{267} \\
-& \texttt{delay(10000..10000 ms)} ($CD2$) & &
-\\ \bottomrule
-\end{tabular}
-}
-\vspace{-20pt}
-\end{table}
-}
 
-{\renewcommand{\arraystretch}{0.6}
-\begin{table}[t!]
-\twocolumn[
-\centering
-\begin{@twocolumnfalse}
-	\caption{Actual delays obtained for \texttt{delay} constructs in the
-benchmark programs based on their BCRT and WCRT}
-\begin{tabular}{ c c l l l l l l }
-	\toprule
-	\multicolumn{2}{c}{} & \emph{HRTCS} & \emph{Motor} & \emph{Printer/CD1} &
-	\emph{Printer/CD2} & \emph{AECS/CD1} &	\emph{AECS/CD2} \\ 
-	\midrule
-	\multicolumn{2}{c}{\emph{BCRT}}	& 0.0334 ms	& 0.0361 ms & 0.009613 ms &
-	0.0263 ms & 0.1683 ms & 0.1881 ms\\ 
-	\cmidrule(r){1-8}
-	\multicolumn{2}{c}{\emph{WCRT}} &0.1120 ms & 0.1116 ms & 0.0603 ms
-	& 0.0491 ms & 0.8148 ms & 1.0115 ms\\ 
-	\cmidrule(r){1-8}
 
-	\multirow{2}{*}{Delay 1} & M..N & 50.3-200.3 ms	& 2.4-8.4882 ms	  &
-	2.7-16.9378 ms & 1.2-30.3 ms & 10000-42483.2198 ms& 10000-53882.0045 ms \\
-	\cmidrule(r){2-8}
-	& d &1506-1888 & 68 & 281 & 46-617 & 59428 &53160\\ 
-	\cmidrule(r){1-8}
-	\multirow{2}{*}{Delay 2} & M..N & N/A & 1.668-5.2452 ms & N/A &
-	5.6-100.2 ms & N/A &10000-53882.0045 ms\\ 
-	\cmidrule(r){2-8}
-	& d & N/A & 48 & N/A & 213-2041 & N/A &53160\\ 
-	\cmidrule(r){1-8}
-	\multirow{2}{*}{Delay 3} & M..N & N/A & 0.05-0.2232 ms & N/A & N/A & N/A
-	&N/A\\ 
-	\cmidrule(r){2-8}
-	& d & N/A & 2 & N/A & N/A & N/A &N/A\\ 
-	\cmidrule(r){1-8}
-	\multirow{2}{*}{Delay 4} & M..N & N/A & 0.3-1.0044 ms & N/A & N/A & N/A
-	&N/A\\ 
-	\cmidrule(r){2-8}
-	& d & N/A & 9 & N/A & N/A & N/A &N/A\\ 
-	\cmidrule(r){1-8}
-	\multirow{2}{*}{Delay 5} & M..N & N/A & 0.833-2.3436 ms & N/A & N/A & N/A
-	&N/A\\ 
-	\cmidrule(r){2-8}
-	& d & N/A & 21 & N/A
-	& N/A & N/A &N/A\\ \bottomrule
-\end{tabular}
-\label{fig:comparison}
-\end{@twocolumnfalse}
-]
-\end{table}
-}
 
 %%% Local Variables: 
 %%% mode: latex
