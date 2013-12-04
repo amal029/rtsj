@@ -474,15 +474,15 @@ application (i.e. data or control dominated).
 				legend columns=-1,
 			}
 		]
-			\addplot + [postaction={pattern=north east lines}] coordinates
+			\addplot + [fill=white,postaction={pattern=north east lines}] coordinates
                         {(Motor, 8.05) (AECS/CD2, 11.82)};
-			\addplot + [postaction={pattern=north west lines}] coordinates
+			\addplot + [fill=white,postaction={pattern=north west lines}] coordinates
                         {(Motor, 8.00) (AECS/CD2, 11.82)};
-			\addplot + [postaction={pattern=dots}] coordinates
+			\addplot + [fill=white,postaction={pattern=dots}] coordinates
                         {(Motor, 6.42)};
-			\addplot + [postaction={pattern=horizontal lines}] coordinates
+			\addplot + [fill=white,postaction={pattern=horizontal lines}] coordinates
                         {(Motor, 7.53)};
-			\addplot + [postaction={pattern=crosshatch}] coordinates
+			\addplot + [fill=white,postaction={pattern=crosshatch}] coordinates
                         {(Motor, 7.89)};
 			\legend{Delay1,Delay2,Delay3,Delay4,Delay5}
 	\end{axis}
