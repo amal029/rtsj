@@ -51,7 +51,7 @@
 Table~\ref{tab:1} presents the SystemJ kernel statements used to program
 the control flow. The data flow is programmed in the safe subset of
 Java~\cite{scj2013} amenable to formal verification and timing analysis,
-while avoiding all the pitfalls of programming in 'C' style languages. A
+while avoiding all the pitfalls of programming in `C' style languages. A
 number of derived statements also exist (e.g., \texttt{sustain},
 \texttt{await}, etc) that make programming reactive systems easier. The
 \textit{Model of Computation} (MoC) of a simple SystemJ program is shown
@@ -110,7 +110,7 @@ while(true){
 The perfect synchrony hypothesis is ideal for programming the
 synchronous sub-set of SystemJ. Unfortunately, every \textit{micro-step}
 requires real-time to compute. Formally, execution of every micro-step
-in the logical zero time, requires $\delta$ physical time. Time for a
+in the logical zero time requires $\delta$ physical time. Time for a
 logical tick can thus be summarized as $\Delta = \mathcal{F} (\delta)$,
 where $\mathcal{F}$ is some function dependent upon the
 \underline{schedule}. We call $\Delta$ the reaction time. Depending upon

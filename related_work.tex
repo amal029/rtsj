@@ -23,11 +23,11 @@ need to be determined and present on the system for the solution to be
 realizable. Moreover, non-deterministic real-time delays and integration
 with non-maximal parallelism is not studied at all. Our solution does
 not require external timers (like~\cite{rsh94}) or logical notion of
-timers (like~\cite{Bourke2009a}). Since in our solution we calculate the
-delay in logical ticks \textit{after} allocation and scheduling, it
-gives the compiler developers the chance to optimize for many different
-criteria such as computation time, energy, power, etc, without worrying
-about or violating the real-time delay specification. 
+timers (like~\cite{Bourke2009a}). In our solution we calculate the delay
+in logical ticks \textit{after} allocation and scheduling, it gives the
+compiler developers the chance to optimize for many different criteria
+such as computation time, energy, power, etc, without worrying about or
+violating the real-time delay specification.
 
 Other works such as Quartz~\cite{glog02} and Bertin et
 al.~\cite{Bertin:2000:TVR:1947412.1947439}, also incorporate delay
@@ -41,9 +41,9 @@ deadlines. Our solution on the other hand removes all continuous time
 elements and produces single discrete time model thereby making the
 solution amenable to existing functional and real-time verification
 tools developed for reactive languages and more in the spirit of logical
-time. Finally, a major difference between Bertin et al and our approach
+time. Finally, a major difference between Bertin et al. and our approach
 is that their approach requires programmers to annotate the time taken
-by 'C' code fragments manually, this is extremely error prone, we use
+by `C' code fragments manually, this is extremely error prone, we use
 static low-level program analysis to find out such times automatically.
 
 
