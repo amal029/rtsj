@@ -21,7 +21,7 @@ All three delay constructs are useful for programming real systems. % The
 Many real-world systems require non-deterministic timing
 constructs. Where the exact real-time delay is not known or should not
 be known apriori. One such system is our motivating example -- the human
-response time system (HRCTS). Another one we presented was a real
+response time system (HRTCS). Another one we presented was a real
 printer-spooler embedded controller in
 Section~\ref{sec:experimental-results}.
 
@@ -31,33 +31,42 @@ Section~\ref{sec:experimental-results}.
 There are many instances when one would like to wait on an input from
 environment for only a specified amount of time. This can be programmed
 as:
-% \begin{scriptsize}
-{\small
+
+\begin{figure}[h!]
+  \centering
+    \begin{minipage}[b]{\linewidth}
 \begin{verbatim}
 // timeout after 1ms.
 trap(T){{await(A);}||
         {delay(1 ms);exit(T);}}
 \end{verbatim}
-% \end{scriptsize}
-}
+    \end{minipage}
+  \caption{Programming low priority timeout tasks with delay statements}
+  \label{fig:timeout}
+\end{figure}
 
 In the above case, the program waits for signal \texttt{A} from the
-environment for \textit{at\_least} \texttt{1 ms}, but it may wait longer
-if other reactions/CDs are scheduled for execution. This second form of
-delay statement is very useful for programming low priority tasks.
+environment for \textit{at least} \texttt{1 ms}, but it may wait longer
+if other reactions/CDs are scheduled for execution. This second variant
+of delay statement is very useful for programming low priority tasks.
 
 \subsubsection{Periodic reactions}
 \label{sec:periodic-reactions}
 
-The third form, is useful for hard-real time guarantees, e.g., a
+The third variant is useful for hard-real time guarantees, e.g., a
 reaction, or a whole CD, can be programmed to run periodically like so:
 
-{\small
+\begin{figure}[h!]
+  \centering
+  \begin{minipage}[b]{\linewidth}
 \begin{verbatim}
 while(true) { delay ((1..1)ms); emit S; 
  //do something }
 \end{verbatim}
-}
+  \end{minipage}
+  \caption{Programming periodic tasks with delay statements}
+  \label{fig:periodic}
+\end{figure}
 
 The above program will emit signal \texttt{S} every \texttt{1 ms}. A
 periodic reaction (or CD) requires special consideration, like any other
@@ -66,32 +75,56 @@ delays and other \texttt{pause} constructs in the body of the reaction
 (or CD). For example, consider the (perceived) periodic program and its
 rewrite below.
 
-{\small
+\begin{figure}[h!]
+  \centering
+  \begin{SubFloat}{\label{pp:a}Original program}
+    \centering
+    \begin{minipage}[b]{0.3\linewidth}
 \begin{verbatim}
-while(true) {      while(true) {
- delay(1..1 ms);    while(true) { 
+while(true) {
+ delay(1..1 ms);
  //extra pause
- pause;              trap(T) {
- emit S;              int x = 0;
-}                     while(true) {
-                       x = x + 1;
-                       pause;
-                       if (x == d)exit(T);
-                      }
-                    }
-                    //extra pause
-                    pause;
-                    emit S;
-                   }
-\end{verbatim}
+ pause;
+ emit S;
 }
+\end{verbatim}
+  \end{minipage}
+\end{SubFloat}
+\hspace{9pt}
+  \begin{SubFloat}{\label{pp:b}Rewritten program}
+    \begin{minipage}[h]{0.5\linewidth}
+\begin{verbatim}
+while(true) {
+ while(true) { 
+  trap(T) {
+   int x = 0;
+   while(true) {
+    x = x + 1;
+    pause;
+    if (x == d)
+     exit(T);
+   }
+  }
+  //extra pause
+  pause;
+  emit S;
+ }
+}
+\end{verbatim}
+    \end{minipage}
+  \end{SubFloat}
+\caption{Extra pause statements in periodic tasks}
+  \label{fig:periodic2}
+\end{figure}
 
 The system designer needs to be aware that just introducing a delay
 construct does not make the reaction (or CD) periodic. The program on
 the left does \textit{not} emit signal \texttt{S} every \texttt{1 ms},
 because of the extra \texttt{pause} statement. Introducing additional
 pauses introduces more logical ticks, consequently increasing the
-real-time delay.
+real-time delay. Static analysis techniques from real-time community can
+be used to automatically determine the delay specification in such
+cases, but describing these techniques is out of the scope of this work.
 
 \subsection{Need for a time analyzable platform -- interaction of
   preemption and delays}
@@ -115,14 +148,19 @@ successful, because of the complex interplay between real-time and
 preemption. Consider the simple example below, which models real-time
 using external timers as in~\cite{rsh94}. 
 
-% \begin{scriptsize}
-{\small
+\begin{figure}[h!]
+  \centering
+  \begin{minipage}[b]{\linewidth}
 \begin{verbatim}
-suspend(S) {emit START_TIMER(10); 
-            await (TIMER);emit O1;}
-\end{verbatim}
+suspend(S) {
+ emit START_TIMER(10); 
+ await (TIMER);emit O1;
 }
-% \end{scriptsize}
+\end{verbatim}
+  \end{minipage}
+  \caption{Interaction of preemption and external timers}
+  \label{fig:preemp}
+\end{figure}
 
 As identified in~\cite{Bourke2009a} \texttt{suspend} does not play well
 with the external timer. The above program sends a signal to an external
@@ -137,10 +175,10 @@ real-time analyzable platforms and constrained
 environments~\cite{DBLP:journals/pieee/SifakisTY03,boldt07}, one can use
 our technique within such a setting with ease.
 
-\subsection{Other semantic discussion}
-\label{sec:other-semant-dissc}
+% \subsection{Other semantic discussion}
+% \label{sec:other-semant-dissc}
 
-\subsubsection{Interaction of channel communication and delays}
+\subsection{Interaction of channel communication and delays}
 \label{sec:inter-chann-comm}
 
 Channels, used for communication between reactions in asynchronously

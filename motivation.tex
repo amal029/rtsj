@@ -44,13 +44,13 @@ while(true) {
 \label{fig:1}
 \end{figure}
 
-Consider a simple machine used to test human response time and collect
-this data for future research purposes. The machine switches on a green
-light on a touch screen for anywhere between 50.3 ms to 200.3 ms, if the
-user can touch this green light then she is successful and an integer
+Consider a machine used to test human response time and collect this
+data for future research purposes. The machine switches on a green light
+on a touch screen for anywhere between 50.3 ms to 200.3 ms, if the user
+can touch this green light then she is successful and an integer
 \texttt{1} is sent to a database, if unsuccessful a \texttt{0} is sent
-instead, Different statistics and analyses on human responsiveness can
-be based on collected data.
+instead. Different statistics and analyses on human responsiveness can
+be based on the collected data.
 
 The SystemJ pseudo-code~\cite{amal10} for such a system is shown in
 Figure~\ref{fig:1}. We use the SystemJ language in this paper, first of
@@ -68,7 +68,7 @@ the user is able to touch the screen within the specified time of 50.3
 ms to 200.3 ms a positive response is sent to the second
 clock-domain. All the SystemJ programming constructs used to implement
 this system are described in~\cite{amal10} and Table~\ref{tab:1} in
-Section~\ref{sec:background}. The delay speciﬁcation, which models the
+Section~\ref{sec:background}. The delay specification, which models the
 non-deterministic delay between 50.3 ms and 200.3 ms is not supported in
 the current language and cannot be compiled with the current SystemJ
 compiler. We introduce real-time \texttt{delay} statements in SystemJ.

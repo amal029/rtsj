@@ -186,16 +186,15 @@ trap(T){
 \end{figure}
 
 Motor is a stepper motor controller from~\cite{Bourke2009a}, used for
-producing monochrome images on paper by applying a correct application
-of current to a print head (a row of resistors). In this example,
-duration of the current applied is controlled by the feedback logic
-using real-time delays, which are expressed using reactive
-constructs. Printer is an example from~\cite{Schneider:1999:CRT:555233},
-which models a printer and a spooler in timed CSP.  Their operation is
-rather simple: as soon as the spooler receives a print job, passes it to
-the printer through a channel where actual printing process take
-place. This example along with HRCTS demonstrates the use of
-non-deterministic delays.
+producing monochrome images on paper by correct application of current
+to a print head (a row of resistors). In this example, duration of the
+current applied is controlled by the feedback logic using real-time
+delays, which are expressed using reactive constructs. Printer is an
+example from~\cite{Schneider:1999:CRT:555233}, which models a printer
+and a spooler in timed CSP. Its operation can be described as follows:
+as soon as the spooler receives a print job it passes it to the printer
+through a channel where actual printing process take place. This example
+along with HRTCS demonstrates the use of non-deterministic delays.
 
 %Robot is an industrial automation application that consists of two
 %manufacturing belts and a robotic arm that splits goods according to
@@ -210,14 +209,14 @@ intruder or generates a beep sound when an entrance door is being opened
 for the same amount of time. In the Printer example, spooler and printer
 processes are mapped to separate CDs. Spooler CD sends a job to the
 Printer CD between 2.7 to 10.6 ms after receiving it from the
-environment (e.g. a user). On the other hand, Printer CD notifies
+environment (e.g. a user). On the other hand, Printer CD notifies the
 environment that it starts printing between 1.2 to 30.3 ms once it
 receives the job from the Spooler CD. Actual print job is started
 between 5.6 to 100.2 ms after the notification. In this example, bounded
-delay ensures that both channel communication and print job should occur
-within the specified amount of time. Lastly, Motor is a synchronous
-program with 5 delay statements that control the amount of current
-applied to the stepper motor coils.
+delay ensures that both; channel communication and print job should
+occur within the specified amount of time. Lastly, Motor is a
+synchronous program with 5 delay statements that control the amount of
+current applied to the stepper motor coils.
 
 %All these examples are written in
 %the SystemJ language. The requirement to have deterministic or
@@ -241,14 +240,14 @@ applied to the stepper motor coils.
 % kernel statements more efficiently.
 
 We use the \textit{Java Optimized Processor}
-(JOP)~\cite{jop:jnl:jsa2007}, to carry out all our experiments. JOP
-implements the JVM specification in hardware directly, and has been
-shown to be real-time amenable. We statically estimate the WCRT and BCRT
-of these benchmark applications using the real-time analysis tools
-provided by the JOP design framework. The \textit{Safety Critical Java}
-(SCJ) specification we use for real-time analysis avoids garbage
-collection (GC) and hence, GC overheads and unpredictability are
-completely avoided. 
+(JOP)~\cite{jop:jnl:jsa2007} to carry out all our experiments. JOP
+implements the JVM specification in hardware directly and has been shown
+to be real-time amenable. We statically estimate the WCRT and BCRT of
+these benchmark applications using the real-time analysis tools provided
+by the JOP design framework. The \textit{Safety Critical Java} (SCJ)
+specification we use for real-time analysis avoids garbage collection
+(GC) and hence, GC overheads and unpredictability are completely
+avoided.
 
 % We disable the \textit{Garbage Collector} (GC) in all experiments to
 % avoid unwanted side-effects such as lengthening clock-domain logical
@@ -285,12 +284,16 @@ on the newly computed \emph{N} for the examples: Motor and AECS.
 
 \subsection{Improving results}
 
-The previous results show that HRTCS and Printer were the only examples
-that the compiler was able to find \textit{d} without relaxing upper
-bound of \texttt{delay}. Figure~\ref{fig:graph1} shows the accuracy of
-our results by comparing differences between programmer specified upper
+The previous results show that for HRTCS and Printer that the compiler
+was able to find \textit{d} without relaxing upper bound of
+\texttt{delay}. Figure~\ref{fig:graph1} shows the accuracy of our
+results by comparing differences between programmer specified upper
 bounds (Table~\ref{fig:benchlist}) and the actual bounds obtained using
-our techniques (Table~\ref{fig:comparison}). 
+our techniques (Table~\ref{fig:comparison}) for the other examples
+requiring relaxation. AECS/CD1 delay is not included in
+Figure~\ref{fig:graph2}, because although it requires relaxation, the
+delay specification (Table~\ref{fig:benchlist}) does not have an upper
+bound.
 
 \begin{figure}[h!]
 	\centering
@@ -310,9 +313,11 @@ our techniques (Table~\ref{fig:comparison}).
 			x tick label style={rotate=45,font=\footnotesize},
 			ylabel=Difference factor,
 		]
-			\addplot coordinates
+			\addplot + [postaction={pattern=north east lines}] coordinates
 			{(HRTCS,1)(Printer/CD1,1)(Printer/CD2,1)(AECS/CD2,1.94)};
-			\addplot coordinates {(Printer/CD2, 1)(AECS/CD2, 1.94)};
+			\addplot + [postaction={pattern=north west
+                          lines}] coordinates 
+                        {(Printer/CD2, 1)(AECS/CD2, 1.94)};
 	\end{axis}
 \end{tikzpicture}
 \begin{tikzpicture}[scale=0.9]
@@ -339,11 +344,16 @@ our techniques (Table~\ref{fig:comparison}).
 			}
 %      nodes near coords
 		]
-			\addplot coordinates {(Motor, 2.60)};
-			\addplot coordinates {(Motor, 2.63)};
-			\addplot coordinates {(Motor, 4.39)};
-			\addplot coordinates {(Motor, 2.92)};
-			\addplot coordinates {(Motor, 2.69)};
+			\addplot + [postaction={pattern=north east lines}] coordinates
+                        {(Motor, 2.60)};
+			\addplot + [postaction={pattern=north west lines}] coordinates
+                        {(Motor, 2.63)};
+			\addplot + [postaction={pattern=dots}] coordinates
+                        {(Motor, 4.39)};
+			\addplot + [postaction={pattern=horizontal lines}] coordinates
+                        {(Motor, 2.92)};
+			\addplot + [postaction={pattern=crosshatch}] coordinates
+                        {(Motor, 2.69)};
 			\legend{Delay1,Delay2,Delay3,Delay4,Delay5}
 	\end{axis}
 \end{tikzpicture}
@@ -404,8 +414,8 @@ In Figure~\ref{fig:improv-a}, the program simply checks for the id of a
 person entering or exiting an intelligent room through the signals
 called \texttt{EntryRequest} and \texttt{ExitRequest}, and verifies the
 id using data logic written in Java (\texttt{isValidRequest}). We
-identified this execution path caused lengthening the WCRT of the
-program. In this case, we divide two consequtive statements, i.e.
+identified this as the critical execution path accounting for the WCRT.
+In this case, we divide two consequtive statements, i.e.
 \texttt{present} and \texttt{if}, by inserting \texttt{pause} such that
 each of these statement is executed in two different ticks. The same
 technique is applied to Motor example, which is purely
@@ -415,14 +425,13 @@ reduce WCRT. However it is out of scope of this paper, hence not
 discussed here.
 
 The result of the upper bound relaxation with reduced WCRT is shown in
-Figure~\ref{fig:graph2}. As one can see from the Figure, the upper
-bounds for delay statements in AECS/CD2 have been decreased by 11.81\%
-which is higher than all those in Motor which ranges from 7.54 to
-8.05\%. It was as expected since amount of computation required
-in control flow is mostly less demanding than data such that breaking
+Figure~\ref{fig:graph2}.  The upper bounds for delay statements in
+AECS/CD2 decreased by 11.81\%, while that for Motor example reduced from
+7.54 to 8.05\%. This is expected since the amount of computation
+required in control flow is less demanding than data and hence, breaking
 the critical paths in Motor did not reduce WCRT as much as AECS/CD2.
 Therefore, we can see from the result that the size of the relaxation
-depends on how designers write their program as well as typs of the
+depends on how designers write their program as well as type of the
 application (i.e. data or control dominated).
 
 %For AECS/CD2, the upper bound has been reduced
@@ -470,11 +479,16 @@ application (i.e. data or control dominated).
 				legend columns=-1,
 			}
 		]
-			\addplot coordinates {(Motor, 8.05) (AECS/CD2, 11.82)};
-			\addplot coordinates {(Motor, 8.00)};
-			\addplot coordinates {(Motor, 6.42)};
-			\addplot coordinates {(Motor, 7.53)};
-			\addplot coordinates {(Motor, 7.89)};
+			\addplot + [postaction={pattern=north east lines}] coordinates
+                        {(Motor, 8.05) (AECS/CD2, 11.82)};
+			\addplot + [postaction={pattern=north west lines}] coordinates
+                        {(Motor, 8.00)};
+			\addplot + [postaction={pattern=dots}] coordinates
+                        {(Motor, 6.42)};
+			\addplot + [postaction={pattern=horizontal lines}] coordinates
+                        {(Motor, 7.53)};
+			\addplot + [postaction={pattern=crosshatch}] coordinates
+                        {(Motor, 7.89)};
 			\legend{Delay1,Delay2,Delay3,Delay4,Delay5}
 	\end{axis}
 \end{tikzpicture}

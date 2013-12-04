@@ -175,16 +175,15 @@ from this set.
 \paragraph{The \texttt{delay(M..M)} construct}
 \label{sec:extend-techn-vari}
 
-The \texttt{delay(M..M)} variant is a little more interesting. Like
-before we find sets $S_1$ and $S_2$, and find the intersection of the
-two sets to get the value of \texttt{d}. It is possible (and often
-likely, as suggested by our experiments in
-Section~\ref{sec:experimental-results}) that the resultant set $D$ is
-empty (also possible in the case of \texttt{delay(M..N)}, but never
-possible in case of \texttt{delay(M)}). Note that $S_1$ and $S_2$ can
-never be empty sets and will always contain at minimum a single
-element. In such a case, we automatically \textit{relax} the upper bound
-of the \texttt{delay} statement.
+The \texttt{delay(M..M)} variant is more interesting. Like before, we
+find sets $S_1$ and $S_2$, and find the intersection of the two sets to
+get the value of \texttt{d}. It is possible (and often likely, as
+suggested by our experiments in Section~\ref{sec:experimental-results})
+that the resultant set $D$ is empty (also possible in the case of
+\texttt{delay(M..N)}, but never possible in case of
+\texttt{delay(M)}). Note that $S_1$ and $S_2$ can never be empty sets
+and will always contain at minimum a single element. In such a case, we
+can \textit{relax} the upper bound of the \texttt{delay} statement.
 
 \paragraph{Relaxation of the upper real-time bound}
 \label{sec:over-appr-relax}
