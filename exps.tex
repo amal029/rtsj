@@ -152,8 +152,8 @@ Figure~\ref{delaycode:b}.
 
 \begin{figure}[h!]
 	\vspace{-10pt}
+	\centering
   \begin{SubFloat}{\label{delaycode:a}Original program}
-    \centering
       \scriptsize
 		\begin{lstlisting}[style=sysj,morekeywords={abort,await,emit,present,trap,pause,exit,delay,suspend}]
 emit TimerTriggered;
@@ -167,7 +167,6 @@ trap(T){
   \end{SubFloat}
   \hspace{1cm}%
   \begin{SubFloat}{\label{delaycode:b}Program with delay constructs}
-    \centering
 		\begin{lstlisting}[style=sysj,morekeywords={abort,await,emit,present,trap,pause,exit,delay,suspend}]
 // No emit statement
 trap(T){
