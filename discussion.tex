@@ -34,15 +34,15 @@ as:
 
 \begin{figure}[h!]
   \centering
-    \begin{minipage}[b]{\linewidth}
-\begin{verbatim}
+			\vspace{-10pt}
+			\begin{lstlisting}[style=sysj,basicstyle=\normalsize\ttfamily,morekeywords={await,emit,trap,pause,exit,delay}]
 // timeout after 1ms.
 trap(T){{await(A);}||
         {delay(1 ms);exit(T);}}
-\end{verbatim}
-    \end{minipage}
+\end{lstlisting}
   \caption{Programming low priority timeout tasks with delay statements}
   \label{fig:timeout}
+			\vspace{-10pt}
 \end{figure}
 
 In the above case, the program waits for signal \texttt{A} from the
@@ -58,14 +58,14 @@ reaction, or a whole CD, can be programmed to run periodically like so:
 
 \begin{figure}[h!]
   \centering
-  \begin{minipage}[b]{\linewidth}
-\begin{verbatim}
+	\vspace{-10pt}
+		\begin{lstlisting}[style=sysj,basicstyle=\normalsize\ttfamily,morekeywords={emit,trap,pause,exit,delay}]
 while(true) { delay ((1..1)ms); emit S; 
  //do something }
-\end{verbatim}
-  \end{minipage}
+ \end{lstlisting}
   \caption{Programming periodic tasks with delay statements}
   \label{fig:periodic}
+	\vspace{-10pt}
 \end{figure}
 
 The above program will emit signal \texttt{S} every \texttt{1 ms}. A
@@ -79,21 +79,18 @@ rewrite below.
   \centering
   \begin{SubFloat}{\label{pp:a}Original program}
     \centering
-    \begin{minipage}[b]{0.3\linewidth}
-\begin{verbatim}
+			\begin{lstlisting}[style=sysj,basicstyle=\normalsize\ttfamily,morekeywords={emit,trap,pause,exit,delay}]
 while(true) {
  delay(1..1 ms);
  //extra pause
  pause;
  emit S;
 }
-\end{verbatim}
-  \end{minipage}
+\end{lstlisting}
 \end{SubFloat}
 \hspace{9pt}
   \begin{SubFloat}{\label{pp:b}Rewritten program}
-    \begin{minipage}[h]{0.5\linewidth}
-\begin{verbatim}
+			\begin{lstlisting}[style=sysj,basicstyle=\normalsize\ttfamily,morekeywords={emit,trap,pause,exit,delay}]
 while(true) {
  while(true) { 
   trap(T) {
@@ -110,8 +107,7 @@ while(true) {
   emit S;
  }
 }
-\end{verbatim}
-    \end{minipage}
+\end{lstlisting}
   \end{SubFloat}
 \caption{Extra pause statements in periodic tasks}
   \label{fig:periodic2}
@@ -150,16 +146,16 @@ using external timers as in~\cite{rsh94}.
 
 \begin{figure}[h!]
   \centering
-  \begin{minipage}[b]{\linewidth}
-\begin{verbatim}
+	\vspace{-10pt}
+		\begin{lstlisting}[style=sysj,basicstyle=\normalsize\ttfamily,morekeywords={emit,trap,pause,exit,delay,suspend}]
 suspend(S) {
  emit START_TIMER(10); 
  await (TIMER);emit O1;
 }
-\end{verbatim}
-  \end{minipage}
+		\end{lstlisting}
   \caption{Interaction of preemption and external timers}
   \label{fig:preemp}
+	\vspace{-10pt}
 \end{figure}
 
 As identified in~\cite{Bourke2009a} \texttt{suspend} does not play well

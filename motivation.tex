@@ -10,10 +10,8 @@
 %  }
 \begin{figure}[t!]
 % \begin{center}
-\begin{minipage}{5cm}
-  \begin{scriptsize}
-    
-\begin{verbatim}
+	\vspace{-10pt}
+		\begin{lstlisting}[style=sysj,morekeywords={sustain,send,receive,abort,await,emit,present,trap,pause,exit,delay,suspend}]
 { // Clock-domain 1
 while(true) {
   trap(TRAP){
@@ -35,9 +33,7 @@ while(true) {
 { // Clock-domain 2
   while(true){ receive S; // do something with S}
 }
-\end{verbatim}
-  \end{scriptsize}
-\end{minipage}
+\end{lstlisting}
 \caption{An example human responsiveness system (HRTCS)}
 % }
 % \end{center}

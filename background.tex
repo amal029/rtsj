@@ -75,9 +75,8 @@ instantaneously.
 \begin{figure}[t!]
 % \centering
 \begin{SubFloat}{\label{fig:2a}Simple SystemJ program}%...verbatim subfigure
-\begin{minipage}[b]{0.3\linewidth}% a minipage to control the width...
-  \begin{scriptsize}
-\begin{verbatim}
+\begin{minipage}[b]{1\linewidth}% a minipage to control the width...
+		\begin{lstlisting}[style=sysj,morekeywords={abort,await,emit,present,trap,pause,exit,delay,suspend}]
 {
 int counter = 0;
 while(true){
@@ -89,8 +88,7 @@ while(true){
   ++counter;
  } // loop end
 } // SystemJ CD end
-\end{verbatim}%
-  \end{scriptsize}
+\end{lstlisting}%
 \end{minipage}%
 \end{SubFloat}
 \hspace{1.5cm}%

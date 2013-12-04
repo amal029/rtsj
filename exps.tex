@@ -53,6 +53,7 @@ with real-time constraints. The characteristics of the benchmark set
 including required real-time delays and program sizes are shown in
 Table~\ref{fig:benchlist}.
 {\renewcommand{\arraystretch}{0.9}
+%\renewcommand{\texttt}[1] {\begin{lstlisting}[language=Java,morekeywords={delay}] #1 \end{lstlisting}}
 \begin{table}[h!]
 	\small
 	\centering
@@ -150,11 +151,11 @@ and delays can be expressed directly in the code as shown in
 Figure~\ref{delaycode:b}.
 
 \begin{figure}[h!]
+	\vspace{-10pt}
   \begin{SubFloat}{\label{delaycode:a}Original program}
     \centering
-    \begin{minipage}[b]{0.3\linewidth}
       \scriptsize
-\begin{verbatim}
+		\begin{lstlisting}[style=sysj,morekeywords={abort,await,emit,present,trap,pause,exit,delay,suspend}]
 emit TimerTriggered;
 trap(T){
   abort(DoorOpened){
@@ -162,15 +163,12 @@ trap(T){
     exit(T); 
   }
 }
-\end{verbatim}
-    \end{minipage}
+\end{lstlisting}
   \end{SubFloat}
   \hspace{1cm}%
   \begin{SubFloat}{\label{delaycode:b}Program with delay constructs}
     \centering
-    \begin{minipage}[b]{0.5\linewidth}
-      \scriptsize
-\begin{verbatim}
+		\begin{lstlisting}[style=sysj,morekeywords={abort,await,emit,present,trap,pause,exit,delay,suspend}]
 // No emit statement
 trap(T){
   abort(DoorOpened){
@@ -178,8 +176,7 @@ trap(T){
     exit(T);  
   }
 }
-\end{verbatim}
-		\end{minipage}
+\end{lstlisting}
 	\end{SubFloat}
 \caption{Replacing external timer with delay construct}
 \label{delaycode}
@@ -375,10 +372,10 @@ code from AECS whose WCRT is reduced by such technique.
 
 \begin{figure}[h!]
 	\centering
+	\vspace{-10pt}
 	\begin{SubFloat}{\label{fig:improv-a}Original program}
-    \begin{minipage}[b]{0.3\linewidth}
-			\scriptsize
-\begin{verbatim}
+    \begin{minipage}[b]{0.45\linewidth}
+		\begin{lstlisting}[style=sysj,morekeywords={present,emit,trap,pause,exit,delay,suspend}]
 present(EntryRequest)
   id = #EntryRequest;
 else
@@ -386,15 +383,13 @@ else
 if(E.isValiedRequest(id)){
   // code ..
 }
-\end{verbatim}
+\end{lstlisting}
 \end{minipage}
 \end{SubFloat}
-  \hspace{1cm}%
   \begin{SubFloat}{\label{fig:improv-b}Program with reduced WCRT}
     \centering
-    \begin{minipage}[b]{0.35\linewidth}
-      \scriptsize
-\begin{verbatim}
+    \begin{minipage}[b]{0.45\linewidth}
+		\begin{lstlisting}[style=sysj,morekeywords={emit,present,trap,pause,exit,delay,suspend}]
 present(EntryRequest)
   id = #EntryRequest;
 else
@@ -403,11 +398,12 @@ pause; // Inserting pause
 if(E.isValiedRequest(id)){
   // code ..
 }
-\end{verbatim}
+\end{lstlisting}
 		\end{minipage}
 	\end{SubFloat}
 	\caption{Improving WCRT by shortening a critical path}
 	\label{fig:improv}
+	\vspace{-10pt}
 \end{figure}
 
 In Figure~\ref{fig:improv-a}, the program simply checks for the id of a

@@ -57,9 +57,9 @@ The introduced \texttt{delay} construct is not a kernel construct, but a
 the \texttt{delay} construct to kernel statements.
 
 \begin{figure}[tb]
+	\vspace{-10pt}
     \begin{minipage}{\textwidth}
-      \begin{scriptsize}
-\begin{verbatim}
+		\begin{lstlisting}[style=sysj,morekeywords={abort,await,emit,present,trap,pause,exit,delay,suspend}]
 trap(T){
  int x = 0;
  while(true){
@@ -68,8 +68,7 @@ trap(T){
   if(x == d) exit (T); //wait for "d" ticks
  } // d is the number of logical ticks calculated
 } // by Algorithm 1
-\end{verbatim}
-      \end{scriptsize}
+\end{lstlisting}
     \end{minipage}
     \caption{The rewrite of \texttt{delay} construct}
     \label{fig:3}
