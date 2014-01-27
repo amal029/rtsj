@@ -35,7 +35,8 @@ We also introduce two variants of the derived statement
   of $\tau$ units, such that, $M \leq \tau < \infty$. It is important to
   note that the lower bound of the wait construct; $M$ is \textit{not}
   an exact delay, but rather the control is allowed to proceed to the
-  next statement anytime after waiting for \textit{at least} time $M$.
+  next statement anytime after waiting for \textit{at least} $M$ times
+  units.
 \item Given a SystemJ program \texttt{wait\_exactly (M); p}, where $M
   \in \mathbb{Q}^{>0}$, statement $p$ is executed after real-time delay
   of $\tau$ units, such that, $M \leq \tau \leq M$. In this variant, the
@@ -136,18 +137,18 @@ requirements. The intersection of these two sets gives all the logical
 ticks that satisfy the real-time requirements invariant of the logical
 time and its elasticity.
 
-Let us revisit our motivating example to illustrate the algorithm. From
-Figure~\ref{fig:1} we know that $M$ is 50.3 ms and $N$ is 200.3 ms,
-respectively. Let the WCRT and BCRT be: 0.112 ms and 0.0334 ms,
-respectively. Thus, the algorithm proceeds as follows:
+Let us revisit the HRTCS example (cf. Figure~\ref{fig:1}) to illustrate
+the algorithm. From Figure~\ref{fig:1} we know that $M$ is 50.3 ms and
+$N$ is 200.3 ms, respectively. Let the WCRT and BCRT be: 0.112 ms and
+0.0334 ms, respectively. Thus, the algorithm proceeds as follows:
 
 \begin{enumerate*}
 \item $l_1 \leftarrow \lceil 50.3/0.112 \rceil$ and $u_1 \leftarrow
   \lfloor 200.3/0.112 \rfloor$. $l_1 = 450$ and $u_1 = 1788$. We first
   calculate the logical ticks that are always running at the WCRT and
-  satisfy the required real-time wait.
+  satisfy the required real-time wait period.
 \item $l_2 \leftarrow \lceil 50.3/0.0334 \rceil$ and $u_2 \leftarrow
-  \lfloor 200.3/0.0334 \rfloor$. $l_1 = 1506$ and $u_1 = 5997$. We do
+  \lfloor 200.3/0.0334 \rfloor$. $l_2 = 1506$ and $u_2 = 5997$. We do
   the same for the BCRT case.
 \item $S_1 = [450,1788]$ and $S_2 =[1506,5997]$. We then map the
   resultant bounds to linear points. Sets $S_1$ and $S_2$ represent
@@ -167,8 +168,8 @@ respectively. Thus, the algorithm proceeds as follows:
 
 The resultant value for \texttt{d} gives the number of logical ticks,
 which can run at any physical clock-speed, bounded by the BCRT and the
-WCRT of the program and still result in the desired real-time
-wait. Figure~\ref{fig:hrtcssoln} gives the solution space for the
+WCRT of the program and still result in the desired real-time wait
+period. Figure~\ref{fig:hrtcssoln} gives the solution space for the
 aforementioned calculation. The patterned space is the only overlapping
 region and hence gives the solution space for the above example.
 
@@ -256,7 +257,7 @@ large over-approximations can be avoided by breaking the critical paths
 constructs), just like in hardware design, which is very
 \textit{unsurprising} considering Esterel has its origins in hardware.
 
-\paragraph{Period execution of the clock domains}
+\paragraph{Periodic execution of the clock domains}
 \label{sec:peri-exec-clock}
 
 The aforementioned technique maintains the essence of synchronous and
@@ -264,8 +265,8 @@ GALS programs -- the logical tick, but in doing so is unable to provide
 the exact real-time wait of $M$ time units in case of
 \texttt{wait\_exactly(M)} statement, thereby violating its
 semantics. The second option is to execute the CD periodically at the
-WCRT. WCRT determines the execution speed of any CD guaranteeing that no
-input events from the environment will be missed
+WCRT. WCRT determines the fastest execution speed of any CD with the
+guarantee that no input events from the environment will be missed
 (cf. Section~\ref{sec:mapping-logical-time}). Thus, if we simply execute
 the CD at periodically at the WCRT, we can choose the value of
 \textit{d} from set $S1$. This technique allows meeting the synchronous
@@ -274,8 +275,8 @@ hypothesis, while at the same time guaranteeing the semantics of the
 option, this technique is very inflexible and results in reduced
 response time and increased power consumption.
 
-We believe that the designer should be allowed to choose either of these
-techniques and hence, provide this option via compiler switches.
+We believe that the designer should be allowed to choose from either of
+these techniques and hence, provide this option via compiler switches.
 
 \subsection{The tool-chain flow}
 \label{sec:tool-chain-flow}
@@ -304,12 +305,19 @@ Figure~\ref{fig:3}.
 Our compiler has a switch that enables over-approximation as described
 in Section~\ref{sec:extend-tehcn-vari} provided the wait requirements
 are not met. If this compiler switch is not enabled, the compiler simply
-decides to execute the CD at the periodically, where the period is the
-WCRT. The system designer can then either set the compiler switch or
-change the program by shortening the critical path by introducing
-\texttt{pause} constructs. We show how introducing \texttt{pause}
-constructs can help reduce the WCRT in
+decides to execute the CD periodically, where the period is the
+WCRT. WCRT effects the over-approximation or the period of the CD,
+irrespective of the solution that the system designer chooses. A large
+WCRT results in reduced performance and hence it is essential that the
+WCRT be optimized. One can optimize the WCRT of any CD by breaking the
+critical paths using the \texttt{pause} construct as we show later in
 Section~\ref{sec:experimental-results}.
+
+% The system designer can then either set the compiler switch or change
+% the program by shortening the critical path by introducing
+% \texttt{pause} constructs. We show how introducing \texttt{pause}
+% constructs can help reduce the WCRT in
+% Section~\ref{sec:experimental-results}.
 
 %%% Local Variables: 
 %%% mode: latex

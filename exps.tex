@@ -50,9 +50,8 @@
 
 We have carried out a number of experiments on a set of applications
 with real-time constraints. The characteristics of the benchmark set
-including required real-time delays and program sizes are shown in
-Table~\ref{fig:benchlist}.
-{\renewcommand{\arraystretch}{0.9}
+including required real-time waits and program sizes are shown in
+Table~\ref{fig:benchlist}.  {\renewcommand{\arraystretch}{0.9}
 %\renewcommand{\texttt}[1] {\begin{lstlisting}[language=Java,morekeywords={delay}] #1 \end{lstlisting}}
 \begin{table}[h!]
 	\scriptsize
@@ -161,8 +160,8 @@ through input/output signals in order to measure how long the entrance
 door to the room is being opened to detect intruders.  The program has
 been modified such that the wait constructs are used instead of external
 timers as shown in Figure~\ref{delaycode}. In the original AECS, the
-system needed to trigger external timer by emitting the output signal in
-order to wait for a specific amount of time (e.g.
+system needed to trigger an external timer by emitting the output signal
+in order to wait for a specific amount of time (e.g.
 \texttt{TimerTriggered} in Figure~\ref{delaycode:a}). When the timer
 expires, it notifies the system through the input signal
 \texttt{TimeOut}, which is polled using the \texttt{await}

@@ -20,7 +20,7 @@ real-time control mechanisms -- a generalization of the two real-time
 mechanisms introduced in real-time operating systems.
 
 \subsubsection{Programming using the non exact real-time control
-  construct the \textrm{\texttt{wait\_inbetween}} statement}
+  construct; the \textrm{\texttt{wait\_inbetween}} statement}
 \label{sec:progr-using-non}
 
 \begin{figure}[t!]
@@ -68,11 +68,11 @@ while(true) {
 
 Consider a machine used to test human response time and collect this
 data for future research purposes. The machine switches on a green light
-on a touch screen for anywhere between 50.3 ms to 200.3 ms, if the user
-can touch this green light then she is successful and an integer
-\texttt{1} is sent to a database, if unsuccessful a \texttt{0} is sent
-instead. Different statistics and analyses on human responsiveness can
-be based on the collected data.
+on a touch screen for anywhere \textit{in between} 50.3 ms to 200.3 ms,
+if the user can touch this green light then she is successful and an
+integer \texttt{1} is sent to a database, if unsuccessful a \texttt{0}
+is sent instead. Different statistics and analyses on human
+responsiveness can be based on the collected data.
 
 The SystemJ pseudo-code~\cite{amal10} for such a system, along with the
 expected timing behavior of the \texttt{wait\_inbetween} statement, is
@@ -94,12 +94,12 @@ this system are described in~\cite{amal10} and Table~\ref{tab:1}. The
 \texttt{wait\_inbetween} specification, which models the non exact delay
 between 50.3 ms and 200.3 ms is not supported in the current language
 and cannot be compiled with the current SystemJ compiler. We introduce
-real-time \texttt{wait\_inbetween} statements in SystemJ. Such non exact
+such \texttt{wait\_inbetween} statements in SystemJ. Such non exact
 real-time mechanisms are useful in developing systems where the
-real-time delay is not know or should not be known a priori.
+real-time delay is not known or should not be known a priori.
 
 \subsubsection{Programming a timeout using the non exact real-time
-  construct the \texttt{wait\_atleast} statement}
+  construct; the \texttt{wait\_atleast} statement}
 \label{sec:progr-time-using}
 
 \begin{figure}[b!]
@@ -143,7 +143,7 @@ is useful for programming low priority tasks.
 
 
 \subsubsection{Programming periodic tasks using the exact real-time
-  construct the \texttt{wait\_exactly} statement}
+  construct; the \texttt{wait\_exactly} statement}
 \label{sec:progr-using-exact}
 
 The previous wait statements are non exact, i.e., the execution of the
@@ -164,21 +164,21 @@ while(true) {
 }
 \end{lstlisting}
 \end{SubFloat}
-\begin{SubFloat}{\label{pp:b}Timing diagram -- the X-axis shows the
+\begin{SubFloat}{\label{p1:b}Timing diagram -- the X-axis shows the
     execution of the \texttt{wait\_exactly} statement. The Y-axis is the
     time elapsed.}
   \includegraphics[scale=0.7]{FF3}
 \end{SubFloat}
   \caption{Programming a periodic task with wait\_exactly}
-  \label{fig:periodic}
+  \label{fig:p1}
   \vspace{-10pt}
 \end{figure}
 
 One such example; periodic emission of a signal to the environment is
-shown in Figure~\ref{fig:periodic}. As before upon execution of
+shown in Figure~\ref{fig:p1}. As before upon execution of
 \texttt{wait\_exactly (1 ms)} statement, the time starts elapsing. But,
 unlike in previous cases the following statement needs to be executed
-once 1 ms have passed, as shown in Figure~\ref{pp:b}.
+exactly after 1 ms have passed, as shown in Figure~\ref{p1:b}.
 
 %%% Local Variables: 
 %%% mode: latex

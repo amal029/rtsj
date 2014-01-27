@@ -1,0 +1,59 @@
+\section{Proof of correctness}
+\label{sec:proof-correctness}
+
+Section~\ref{sec:intr-real-time} describes the techniques and algorithms
+for introducing various types of wait statements providing real-time
+control in the SystemJ language. In this section we give the formal
+proof of correctness for the algorithms described in
+Section~\ref{sec:intr-real-time}.
+
+\begin{lemma}
+  Algorithm~\ref{alg:1} gives a value for \texttt{d} such that: $\lceil
+  \frac{M}{BCRT} \rceil \leq d \leq \lfloor \frac{N}{WCRT} \rfloor$
+  provided $D$ is a non-empty set for construct \texttt{wait\_inbetween
+    (M..N)}
+\label{lemma:1}
+\end{lemma}
+\begin{proof}
+  This lemma is trivially true from the definition of set $D$ in
+  Algorithm~\ref{alg:1}.
+\end{proof}
+
+\begin{theorem}
+ Given \texttt{wait\_inbetween (M..N)} Algorithm~\ref{alg:1} gives a
+ value \texttt{d}, such that for any given $BCRT \leq T \leq WCRT$,
+ $M \leq T \times d \leq N$ holds.
+\label{th:1}
+\end{theorem}
+\begin{proof}
+  We use case analysis and contradiction to prove the above theorem.
+  \begin{compactenum}[\hspace{0.25cm} 1.]
+  \item Proof for case $T = WCRT$: Assume \mbox{$d \times WCRT < M$},
+    then $d < \frac{M}{WCRT}$. $BCRT \leq WCRT$, by definition, hence,
+    $\frac{M}{WCRT} \leq \frac{M}{BCRT}$. Thus for the assumption to
+    hold, $d < \frac{M}{BCRT}$, which contradicts
+    Lemma~\ref{lemma:1}. The assumption $d \times WCRT >N$ is trivially
+    proven from Lemma~\ref{lemma:1}.
+  \item Proof for case $T = BCRT$: Like above, the assumption $d \times
+    BCRT < M$ is trivially proven from Lemma~\ref{lemma:1}. For $d
+    \times BCRT > N$ to hold, $d > \frac{N}{BCRT}$ should hold. But,
+    $BCRT \leq WCRT$, by definition, hence, $\frac{N}{BCRT} \geq
+    \frac{N}{WCRT}$, which again contradicts Lemma~\ref{lemma:1}.
+  \item Proof for case $BCRT < T < WCRT$: For $d \times T < M$ to hold,
+    $d < \frac{M}{T}$ should hold. By definition, $T > BCRT$, thus,
+    $\frac{M}{BCRT} < \frac{M}{T}$, hence, $d < {M}{BCRT}$ should hold,
+    which contradicts Lemma~\ref{lemma:1}. We can prove the other case
+    $d \times T \leq N$, using the upper bound from Lemma~\ref{lemma:1}
+    similarly.
+  \end{compactenum}
+\end{proof}
+
+The proof for correctness for Algorithm~\ref{alg:2} follows from
+Theorem~\ref{th:1}.
+
+
+
+%%% Local Variables: 
+%%% mode: latex
+%%% TeX-master: "paper"
+%%% End: 

@@ -120,7 +120,7 @@ construct does not make the reaction (or CD) periodic. The program on
 the left does \textit{not} emit signal \texttt{S} every \texttt{1 ms},
 because of the extra \texttt{pause} statement. Introducing additional
 pauses introduces more logical ticks, consequently increasing the
-real-time wait constructs. Static analysis techniques from real-time
+real-time wait period. Static analysis techniques from real-time
 community can be used to automatically determine the wait specification,
 in such cases, but describing these techniques is out of the scope of
 this work.
@@ -136,20 +136,20 @@ section we debunk this \textit{perceived} disadvantage.
 \subsubsection{Interaction of timers and reactive constructs}
 \label{sec:inter-timers-react}
 
-As mentioned previously, the proposed solution might need
-over-approximation techniques (Algorithm~\ref{alg:2}) to guarantee
-timing requirements (cf. Section~\ref{sec:extend-tehcn-vari}). This
-might give the readers an impression that timer based solution proposed
-for standard real-time operating systems should be utilized for
-GALS/synchronous programs. This is a fallacy. Bourke et
-al~\cite{Bourke2009a} have investigated this technique
-unsuccessfully. We elaborate upon the interplay of timers and reactivity
-to make the problem of using timers explicit.
+% As mentioned previously, the proposed solution might need
+% over-approximation techniques (Algorithm~\ref{alg:2}) to guarantee
+% timing requirements (cf. Section~\ref{sec:extend-tehcn-vari}). This
+% might give the readers an impression that timer based solution proposed
+% for standard real-time operating systems should be utilized for
+% GALS/synchronous programs. This is a fallacy. Bourke et
+% al~\cite{Bourke2009a} have investigated this technique
+% unsuccessfully. We elaborate upon the interplay of timers and reactivity
+% to make the problem of using timers explicit.
 
 Preemption plays an important role in reactive languages. One needs to
 carefully consider the interplay of wait constructs semantics with the
 preemption semantics of reactive languages. Previous attempts at
-incorporating delay (using external timers) have only been partially
+incorporating postponement using external timers has only been partially
 successful, because of the complex interplay between real-time and
 preemption. Consider the simple example below, which models real-time
 using external timers as in~\cite{rsh94}.
@@ -169,15 +169,16 @@ suspend(S) {
 \end{figure}
 
 As identified in~\cite{Bourke2009a} \texttt{suspend} does not play well
-with the external timer. The above program sends a signal to an external
-timer and waits for 10 ms to pass by. Consider what happens when signals
-\texttt{S} and \texttt{TIMER} occur in the same logical tick, the
-\texttt{await} statement is never executed (due to suspend) and hence,
-we enter a deadlock. Such problems are completely avoided in our
-technique, because we convert the real-time wait constructs into logical
-waits (\texttt{pause} constructs), which interact well with preemption.
-Furthermore, synchronous/GALS languages have always been targeted at
-real-time analyzable platforms and constrained
+with the external timer. The program in Figure~\ref{fig:preemp} sends a
+signal to an external timer and waits for 10 ms to pass by. Consider
+what happens when signals \texttt{S} and \texttt{TIMER} occur in the
+same logical tick, the \texttt{await} statement is never executed (due
+to suspend) and hence, we enter a deadlock. Such problems are completely
+avoided in our technique, because we convert the real-time wait
+constructs into logical waits (\texttt{pause} constructs), which
+interact well with preemption.  Furthermore, synchronous/GALS languages
+have always been targeted at real-time analyzable platforms and
+constrained
 environments~\cite{DBLP:journals/pieee/SifakisTY03,boldt07}. One can use
 our technique within such a setting with ease.
 
@@ -193,7 +194,7 @@ our technique within such a setting with ease.
  emit START_TIMER(1 ms); 
  await (TIMER);emit O1;
 }
-||
+|| //synchronous parallel
 {
  //reaction R2
  // do something
@@ -207,7 +208,7 @@ our technique within such a setting with ease.
 There is yet another problem with timer based systems. Let us consider
 the program in Figure~\ref{fig:resolution}. On a cursory look this
 example should work fine. An external timer is started in reaction R1,
-which counts down from 1 ms. Once this time has elapsed a signal
+which counts down from 1 ms. Once this time has elapsed, a signal
 \texttt{TIMER} is generated from this external timer, which should emit
 O1 in turn. There is no \texttt{suspend} construct encapsulating the
 timer and hence all seems fine. Let us now consider what happens to the
@@ -229,7 +230,7 @@ need for a time analyzable platform even when using external timers.
 In general we observe that the WCRT determines the lowest resolution of
 any real-time construct whether it be external timer independent, like
 the proposed technique, or external timer dependent, like above. This
-discovery is one of the key insights for proposing the solution
+discovery is one of the key insights for proposing the solutions
 described in this paper.
 
 % \subsection{Other semantic discussion}

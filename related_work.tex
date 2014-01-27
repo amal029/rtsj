@@ -24,11 +24,11 @@ need to be determined and present on the system for the solution to be
 realizable. Moreover, non exact real-time waits and integration with
 non-maximal parallelism is not studied at all. Our solution does not
 require external timers (like~\cite{rsh94}) or logical notion of timers
-(like~\cite{Bourke2009a}). In our solution we calculate the real-time
-waiting time in logical ticks \textit{after} allocation and scheduling,
-it gives the compiler developers the chance to optimize for many
-different criteria such as computation time, energy, power, etc, without
-worrying about or violating the real-time wait specification.
+(like~\cite{Bourke2009a}). In our solution we calculate the real waiting
+time in logical ticks \textit{after} allocation and scheduling, it gives
+the compiler developers the chance to optimize for many different
+criteria such as computation time, energy, power, etc, without worrying
+about or violating the real-time wait specification.
 
 Other works such as Quartz~\cite{glog02} and Bertin et
 al.~\cite{Bertin:2000:TVR:1947412.1947439}, also incorporate real-time
