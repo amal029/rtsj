@@ -1,4 +1,4 @@
-\section{Proof of correctness}
+\section{Proofs of correctness, completeness, and soundness}
 \label{sec:proof-correctness}
 
 Section~\ref{sec:intr-real-time} describes the techniques and algorithms
@@ -20,9 +20,9 @@ Section~\ref{sec:intr-real-time}.
 \end{proof}
 
 \begin{theorem}
- Given \texttt{wait\_inbetween (M..N)} Algorithm~\ref{alg:1} gives a
- value \texttt{d}, such that for any given $BCRT \leq T \leq WCRT$,
- $M \leq T \times d \leq N$ holds.
+  Given \texttt{wait\_inbetween (M..N)} Algorithm~\ref{alg:1} gives a
+  value \texttt{d}, provided $D$ is a non empty set, such that for any
+  given $BCRT \leq T \leq WCRT$, $M \leq T \times d \leq N$ holds.
 \label{th:1}
 \end{theorem}
 \begin{proof}
@@ -48,10 +48,32 @@ Section~\ref{sec:intr-real-time}.
   \end{compactenum}
 \end{proof}
 
-The proof for correctness for Algorithm~\ref{alg:2} follows from
-Theorem~\ref{th:1}.
+Next, we prove the completeness property.
+\begin{theorem}
+  Given \texttt{wait\_inbetween (M..N)} Algorithm~\ref{alg:1} gives a
+  value \texttt{d}, provided $D$ is a non empty set, such that for
+  \textbf{all} given $BCRT \leq T \leq WCRT$, $M \leq T \times d \leq N$
+  holds.
+\end{theorem}
+\begin{proof}
+  From Theorem~\ref{th:1} case 3.
+\end{proof}
 
+Next, we sketch the proof for the opposite of completeness -- the
+soundness property of Algorithm~\ref{alg:1}.
 
+\begin{theorem}
+  Given \texttt{wait\_inbetween (M..N)} Algorithm~\ref{alg:1}
+  \textbf{does not} give a value \texttt{d}, such that for \textbf{all}
+  given $BCRT \geq T \geq WCRT$, $M \leq T \times d \leq N$ holds.
+\end{theorem}
+
+\begin{proof}
+  The proof is the opposite of case 3 in Theorem~\ref{th:1}.
+\end{proof}
+
+The proofs for correctness, completeness, and soundness for
+Algorithm~\ref{alg:2} are similar to those of Algorithm~\ref{alg:1}.
 
 %%% Local Variables: 
 %%% mode: latex
