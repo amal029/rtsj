@@ -1,4 +1,5 @@
-\subsection{Motivating Example}
+\subsection{Motivation via examples of real-time systems programmed in a
+reactive language -- SystemJ}
 \label{sec:motivating-example}
 
 % system{
@@ -8,10 +9,25 @@
 %   output char channel S;
 %   input char channel R;
 %  }
+
+Real-time operating systems~\cite{barry2009using} usually provide two
+types of mechanisms for introducing real-time in the developed program:
+(1) the ability to perform a timeout and (2) the ability to run tasks
+periodically with some real-time period $T$. We would like to provide
+similar mechanisms in reactive languages for real-time program
+development. In fact, we provide \textit{exact} and \textit{non exact}
+real-time control mechanisms -- a generalization of the two real-time
+mechanisms introduced in real-time operating systems.
+
+\subsubsection{Programming using the non exact real-time control
+  construct the \textrm{\texttt{wait\_inbetween}} statement}
+\label{sec:progr-using-non}
+
 \begin{figure}[t!]
-% \begin{center}
 	\vspace{-10pt}
-		\begin{lstlisting}[style=sysj,morekeywords={sustain,send,receive,abort,await,emit,present,trap,pause,exit,delay,suspend}]
+        \begin{SubFloat}{\label{delaycode:a}A human responsiveness
+            system (HRTCS)}
+        \begin{lstlisting}[style=sysj,morekeywords={sustain,send,receive,abort,await,emit,present,trap,pause,exit,wait_inbetween,suspend}]
 { // Clock-domain 1
 while(true) {
   trap(TRAP){
@@ -21,7 +37,7 @@ while(true) {
     || // synchronous parallel operator
     {
      //exit after any where from 50.3 to 200.3 ms.
-     delay (50.3 .. 200.3 ms); 
+     wait_inbetween (50.3 .. 200.3 ms); 
      exit(TRAP); 
     } // reaction R2
    } do {send S(1);} // Send 1 if touched 
@@ -34,7 +50,17 @@ while(true) {
   while(true){ receive S; /* do something with S */}
 }
 \end{lstlisting}
-\caption{An example human responsiveness system (HRTCS)}
+\end{SubFloat}
+\begin{SubFloat}{\label{delaycode:b}Timing diagram -- the X-axis shows
+    the execution of the \texttt{wait\_inbetween} statement. The Y-axis
+    is the time elapsed.}
+  % \begin{figure}[h!]
+    \centering
+    \includegraphics[scale=0.7]{FF1}
+  % \end{figure}
+\end{SubFloat}
+\caption{Programming a human responsiveness system (HRTCS) with
+  \texttt{wait\_inbetween}}
 % }
 % \end{center}
 \label{fig:1}
@@ -48,14 +74,15 @@ can touch this green light then she is successful and an integer
 instead. Different statistics and analyses on human responsiveness can
 be based on the collected data.
 
-The SystemJ pseudo-code~\cite{amal10} for such a system is shown in
-Figure~\ref{fig:1}. We use the SystemJ language in this paper, first of
-all, because being a \textit{Globally Asynchronous Locally Synchronous}
-(GALS) language it helps us easily describe a larger class of systems
-(like HRTCS in Figure~\ref{fig:1}) compared to purely synchronous
-languages like Esterel. Moreover, being a super-set of Esterel, SystemJ
-allows us to explore the marriage of real-time and logical time, which
-is equally applicable to the synchronous sub-set.
+The SystemJ pseudo-code~\cite{amal10} for such a system, along with the
+expected timing behavior of the \texttt{wait\_inbetween} statement, is
+shown in Figure~\ref{fig:1}. We use the SystemJ language in this paper,
+first of all, because being a \textit{Globally Asynchronous Locally
+  Synchronous} (GALS) language it helps us easily describe a larger
+class of systems (like HRTCS in Figure~\ref{fig:1}) compared to purely
+synchronous languages like Esterel. Moreover, being a super-set of
+Esterel, SystemJ allows us to explore the marriage of real-time and
+logical time, which is equally applicable to the synchronous sub-set.
 
 The SystemJ program is divided into two clock-domains, the first
 clock-domain continuously displays a green light (\texttt{GREEN\_LIGHT}
@@ -63,11 +90,95 @@ signal) on the touch screen sensor and waits for the user to respond. If
 the user is able to touch the screen within the specified time of 50.3
 ms to 200.3 ms a positive response is sent to the second
 clock-domain. All the SystemJ programming constructs used to implement
-this system are described in~\cite{amal10} and Table~\ref{tab:1} in
-Section~\ref{sec:background}. The delay specification, which models the
-non-deterministic delay between 50.3 ms and 200.3 ms is not supported in
-the current language and cannot be compiled with the current SystemJ
-compiler. We introduce real-time \texttt{delay} statements in SystemJ.
+this system are described in~\cite{amal10} and Table~\ref{tab:1}. The
+\texttt{wait\_inbetween} specification, which models the non exact delay
+between 50.3 ms and 200.3 ms is not supported in the current language
+and cannot be compiled with the current SystemJ compiler. We introduce
+real-time \texttt{wait\_inbetween} statements in SystemJ. Such non exact
+real-time mechanisms are useful in developing systems where the
+real-time delay is not know or should not be known a priori.
+
+\subsubsection{Programming a timeout using the non exact real-time
+  construct the \texttt{wait\_atleast} statement}
+\label{sec:progr-time-using}
+
+\begin{figure}[b!]
+	\centering
+	\vspace{-10pt}
+        \begin{SubFloat}{\label{dd:a}Timeout waiting for the input
+            signal \texttt{DoorOpened}}
+        \begin{lstlisting}[style=sysj,morekeywords={abort,await,emit,present,trap,pause,exit,wait_atleast,suspend}]
+trap(T){
+  abort(DoorOpened){
+    wait_atleast(10000 ms);
+    exit(T);  
+  }
+}
+\end{lstlisting}
+\end{SubFloat}
+\begin{SubFloat}{\label{dd:b}Timing diagram -- the X-axis shows the
+    execution of the \texttt{wait\_atleast} statement. The Y-axis is the
+    time elapsed.}
+\includegraphics[scale=0.7]{FF2}
+\end{SubFloat}
+\caption{Programming a timeout with \texttt{wait\_atleast}}
+\label{dd}
+\end{figure}
+
+There are many instances when one would like to wait on an input from
+environment for only a specified amount of time. If the signal is not
+received then a timeout is generated so that the program can make
+progress. Such a timeout programmed in the SystemJ pseudo-code along
+with its timing behavior is shown in Figure~\ref{dd}. The SystemJ
+program is waiting on an input signal, \texttt{DoorOpened}, from the
+environment for 10 seconds and makes progress irrespective of the
+reception of this signal after 10 seconds.
+
+The timing diagram, Figure~\ref{dd:b}, shows that the
+\texttt{wait\_atleast} statement waits for a \textit{at least} 10
+seconds, but unlike \texttt{wait\_inbetween} there is no upper
+bound. The statement following the \texttt{wait\_atleast} statement is
+executed after a finite countable, but unbounded delay. Such a statement
+is useful for programming low priority tasks.
+
+
+\subsubsection{Programming periodic tasks using the exact real-time
+  construct the \texttt{wait\_exactly} statement}
+\label{sec:progr-using-exact}
+
+The previous wait statements are non exact, i.e., the execution of the
+statement following the wait statement cannot be controlled exactly. The
+final variant we introduce allows doing exactly that. We call it
+\texttt{wait\_exactly} and this statement can be used to program exact
+timeouts, periodic tasks, etc.
+
+\begin{figure}[t!]
+  \centering
+	\vspace{-10pt}
+        \begin{SubFloat}{\label{pp:a}Periodically emitting signal S}
+        \begin{lstlisting}[style=sysj,morekeywords={emit,trap,pause,exit,wait_exactly}]
+while(true) { 
+ wait_exactly (1 ms); 
+ emit S; 
+ //do something 
+}
+\end{lstlisting}
+\end{SubFloat}
+\begin{SubFloat}{\label{pp:b}Timing diagram -- the X-axis shows the
+    execution of the \texttt{wait\_exactly} statement. The Y-axis is the
+    time elapsed.}
+  \includegraphics[scale=0.7]{FF3}
+\end{SubFloat}
+  \caption{Programming a periodic task with wait\_exactly}
+  \label{fig:periodic}
+  \vspace{-10pt}
+\end{figure}
+
+One such example; periodic emission of a signal to the environment is
+shown in Figure~\ref{fig:periodic}. As before upon execution of
+\texttt{wait\_exactly (1 ms)} statement, the time starts elapsing. But,
+unlike in previous cases the following statement needs to be executed
+once 1 ms have passed, as shown in Figure~\ref{pp:b}.
 
 %%% Local Variables: 
 %%% mode: latex

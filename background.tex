@@ -120,24 +120,24 @@ be missed -- one needs to calculate the \textit{Worst Case Reaction
 between any two consecutive events on any input, else the synchrony
 hypothesis is violated. Techniques for calculating the WCRT of
 synchronous programs~\cite{boldt07} exist and this analysis is not the
-focus of this paper. The opposite of the WCRT is the \textit{Best Case
-  Reaction Time} (BCRT), we denote the WCRT and BCRT in
-Figure~\ref{fig:2c} using \texttt{W} and \texttt{B},
-respectively. Figure~\ref{fig:2c} shows a continuously running physical
-clock (analogous to a clock in digital hardware), the numerical
-annotations on the rising edge of the clock mark the logical ticks from
-Figure~\ref{fig:2c}. The subscripts \texttt{s} and \texttt{e} for the
-numbers show the start and end of the logical ticks, respectively. The
-end of a logical tick and the start of the next logical tick happen
-together. Figure~\ref{fig:2c} shows the mapping of the logical time to
-the physical time. For example, the logical tick \texttt{1} starts at
-the first rising edge and completes at the second rising edge of the
-physical clock, whereas logical tick \texttt{4} starts at the $4^{th}$
-rising edge, but finishes at the $6^{th}$ rising edge of the physical
-clock. This difference can be accounted for by the Java computations
-required when signal \texttt{A} is input by the environment (see
-Figure~\ref{fig:2a}). This elasticity is inherent (and elegant) to both
-Esterel and SystemJ.
+focus of this paper. The opposite of the WCRT, the shortest time for a
+reaction, is called the \textit{Best Case Reaction Time} (BCRT), we
+denote the WCRT and BCRT in Figure~\ref{fig:2c} using \texttt{W} and
+\texttt{B}, respectively. Figure~\ref{fig:2c} shows a continuously
+running physical clock (analogous to a clock in digital hardware), the
+numerical annotations on the rising edge of the clock mark the logical
+ticks from Figure~\ref{fig:2c}. The subscripts \texttt{s} and \texttt{e}
+for the numbers show the start and end of the logical ticks,
+respectively. The end of a logical tick and the start of the next
+logical tick happen together. Figure~\ref{fig:2c} shows the mapping of
+the logical time to the physical time. For example, the logical tick
+\texttt{1} starts at the first rising edge and completes at the second
+rising edge of the physical clock, whereas logical tick \texttt{4}
+starts at the $4^{th}$ rising edge, but finishes at the $6^{th}$ rising
+edge of the physical clock. This difference can be accounted for by the
+Java computations required when signal \texttt{A} is input by the
+environment (see Figure~\ref{fig:2a}). This elasticity is inherent (and
+elegant) to both Esterel and SystemJ.
 
 % We now present a lemma with proof sketch (due to lack of space) that we
 % require for the rest of the paper and is special to SystemJ, being a

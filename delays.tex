@@ -1,65 +1,71 @@
 \section{Introducing real-time in SystemJ}
 \label{sec:intr-real-time}
 
-We introduce a single \textit{derived} (built from kernel constructs)
-statement called \mbox{\texttt{delay (M..N)}} in the SystemJ language
-for real-time control. The resolution of the delay statement is of
-secondary concern and is dependent upon the execution platform. 
+We introduce a single \textit{derived} statement called
+\mbox{\texttt{wait\_inbetween (M..N)}}, built from kernel constructs, in
+the SystemJ language for real-time control. The other two constructs
+\mbox{\texttt{wait\_atleast (M)}} and \mbox{\texttt{wait\_exactly (M)}}
+are variants of this single derived construct.
+
+% The resolution of the delay statement is of secondary concern and is
+% dependent upon the execution platform.
 
 
-\subsection{Semantics of the delay statement}
+\subsection{Semantics of the \texttt{wait\_inbetween} statement}
 \label{sec:semant-delay-stat}
 
-\begin{figure}[t!]
-  \centering
-  \includegraphics[scale=0.6]{./sem}
-  \caption{Pictorial representation of the semantics of the delay
-    statement and its variants}
-  \label{fig:5}
-\end{figure}
+% \begin{figure}[t!]
+%   \centering
+%   \includegraphics[scale=0.6]{./sem}
+%   \caption{Pictorial representation of the semantics of the delay
+%     statement and its variants}
+%   \label{fig:5}
+% \end{figure}
 
-Given a SystemJ program: \texttt{delay (M..N); p}, where $M \in
-\mathbb{Q}^{>0}$ and $N \in \mathbb{Q}^{>0}$, statement $p$ is executed
-after real-time delay of $\tau$ units, such that, $M \leq \tau \leq N$.
+Given a SystemJ program: \texttt{wait\_inbetween (M..N); p}, where $M
+\in \mathbb{Q}^{>0}$ and $N \in \mathbb{Q}^{>0}$, statement $p$ is
+executed after real-time delay of $\tau$ units, such that, $M \leq \tau
+\leq N$.
 
-We also introduce two variants of the derived statement \texttt{delay}.
+We also introduce two variants of the derived statement
+\texttt{wait\_inbetween}.
 \begin{enumerate*}
-\item Given a SystemJ program \texttt{delay (M); p}, where $M \in
-  \mathbb{Q}^{>0}$, statement $p$ is executed after real-time delay of
-  $\tau$ units, such that, $M \leq \tau < \infty$. It is important to
-  note that the lower bound of the delay construct $M$ is \textit{not}
+\item Given a SystemJ program \texttt{wait\_atleast (M); p}, where $M
+  \in \mathbb{Q}^{>0}$, statement $p$ is executed after real-time delay
+  of $\tau$ units, such that, $M \leq \tau < \infty$. It is important to
+  note that the lower bound of the wait construct; $M$ is \textit{not}
   an exact delay, but rather the control is allowed to proceed to the
-  next statement anytime after the delay of time $M$.
-\item Given a SystemJ program \texttt{delay (M..M); p}, where $M \in
-  \mathbb{Q}^{>0}$, statement $p$ is executed after real-time delay of
-  $\tau$ units, such that, $M \leq \tau \leq M$. In this variant, the
-  delay is exact.
+  next statement anytime after waiting for \textit{at least} time $M$.
+\item Given a SystemJ program \texttt{wait\_exactly (M); p}, where $M
+  \in \mathbb{Q}^{>0}$, statement $p$ is executed after real-time delay
+  of $\tau$ units, such that, $M \leq \tau \leq M$. In this variant, the
+  waiting time is exact.
 \end{enumerate*}
 
-Figure~\ref{fig:5} pictorially represents the semantics of these delay
-constructs. The construct \texttt{delay (M..N)} requires that upon
-execution the control-flow is suspended for \textit{at least} $M$ units
-and \textit{at most} $N$ units, depicted as bounded box in
-Figure~\ref{fig:5}. There is no upper bound for the second delay variant
-\texttt{delay(M)}, which requires that the control-flow suspends for
-\textit{at least} $M$ units, but the following statement can be executed
-after some countable delay, depicted with the unbounded box in
-Figure~\ref{fig:5}. Finally, \texttt{delay (M..M)} requires that there
-is an \textit{exact} delay of $M$ units, i.e., the control-flow suspends
-execution for \textit{at least} and \textit{at most} $M$ units.
+% Figure~\ref{fig:5} pictorially represents the semantics of these delay
+% constructs. The construct \texttt{delay (M..N)} requires that upon
+% execution, the control-flow is suspended for \textit{at least} $M$ units
+% and \textit{at most} $N$ units, depicted as bounded box in
+% Figure~\ref{fig:5}. There is no upper bound for the delay variant
+% \texttt{delay(M)}, which requires that the control-flow suspends for
+% \textit{at least} $M$ units, but the following statement can be executed
+% after some countable delay, depicted with the unbounded box in
+% Figure~\ref{fig:5}. Finally, \texttt{delay (M..M)} requires that there
+% is an \textit{exact} delay of $M$ units, i.e., the control-flow suspends
+% execution for \textit{at least} and \textit{at most} $M$ units.
 
-\subsection{Rewriting the \texttt{delay} statement}
+\subsection{Rewriting the \texttt{wait\_inbetween} statement}
 \label{sec:rewr-delay-stat}
 
-The introduced \texttt{delay} construct is not a kernel construct, but a
-\textit{derived} construct built from the kernel constructs
-(Table~\ref{tab:1}) in SystemJ. Figure~\ref{fig:3} gives the rewrite of
-the \texttt{delay} construct to kernel statements.
+The introduced \texttt{wait\_inbetween} construct is not a kernel
+construct, but a \textit{derived} construct built from the kernel
+constructs (Table~\ref{tab:1}) in SystemJ. Figure~\ref{fig:3} gives the
+rewrite of the \texttt{wait\_inbetween} construct to kernel statements.
 
 \begin{figure}[tb]
 	\vspace{-10pt}
     \begin{minipage}{\textwidth}
-		\begin{lstlisting}[style=sysj,morekeywords={abort,await,emit,present,trap,pause,exit,delay,suspend}]
+      \begin{lstlisting}[style=sysj,morekeywords={abort,await,emit,present,trap,pause,exit,delay,suspend}]
 trap(T){
  int x = 0;
  while(true){
@@ -70,20 +76,20 @@ trap(T){
 } // by Algorithm 1
 \end{lstlisting}
     \end{minipage}
-    \caption{The rewrite of \texttt{delay} construct}
+    \caption{The rewrite of \texttt{wait\_inbetween} construct}
     \label{fig:3}
 \end{figure}
 
 The fundamental observation is that real-time is converted into logical
 time via the \texttt{pause} construct. The rewrite basically maps the
 physical notion of time back to the elegant logical notion of time. The
-rewrite \textit{delays} a certain number of logical ticks, before
+rewrite \textit{waits} a certain number of logical ticks, before
 proceeding to the next statement. The number of logical ticks \texttt{d}
-to \textit{delay} (Figure~\ref{fig:3}) is determined by the compiler
+to \textit{wait} (Figure~\ref{fig:3}) is determined by the compiler
 statically at compile time. The value of \texttt{d} is intricately tied
 with the WCRT and BCRT of the program and hence the execution platform.
 
-\subsection{Finding the logical delay \texttt{d}}
+\subsection{Finding the logical wait \texttt{d}}
 \label{sec:find-logic-delay}
 
 \begin{algorithm}[t!]
@@ -109,24 +115,26 @@ algorithm is carried out for each CD (in SystemJ) or a synchronous
 program individually. \textit{The fundamental observation is -- the
   reaction time for each logical tick is elastic -- varying only between
   the BCRT and the WCRT, thus any number of logical ticks \texttt{d}
-  that map to the required real-time \texttt{delay} should be chosen in
-  such a way that they are invariant to this elasticity.}
+  that map to the required real-time \mbox{\texttt{wait\_inbetween
+      (M..N)}} should be chosen in such a way that they are invariant to
+  this elasticity.}
 
 Our algorithm takes as input: WCRT, BCRT, and the lower and upper bounds
-$M$ and $N$, respectively of the \texttt{delay} construct. We first
-divide $M$ and $N$ with the BCRT and WCRT, respectively. This division
-gives us the number of individual logical ticks required to delay the CD
-(or synchronous program) by the real-time specification. We always
-$ceil$ when dividing $M$ and $floor$ when dividing $N$ to make sure that
-the resultant values are integers (in domain $\mathbb{N}^{>0}$) and
-these functions guarantee that the resultant logical ticks result in
-real-time delays between the required range $[M,N]$. Next, a function
-$F$ maps these calculated values to a set of equidistant integer points
-(values) separated by a unit value -- these points represent all the
-logical ticks running at the WCRT and the BCRT, respectively that
-satisfy the real-time delay requirements. The intersection of these two
-sets gives all the logical ticks that satisfy the real-time requirements
-invariant of the logical time and its elasticity.
+$M$ and $N$, respectively of the \texttt{wait\_inbetween} construct. We
+first divide $M$ and $N$ with the BCRT and WCRT, respectively. This
+division gives us the number of individual logical ticks required to
+postpone the CD (or synchronous program) by the real-time
+specification. We always $ceil$ when dividing $M$ and $floor$ when
+dividing $N$ to make sure that the resultant values are integers (in
+domain $\mathbb{N}^{>0}$) and these functions guarantee that the
+resultant logical ticks result in real-time postponements between the
+required range $[M,N]$. Next, a function $F$ maps these calculated
+values to a set of equidistant integer points (values) separated by a
+unit value -- these points represent all the logical ticks running at
+the WCRT and the BCRT, respectively that satisfy the real-time wait
+requirements. The intersection of these two sets gives all the logical
+ticks that satisfy the real-time requirements invariant of the logical
+time and its elasticity.
 
 Let us revisit our motivating example to illustrate the algorithm. From
 Figure~\ref{fig:1} we know that $M$ is 50.3 ms and $N$ is 200.3 ms,
@@ -137,7 +145,7 @@ respectively. Thus, the algorithm proceeds as follows:
 \item $l_1 \leftarrow \lceil 50.3/0.112 \rceil$ and $u_1 \leftarrow
   \lfloor 200.3/0.112 \rfloor$. $l_1 = 450$ and $u_1 = 1788$. We first
   calculate the logical ticks that are always running at the WCRT and
-  satisfy the required real-time delay.
+  satisfy the required real-time wait.
 \item $l_2 \leftarrow \lceil 50.3/0.0334 \rceil$ and $u_2 \leftarrow
   \lfloor 200.3/0.0334 \rfloor$. $l_1 = 1506$ and $u_1 = 5997$. We do
   the same for the BCRT case.
@@ -150,39 +158,54 @@ respectively. Thus, the algorithm proceeds as follows:
   for \texttt{d}.
 \end{enumerate*}
 
+\begin{figure}[t!]
+  \centering
+  \includegraphics[scale=0.6]{FF4}
+  \caption{The pictorial representation of the solution for the HRTCS system}
+  \label{fig:hrtcssoln}
+\end{figure}
+
 The resultant value for \texttt{d} gives the number of logical ticks,
 which can run at any physical clock-speed, bounded by the BCRT and the
-WCRT of the program and still result in the desired real-time delay. We
-think this is an elegant solution, because the technique provides
+WCRT of the program and still result in the desired real-time
+wait. Figure~\ref{fig:hrtcssoln} gives the solution space for the
+aforementioned calculation. The patterned space is the only overlapping
+region and hence gives the solution space for the above example.
+
+We think this is an elegant solution, because the technique provides
 real-time guarantees while preserving the essence (elastic logical tick)
 of synchronous and GALS programming prescribed by SystemJ and Esterel
 style languages. Moreover, this technique considers non
-maximal-parallelism, i.e., the delay in logical ticks is calculated
-after scheduling of CDs or synchronous programs has been performed. To
-our knowledge we are the first to do so.
+maximal-parallelism, i.e., the postponement in logical ticks is
+calculated after scheduling of CDs or synchronous programs has been
+performed. To our knowledge we are the first to do so.
 
-\subsection{Extending the technique to variants of \texttt{delay}}
+\subsection{Extending the technique to variants of wait}
 \label{sec:extend-tehcn-vari}
 
-\paragraph{The \texttt{delay(M)} construct}
+\paragraph{The \texttt{wait\_atleast(M)} construct}
 \label{sec:extend-techn-vari}
 
-The \texttt{delay(M)} variant is easily accommodated in the
+The \texttt{wait\_atleast(M)} variant is easily accommodated in the
 technique. All one needs to do is find the set $S_1$ and choose a value
 from this set.
 
-\paragraph{The \texttt{delay(M..M)} construct}
+\paragraph{The \texttt{wait\_exactly(M)} construct}
 \label{sec:extend-techn-vari}
 
-The \texttt{delay(M..M)} variant is more interesting. Like before, we
-find sets $S_1$ and $S_2$, and find the intersection of the two sets to
-get the value of \texttt{d}. It is possible (and often likely, as
-suggested by our experiments in Section~\ref{sec:experimental-results})
+The \texttt{wait\_exactly(M)} variant is more interesting. Like before,
+we find sets $S_1$ and $S_2$, and find the intersection of the two sets
+to get the value of \texttt{d}. It is possible % (and often likely, as
+% suggested by our experiments in
+% Section~\ref{sec:experimental-results})
 that the resultant set $D$ is empty (also possible in the case of
-\texttt{delay(M..N)}, but never possible in case of
-\texttt{delay(M)}). Note that $S_1$ and $S_2$ can never be empty sets
-and will always contain at minimum a single element. In such a case, we
-can \textit{relax} the upper bound of the \texttt{delay} statement.
+\texttt{wait\_inbetween(M..N)}, but never possible in case of
+\texttt{wait\_atleast(M)}). Note that $S_1$ and $S_2$ can never be empty
+sets and will always contain at minimum a single element. For such cases
+we provide two solutions listed below.
+
+% In such a case, we can \textit{relax} the upper bound of the
+% \texttt{delay} statement.
 
 \paragraph{Relaxation of the upper real-time bound}
 \label{sec:over-appr-relax}
@@ -208,29 +231,51 @@ The relaxation technique is shown in Algorithm~\ref{alg:2}.
 
 
 This algorithm results in the \underline{smallest} relaxation required
-for the real-time delay to be satisfied. The algorithm takes as input
-the WCRT and set $S_2$, recall that set $S_2$ represents the logical
-ticks required to satisfy the real-time requirement at the BCRT. We take
-the very first value from set $S_2$ and multiply it with the WCRT to get
-the relaxation $N$. The first element of set $S_2$ is returned as the
-logical tick delay \texttt{d}. The fundamental observation is that we
-have to delay for at least $M$ units of real-time, hence,
-under-approximation is out of question. We can still over-approximate,
-but to reduce the resultant error, we should over-approximate by least
-possible value, which is the lower bound of set $S_2$. Thus, the lower
-bound is considered to be the only element shared between the two sets
-$S_1$ and $S_2$ and accordingly, the upper real-time bound is relaxed by
-the multiplication of WCRT and the first element of set $S_2$.
+for the real-time postponement to be satisfied. The algorithm takes as
+input the WCRT and set $S_2$, recall that set $S_2$ represents the
+logical ticks required to satisfy the real-time requirement at the
+BCRT. We take the very first value from set $S_2$ and multiply it with
+the WCRT to get the relaxation $N$. The first element of set $S_2$ is
+returned as the logical tick \texttt{d}. The fundamental observation is
+that we have to postpone the proceeding statement for at least $M$ units
+of real-time, hence, under-approximation is out of question. We can
+still over-approximate, but to reduce the resultant error, we should
+over-approximate by the least possible value, which is the lower bound
+of set $S_2$. Thus, the lower bound is considered to be the only element
+shared between the two sets $S_1$ and $S_2$ and accordingly, the upper
+real-time bound is relaxed by the multiplication of WCRT and the first
+element of set $S_2$.
 
-For example, assume $BCRT=5$ and $WCRT=100$, with a required delay of
-$(200..200)$. Algorithm~\ref{alg:1}, results in $D$ being an empty set,
-since $S_1=[2]$ and $S_2=[40]$, respectively. In such a case, the
-resultant relaxation is: $40 \times 100$ using Algorithm~\ref{alg:2},
-which results in a time of $4000$ units. Such large over-approximations
-can be avoided by breaking the critical paths (worst case ticks) in the
-program (by inserting \texttt{pause} constructs), just like in hardware
-design, which is very \textit{unsurprising} considering Esterel has its
-origins in hardware.
+For example, assume $BCRT=5$ and $WCRT=100$, with a required
+postponement of $(200..200)$. Algorithm~\ref{alg:1}, results in $D$
+being an empty set, since $S_1=[2]$ and $S_2=[40]$, respectively. In
+such a case, the resultant relaxation is: $40 \times 100$ using
+Algorithm~\ref{alg:2}, which results in a time of $4000$ units. Such
+large over-approximations can be avoided by breaking the critical paths
+(worst case ticks) in the program (by inserting \texttt{pause}
+constructs), just like in hardware design, which is very
+\textit{unsurprising} considering Esterel has its origins in hardware.
+
+\paragraph{Period execution of the clock domains}
+\label{sec:peri-exec-clock}
+
+The aforementioned technique maintains the essence of synchronous and
+GALS programs -- the logical tick, but in doing so is unable to provide
+the exact real-time wait of $M$ time units in case of
+\texttt{wait\_exactly(M)} statement, thereby violating its
+semantics. The second option is to execute the CD periodically at the
+WCRT. WCRT determines the execution speed of any CD guaranteeing that no
+input events from the environment will be missed
+(cf. Section~\ref{sec:mapping-logical-time}). Thus, if we simply execute
+the CD at periodically at the WCRT, we can choose the value of
+\textit{d} from set $S1$. This technique allows meeting the synchronous
+hypothesis, while at the same time guaranteeing the semantics of the
+\texttt{wait\_exactly(M)} statement. But, compared to the previous
+option, this technique is very inflexible and results in reduced
+response time and increased power consumption.
+
+We believe that the designer should be allowed to choose either of these
+techniques and hence, provide this option via compiler switches.
 
 \subsection{The tool-chain flow}
 \label{sec:tool-chain-flow}
@@ -238,12 +283,12 @@ origins in hardware.
 \begin{figure}[h!]
   \centering
   \includegraphics[scale=0.45]{./tool.pdf}
-  \caption{The tool-chain flow of SystemJ compiler with delays}
+  \caption{The tool-chain flow of SystemJ compiler with waits}
   \label{fig:4}
 \end{figure}
 
 The interaction of the low-level execution platform and the described
-high-level technique of introducing real-time delays in the SystemJ
+high-level technique of introducing real-time waits in the SystemJ
 language is shown in Figure~\ref{fig:4}. We use static-analysis
 techniques to find out the WCRT/BCRT of the programs automatically after
 rewrites and standard compiler optimizations. We require timing
@@ -257,13 +302,14 @@ the logical tick, which is then used for calculating $d$ in
 Figure~\ref{fig:3}.
 
 Our compiler has a switch that enables over-approximation as described
-in Section~\ref{sec:extend-tehcn-vari} provided the delay requirements
+in Section~\ref{sec:extend-tehcn-vari} provided the wait requirements
 are not met. If this compiler switch is not enabled, the compiler simply
-outputs an error indicating the relaxation required. The system designer
-can then either set the compiler switch or change the program by
-shortening the critical path by introducing \texttt{pause}
-constructs. We show how introducing \texttt{pause} constructs can help
-reduce the WCRT in Section~\ref{sec:experimental-results}.
+decides to execute the CD at the periodically, where the period is the
+WCRT. The system designer can then either set the compiler switch or
+change the program by shortening the critical path by introducing
+\texttt{pause} constructs. We show how introducing \texttt{pause}
+constructs can help reduce the WCRT in
+Section~\ref{sec:experimental-results}.
 
 %%% Local Variables: 
 %%% mode: latex

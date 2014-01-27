@@ -7,7 +7,7 @@ continuously respond to input from their environment. These languages
 have been successfully used in programming a plethora of systems such as
 fly-by-wire in Airbus~\cite{eairbus}, security surveillance
 systems~\cite{amal121}, etc. Usually these systems also need to meet
-real-time constraints enforced by the environment. Yet, these languages
+real-time constraints imposed by the environment. Yet, these languages
 do not support describing real-time statements as first class language
 constructs.  For example, one cannot describe a simple real-time delay
 (postponement) of an operation for 0.2 ms. These languages are based on
@@ -33,18 +33,19 @@ non-functional requirements before system deployment.
 
 \input{motivation}
 
-The major motivations for introducing delay mechanism and at the same
-time contributions of the paper are: (1) delays allow real-time based
-synchronization between concurrent behaviors, (2) delay model relies on
-the use of relative instead of absolute real-time, i.e., a delay in
-selected time units is counted from the currently executing SystemJ
-statement (3) delays allow mixing behaviors with real-time features and
-others with only logical time and (4) real-time delay does not affect
+The major motivations for introducing these real-time \textit{wait}
+mechanisms and at the same time \textbf{contributions} of the paper are:
+(1) these waiting mechanisms allow real-time based synchronization
+between concurrent behaviors, (2) the waiting model relies on the use of
+relative instead of absolute real-time, i.e., a wait in selected time
+units is counted from the currently executing SystemJ statement, (3)
+these waiting mechanisms allow mixing behaviors with real-time features
+and others with only logical time and (4) real-time wait does not affect
 the model of logical time in SystemJ program as long as the amount of
 delay is within boundaries that can be determined statically by program
 analysis. All these as well as semantics of the delay construct are
-discussed and illustrated in the remaining part of the paper. Our
-contributions can be further refined as follows:
+discussed and illustrated in the rest of the paper. Our contributions
+can be further refined as follows:
 \begin{enumerate*}
 \item Real-time is modeled in the $\mathbb{Q}^{>0}$ domain of numbers,
  i.e., non-negative rational numbers.
@@ -56,23 +57,20 @@ contributions can be further refined as follows:
   consumption, etc. This allocation and scheduling is an integral part
   of any language compilation and needs to be considered when
   introducing real-time delays.
-% \item Our solution does not change the functional or timing semantics of
-%   GALS and its subset synchronous programs, in fact, our solution does
-%   not require one to change the mid-end, the back-end or the related
-%   optimization phases of the compiler at all.
-\item We are the first, to our knowledge, to allow specification of both
-  deterministic and non-deterministic real-time in GALS and synchronous
-  languages. \textit{Deterministic delay:} is the ability to specify an
-  exact \textit{real-time} delay. \textit{Non-deterministic delay:} is
-  the ability to specify a range of real-time values for a delay
-  statement, e.g., delay statement in Figure~\ref{fig:1}.
+\item We are the first, to our knowledge, to allow specification of
+  both; exact and non-exact real-time in GALS and synchronous programs.
+\item We elucidate upon a key insight relating real-time and
+  logical-time -- \textit{the resolution of any real-time statement is
+    dependent on the worst case logical tick time} -- an aspect that
+  seems to have escaped in the current literature of real-time in
+  synchronous/GALS languages.
 \end{enumerate*}
 
 The rest of the paper is arranged as follows:
 Section~\ref{sec:background} gives the background on SystemJ and related
 techniques required for the rest of the
-paper. Section~\ref{sec:intr-real-time} introduces real-time delays in
-the GALS paradigm and describes their compilation into logical
+paper. Section~\ref{sec:intr-real-time} introduces real-time mechanisms
+in the GALS paradigm and describes their compilation into logical
 time. Section~\ref{sec:experimental-results} gives the experimental
 results for a set of real-time
 applications. Section~\ref{sec:related-work} positions this work in

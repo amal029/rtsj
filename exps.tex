@@ -55,7 +55,7 @@ Table~\ref{fig:benchlist}.
 {\renewcommand{\arraystretch}{0.9}
 %\renewcommand{\texttt}[1] {\begin{lstlisting}[language=Java,morekeywords={delay}] #1 \end{lstlisting}}
 \begin{table}[h!]
-	\small
+	\scriptsize
 	\centering
 	\caption{An overview of the benchmark programs}
 	\label{fig:benchlist}
@@ -65,22 +65,30 @@ Table~\ref{fig:benchlist}.
 \emph{Benchmark}       & \emph{Delay constructs used in each CD} & \emph{\# of CDs} & 
 \emph{Lines of code}        
 \\ \midrule
-HRTCS                  & \texttt{delay(50.3..200.3 ms)} ($CD1$) & 2                  & 56
+HRTCS                  & \texttt{wait\_inbetween(50.3..200.3 ms)} ($CD1$) & 2                  & 56
 \\ \midrule
-\multirow{5}{*}{Motor} & \texttt{delay(2.4..2.4 ms)}        & \multirow{5}{*}{1} & \multirow{5}{*}{116} \\ 
-											 & \texttt{delay(1.667..1.667 ms)}      &                    &                      \\ 
-											 & \texttt{delay(0.05..0.05 ms)}       &                    &                      \\ 
-											 & \texttt{delay(0.3..0.3 ms)}        &                    &                      \\ 
-											 & \texttt{delay(0.733..0.733 ms)}      &                    &
+\multirow{5}{*}{Motor} & \texttt{wait\_exactly(2.4 ms)}        & \multirow{5}{*}{1} & \multirow{5}{*}{116} \\ 
+											 &
+                                                                                         \texttt{wait\_exactly(1.667
+                                                                                           ms)}      &                    &                      \\ 
+											 &
+                                                                                    \texttt{wait\_exactly(0.05
+                                                                                           ms)}       &                    &                      \\ 
+											 &
+                                                                                    \texttt{wait\_exactly(0.3
+                                                                                           ms)}        &                    &                      \\ 
+											 &
+                                                                                         \texttt{wait\_exactly(0.733
+                                                                                           ms)}      &                    &
 \\ \midrule
 \multirow{3}{*}{Printer}
-& \texttt{delay(2.7..10.6 ms)} ($CD1$)      & \multirow{3}{*}{2}        & \multirow{3}{*}{39} \\
-& \texttt{delay(1.2..30.3 ms)} ($CD2$)		  &														&											\\
-& \texttt{delay(5.6..100.2 ms)} ($CD2$)     &														&											
+& \texttt{wait\_inbetween(2.7..10.6 ms)} ($CD1$)      & \multirow{3}{*}{2}        & \multirow{3}{*}{39} \\
+& \texttt{wait\_inbetween(1.2..30.3 ms)} ($CD2$)		  &														&											\\
+& \texttt{wait\_inbetween(5.6..100.2 ms)} ($CD2$)     &														&											
 \\ \midrule
-\multirow{2}{*}{AECS} & \texttt{delay(10000 ms)} ($CD1$) 
+\multirow{2}{*}{AECS} & \texttt{wait\_atleast(10000 ms)} ($CD1$) 
 & \multirow{2}{*}{2} & \multirow{2}{*}{267} \\
-& \texttt{delay(10000..10000 ms)} ($CD2$) & &
+& \texttt{wait\_exactly(10000 ms)} ($CD2$) & &
 \\ \bottomrule
 \end{tabular}
 }
@@ -89,7 +97,7 @@ HRTCS                  & \texttt{delay(50.3..200.3 ms)} ($CD1$) & 2             
 {\renewcommand{\arraystretch}{0.6}
 \begin{table*}[t!]
 \centering
-	\caption{Actual delays obtained for \texttt{delay} constructs in the
+	\caption{Actual delays obtained for wait constructs in the
 benchmark programs based on their BCRT and WCRT}
 \begin{tabular}{ c c l l l l l l }
 	\toprule
@@ -106,7 +114,7 @@ benchmark programs based on their BCRT and WCRT}
 	\multirow{2}{*}{Delay 1} & M..N & 50.3-200.3 ms	& 2.4-6.2493 ms	  &
 	2.7-10.6 ms & 1.2-30.3 ms & 10000-19484.3481 ms& 10000-23278.2752 ms \\
 	\cmidrule(r){2-8}
-	& d &1272-1739 & 57 & 143-163 & 46-617 & 56062 &77844\\ 
+	& d &1506-1788 & 57 & 143-163 & 46-617 & 56062 &77844\\ 
 	\cmidrule(r){1-8}
 	\multirow{2}{*}{Delay 2} & M..N & N/A & 1.668-4.3855 ms & N/A &
 	5.6-100.2 ms & N/A &10000-23278.2752 ms\\ 
@@ -134,20 +142,32 @@ benchmark programs based on their BCRT and WCRT}
 }
 
 HRTCS is the human response system described in
-Section~\ref{sec:motivating-example}. AECS (Access and Environmental
-Control System) is an application that controls an intelligent room
-environment described in~\cite{aecs_ispa}. The system interacts with two
-external timers through input/output signals in order to measure how
-long the entrance door to the room is being opened to detect intruders.
-The program has been modified such that the delay constructs are used
-instead of external timers as shown in Figure~\ref{delaycode}. In the
-original AECS, the system needed to trigger external timer by emitting
-the output signal in order to wait for a specific amount of time (e.g.
+Section~\ref{sec:motivating-example}. Motor is a stepper motor
+controller from~\cite{Bourke2009a}, used for producing monochrome images
+on paper by correct application of current to a print head (a row of
+resistors). In this example, duration of the current applied is
+controlled by the feedback logic using real-time waits, which are
+expressed using reactive constructs. Printer is an example
+from~\cite{Schneider:1999:CRT:555233}, which models a printer and a
+spooler in timed CSP. Its operation can be described as follows: as soon
+as the spooler receives a print job it passes it to the printer through
+a channel where actual printing process take place. This example along
+with HRTCS demonstrates the use of non exact wait statements.
+
+AECS (Access and Environmental Control System) is an application that
+controls an intelligent room environment described
+in~\cite{aecs_ispa}. The system interacts with two external timers
+through input/output signals in order to measure how long the entrance
+door to the room is being opened to detect intruders.  The program has
+been modified such that the wait constructs are used instead of external
+timers as shown in Figure~\ref{delaycode}. In the original AECS, the
+system needed to trigger external timer by emitting the output signal in
+order to wait for a specific amount of time (e.g.
 \texttt{TimerTriggered} in Figure~\ref{delaycode:a}). When the timer
 expires, it notifies the system through the input signal
 \texttt{TimeOut}, which is polled using the \texttt{await}
-statement. With the new delay constructs, these timers are not necessary
-and delays can be expressed directly in the code as shown in
+statement. With the new wait constructs, these timers are not necessary
+and waits can be expressed directly in the code as shown in
 Figure~\ref{delaycode:b}.
 
 \begin{figure}[h!]
@@ -155,7 +175,7 @@ Figure~\ref{delaycode:b}.
 	\centering
   \begin{SubFloat}{\label{delaycode:a}Original program}
       \scriptsize
-		\begin{lstlisting}[style=sysj,morekeywords={abort,await,emit,present,trap,pause,exit,delay,suspend}]
+		\begin{lstlisting}[style=sysj,morekeywords={abort,await,emit,present,trap,pause,exit,suspend}]
 emit TimerTriggered;
 trap(T){
   abort(DoorOpened){
@@ -166,40 +186,31 @@ trap(T){
 \end{lstlisting}
   \end{SubFloat}
   \hspace{1cm}%
-  \begin{SubFloat}{\label{delaycode:b}Program with delay constructs}
-		\begin{lstlisting}[style=sysj,morekeywords={abort,await,emit,present,trap,pause,exit,delay,suspend}]
+  \begin{SubFloat}{\label{delaycode:b}Program with wait constructs}
+		\begin{lstlisting}[style=sysj,morekeywords={abort,await,emit,present,trap,pause,exit,wait_atleast,suspend}]
 // No emit statement
 trap(T){
   abort(DoorOpened){
-    delay(10000 ms);
+    wait_atleast (10000 ms);
     exit(T);  
   }
 }
 \end{lstlisting}
 	\end{SubFloat}
-\caption{Replacing external timer with delay construct}
+\caption{Replacing external timer with wait\_atleast construct}
 \label{delaycode}
 \end{figure}
 
-Motor is a stepper motor controller from~\cite{Bourke2009a}, used for
-producing monochrome images on paper by correct application of current
-to a print head (a row of resistors). In this example, duration of the
-current applied is controlled by the feedback logic using real-time
-delays, which are expressed using reactive constructs. Printer is an
-example from~\cite{Schneider:1999:CRT:555233}, which models a printer
-and a spooler in timed CSP. Its operation can be described as follows:
-as soon as the spooler receives a print job it passes it to the printer
-through a channel where actual printing process take place. This example
-along with HRTCS demonstrates the use of non-deterministic delays.
+
 
 %Robot is an industrial automation application that consists of two
 %manufacturing belts and a robotic arm that splits goods according to
 %their volumes. 
 
-HRTCS consists of 2 CDs, but only one with real-time delays. AECS also
-has 2 CDs; CD1 consist of a single delay statement, while CD2 has 2
-delay statements. In this case, as explained previously, delay
-statements replace the external timers and corresponding interface (I/O)
+HRTCS consists of 2 CDs, but only one with real-time waits. AECS also
+has 2 CDs; CD1 consist of a single wait statement, while CD2 has 2 wait
+statements. In this case, as explained previously, wait statements
+replace the external timers and corresponding interface (I/O)
 signals. The system triggers an alarm 10 seconds after detection of an
 intruder or generates a beep sound when an entrance door is being opened
 for the same amount of time. In the Printer example, spooler and printer
@@ -209,10 +220,10 @@ environment (e.g. a user). On the other hand, Printer CD notifies the
 environment that it starts printing between 1.2 to 30.3 ms once it
 receives the job from the Spooler CD. Actual print job is started
 between 5.6 to 100.2 ms after the notification. In this example, bounded
-delay ensures that both; channel communication and print job should
-occur within the specified amount of time. Lastly, Motor is a
-synchronous program with 5 delay statements that control the amount of
-current applied to the stepper motor coils.
+wait ensures that both; channel communication and print job should occur
+within the specified amount of time. Lastly, Motor is a synchronous
+program with 5 exact wait statements that control the amount of current
+applied to the stepper motor coils.
 
 %All these examples are written in
 %the SystemJ language. The requirement to have deterministic or
@@ -251,17 +262,17 @@ avoided.
 
 Table~\ref{fig:comparison} shows the result of our algorithm applied to
 each benchmark program. Note that we allowed the compiler to relax the
-upper real-time bounds even for bounded (\texttt{M..N}) or exact
-(\texttt{M..M}) delays when it failed to find a feasible solution.
+upper real-time bounds for \texttt{wait\_exactly} and
+\texttt{wait\_inbetween} when it failed to find a feasible solution.
 However, a user can prohibit such behavior using compiler switch as
 described in Section~\ref{sec:tool-chain-flow}.
 
 As a first step, BCRT and WCRT were calculated for all examples. Given
-the real-time \mbox{\texttt{delay (M..N)}} provided by programmers,
-required logical delay \textit{d} was determined by applying
-Algorithm~\ref{alg:1}. In HRTCS, real-time delay of the range
-50.3..200.3 (ms) is only satisfied when \emph{d} is between 1272 and
-1739 (as shown previously in Section~\ref{sec:find-logic-delay}). Delay
+the real-time \mbox{\texttt{wait\_inbetween (M..N)}} provided by
+programmers, required logical delay \textit{d} was determined by
+applying Algorithm~\ref{alg:1}. In HRTCS, real-time delay of the range
+50.3..200.3 (ms) is only satisfied when \emph{d} is between 1506 and
+1788 (as shown previously in Section~\ref{sec:find-logic-delay}). Delay
 2.7..10.6 (ms) is satisfied in Printer/CD1 with \emph{d} of 143..163.
 Similarly, Printer/CD2 satisfies real-time ranges of 1.2..30.3 (ms) and
 5.6..100.2 (ms) when \emph{d} is 46..617 and 213..2041, respectively. It
@@ -280,15 +291,15 @@ on the newly computed \emph{N} for the examples: Motor and AECS.
 
 \subsection{Improving results}
 
-The previous results show that for HRTCS and Printer that the compiler
-was able to find \textit{d} without relaxing upper bound of
-\texttt{delay}. Figure~\ref{fig:graph1} shows the accuracy of our
-results by comparing differences between programmer specified upper
-bounds (Table~\ref{fig:benchlist}) and the actual bounds obtained using
-our techniques (Table~\ref{fig:comparison}) for the other examples
-requiring relaxation. AECS/CD1 delay is not included in
+The previous results show that for HRTCS and Printer the compiler was
+able to find \textit{d} without relaxing upper bound of wait
+statements. Figure~\ref{fig:graph1} shows the accuracy of our results by
+comparing differences between programmer specified upper bounds
+(Table~\ref{fig:benchlist}) and the actual bounds obtained using our
+techniques (Table~\ref{fig:comparison}) for the other examples requiring
+relaxation. AECS/CD1 wait specification is not included in
 Figure~\ref{fig:graph2}, because although it requires relaxation, the
-delay specification (Table~\ref{fig:benchlist}) does not have an upper
+wait specification (Table~\ref{fig:benchlist}) does not have an upper
 bound.
 
 \begin{figure}[h!]
@@ -364,8 +375,8 @@ impacts the value of WCRT. On the other hand, programmer can write a
 program such that large data (or control) computations in a single
 logical tick increase WCRT of the program.  Assuming we do not change
 the architecture of the execution platform (i.e. JOP), the differece
-factor can can only be reduced by modifying the benchmark programs such
-that the critical paths are broken up using \texttt{pause} constructs,
+factor can only be reduced by modifying the benchmark programs such that
+the critical paths are broken up using \texttt{pause} constructs,
 thereby reducing the WCRT.  Figure~\ref{fig:improv} shows segments of
 code from AECS whose WCRT is reduced by such technique.
 
@@ -420,7 +431,7 @@ reduce WCRT. However it is out of scope of this paper, hence not
 discussed here.
 
 The result of the upper bound relaxation with reduced WCRT is shown in
-Figure~\ref{fig:graph2}.  The upper bounds for delay statements in
+Figure~\ref{fig:graph2}.  The upper bounds for wait statements in
 AECS/CD2 decreased by 11.81\%, while that for Motor example reduced from
 6.42 to 8.05\%. This is expected since the amount of computation
 required in control flow is less demanding than data and hence, breaking
