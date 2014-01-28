@@ -11,41 +11,42 @@ real-time constraints imposed by the environment. Yet, these languages
 do not support describing real-time statements as first class language
 constructs.  For example, one cannot describe a simple real-time delay
 (postponement) of an operation for 0.2 ms. These languages are based on
-formal semantics, essential for the formal reasoning about and
-verification of correctness of functional properties of the developed
-programs, but leave nonfunctional properties such as timing behavior as
-an implementation detail~\cite{boldt07}. Arguably, rightly so, because
-physical time cannot be incorporated without information about the
-underlying execution platform.  But, one can still reason in terms of
-logical time. These languages support discrete logical clock rather than
-a discrete physical (real-time) clock. The real-time period of the
-discrete logical clock (also referred to as a logical tick) is not fixed
-and it is determined by the responsiveness of the program to the input
-signals. Unlike a discrete physical clock, which has fixed real-time
-period, the period of the logical clock is elastic. Although the timing
-model with logical clock has worked well for reactive synchronous/GALS
-languages in designing discrete systems, there is a need to introduce
-real-time, since often, implementation models are in the continuous or
-discrete real-time domain~\cite{DBLP:journals/pieee/SifakisTY03}.
-Moreover, adding timing capabilities as first class language constructs
-create additional opportunity for formally verifying functional and
-non-functional requirements before system deployment.
+formal semantics, essential for the formal reasoning about \hj{code
+generation} and verification of correctness of functional properties of
+the developed programs, but leave nonfunctional properties such as
+timing behavior as an implementation detail~\cite{boldt07}. Arguably,
+rightly so, because physical time cannot be incorporated without
+information about the underlying execution platform.  But, one can still
+reason in terms of logical time. These languages support discrete
+logical clock rather than a discrete physical (real-time) clock. The
+real-time period of the discrete logical clock (also referred to as a
+logical tick) is not fixed and it is determined by the responsiveness of
+the program to the input signals. Unlike a discrete physical clock,
+which has fixed real-time period, the period of the logical clock is
+elastic. Although the timing model with logical clock has worked well
+for reactive synchronous/GALS languages in designing discrete systems,
+there is a need to introduce real-time since often, implementation
+models are in the continuous or discrete real-time
+domain~\cite{DBLP:journals/pieee/SifakisTY03}.  Moreover, adding timing
+capabilities as first class language constructs create additional
+opportunity for formally verifying functional and non-functional
+requirements before system deployment.
 
 \input{motivation}
 
 The major motivations for introducing these real-time \textit{wait}
 mechanisms and at the same time \textbf{contributions} of the paper are:
-(1) these waiting mechanisms allow real-time based synchronization
-between concurrent behaviors, (2) the waiting model relies on the use of
-relative instead of absolute real-time, i.e., a wait in selected time
-units is counted from the currently executing SystemJ statement, (3)
-these waiting mechanisms allow mixing behaviors with real-time features
-and others with only logical time and (4) real-time wait does not affect
-the model of logical time in SystemJ program as long as the amount of
-delay is within boundaries that can be determined statically by program
-analysis. All these as well as semantics of the wait constructs are
-discussed and illustrated in the rest of the paper. Our contributions
-can be further refined as follows:
+\hj{(1) real-time wait does not affect the model of logical time in
+	SystemJ program as long as the amount of delay is within boundaries
+	that can be determined statically by program analysis,} (2) the
+	waiting model relies on the use of relative instead of absolute
+	real-time, i.e., a wait in selected time units is counted from the
+	currently executing SystemJ statement and (3) these waiting mechanisms
+	allow mixing behaviors with real-time features and others with only
+	logical time. All these as well as semantics of the wait constructs
+	are discussed and illustrated in the rest of the paper. Our
+	contributions can be further refined as follows:
+
 \begin{enumerate*}
 \item Real-time is modeled in the $\mathbb{Q}^{>0}$ domain of numbers,
  i.e., non-negative rational numbers.
@@ -59,7 +60,7 @@ can be further refined as follows:
   introducing real-time waits.
 \item We are the first, to our knowledge, to allow specification of
   both; exact and non-exact real-time in GALS and synchronous programs.
-\item We elucidate upon a key insight relating real-time and
+\item We \hj{clarify} upon a key insight relating real-time and
   logical-time -- \textit{the resolution of any real-time statement is
     dependent on the worst case logical tick time} -- an aspect that
   seems to have escaped in the current literature on incorporation of

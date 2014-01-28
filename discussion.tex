@@ -6,7 +6,7 @@ semantics, their usage and the advantages and limitations of our
 proposed technique to introducing these real-time constructs in a
 reactive setting.
 
-\subsection{Programming using the wait\_exactly construct -- the
+\subsection{Programming using the wait\_exact construct -- the
   periodic reactions}
 \label{sec:progr-using-delay}
 
@@ -60,11 +60,11 @@ reactive setting.
 \begin{figure}[h!]
   \centering
 	\vspace{-10pt}
-        \begin{lstlisting}[style=sysj,basicstyle=\normalsize\ttfamily,morekeywords={emit,trap,pause,exit,wait_exactly}]
-          while(true){wait_exactly (1 ms); emit S; //do something
+        \begin{lstlisting}[style=sysj,basicstyle=\normalsize\ttfamily,morekeywords={emit,trap,pause,exit,wait_exact}]
+          while(true){wait_exact (1 ms); emit S; //do something
           }
  \end{lstlisting}
-  \caption{Programming periodic tasks with wait\_exactly statement}
+  \caption{Programming periodic tasks with wait\_exact statement}
   \label{fig:periodic}
 	\vspace{-10pt}
 \end{figure}
@@ -81,9 +81,9 @@ the (perceived) periodic program and its rewrite below.
   \centering
   \begin{SubFloat}{\label{pp:a}Original program}
     \centering
-			\begin{lstlisting}[style=sysj,basicstyle=\normalsize\ttfamily,morekeywords={emit,trap,pause,exit,wait_exactly}]
+			\begin{lstlisting}[style=sysj,basicstyle=\normalsize\ttfamily,morekeywords={emit,trap,pause,exit,wait_exact}]
 while(true) {
- wait_exactly(1 ms);
+ wait_exact(1 ms);
  //extra pause
  pause;
  emit S;
