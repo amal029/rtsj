@@ -269,7 +269,7 @@ semantics. The second option is to execute the CD periodically at the
 WCRT. WCRT determines the fastest execution speed of any CD with the
 guarantee that no input events from the environment will be missed
 (cf. Section~\ref{sec:mapping-logical-time}). Thus, if we simply execute
-the CD at periodically at the WCRT, we can choose the value of
+the CD periodically at the WCRT, we can choose the value of
 \textit{d} from set $S1$. This technique allows meeting the synchronous
 hypothesis, while at the same time guaranteeing the semantics of the
 \texttt{wait\_exact(M)} statement. But, compared to the previous
@@ -291,13 +291,13 @@ these techniques and hence, provide this option via compiler switches.
 
 The interaction of the low-level execution platform and the described
 high-level technique of introducing real-time waits in the SystemJ
-language is shown in Figure~\ref{fig:4}. We use static-analysis
+language is shown in Figure~\ref{fig:4}. We use static analysis
 techniques to find out the WCRT/BCRT of the programs automatically after
 rewrites and standard compiler optimizations. We require timing
 analyzable platforms, in our case \textit{Java Optimized Processor}
 (JOP)~\cite{jop:jnl:jsa2007}. Moreover, since algorithms~\ref{alg:1}
 and~\ref{alg:2} are performed after scheduling for different constraints
-such as faster execution time, or reduced power consumption, we,
+such as faster execution time, or reduced power consumption, we
 inherently satisfy the criteria of exploiting non-maximal
 parallelism. The low-level analysis guarantees a precise WCRT/BCRT for
 the logical tick, which is then used for calculating $d$ in
