@@ -42,7 +42,7 @@ while(true) {
     } // reaction R2
    } do {send S(1);} // Send 1 if touched 
   } do {send S(0);} // Else Send 0
-  wait_exact(1 s); // Wait for 1 second
+  pause; pause; pause; // pass some time before restarting
  }
 }
 >< // asynchronous operator
@@ -52,7 +52,7 @@ while(true) {
 }
 \end{lstlisting}
 \end{SubFloat}
-\begin{SubFloat}{\label{delaycode:b}Timing diagram -- the X-axis shows
+\begin{SubFloat}{\label{d:b}Timing diagram -- the X-axis shows
     the execution of the \texttt{wait\_inbetween} statement. The Y-axis
     is the time elapsed.}
   % \begin{figure}[h!]
@@ -67,13 +67,18 @@ while(true) {
 \label{fig:1}
 \end{figure}
 
+The \texttt{wait\_inbetween (M..N)} statement postpones the program
+control flow to move to the proceeding statement for a minimum of $M$
+time units and a maximum of $N$ time units, as shown in
+Figure~\ref{d:b}.
+
 Consider a machine used to test human response time and collect this
 data for future research purposes. The machine switches on a green light
 on a touch screen for anywhere \textit{in between} 50.3 ms to 200.3 ms,
 if the user can touch this green light then she is successful and \hj{an
-	integer \texttt{1} is sent to another process in order to increase an
-	integer counter, if unsuccessful a \texttt{0} is sent instead to
-decrease the counter}. Different statistics and analyses on human
+  integer \texttt{1} is sent to another process in order to increase an
+  integer counter, if unsuccessful a \texttt{0} is sent instead to
+  decrease the counter}. Different statistics and analyses on human
 responsiveness can be based on the collected data.
 
 The SystemJ pseudo-code~\cite{amal10} for such a system, along with the
@@ -93,13 +98,14 @@ waits for the user to respond. If the user is able to touch the screen
 within the specified time of 50.3 ms to 200.3 ms a positive response is
 sent to the second clock-domain. All the SystemJ programming constructs
 used to implement this system are described in Table~\ref{tab:1} \hj{and
-more details can be found in~\cite{amal10}}. The
+  more details can be found in~\cite{amal10}}. The
 \texttt{wait\_inbetween} specification, which models the non exact
-delay between 50.3 ms and 200.3 ms is not supported in the current
-language and cannot be compiled with the current SystemJ compiler. We
-introduce such \texttt{wait\_inbetween} statements in SystemJ. Such
-non exact real-time mechanisms are useful in developing systems where
-the real-time delay is not known or should not be known a priori.
+postponement between 50.3 ms and 200.3 ms is not supported in the
+current language and cannot be compiled with the current SystemJ
+compiler. We introduce such \texttt{wait\_inbetween} statements in
+SystemJ. Such non exact real-time mechanisms are useful in developing
+systems where the real-time postponement is not known or should not be
+known a priori.
 
 \subsubsection{Programming a timeout using the non exact real-time
   construct; the \texttt{wait\_atleast} statement}
@@ -128,6 +134,11 @@ trap(T){
 \label{dd}
 \end{figure}
 
+The \texttt{wait\_atleast (M)} statement is used to postpone the program
+control flow from proceeding to the next statment for a minimum of $M$
+time units. The maximum postponement is unbounded, but countable
+(Figure~\ref{dd:b}).
+
 There are many instances when one would like to wait on an input from
 environment for only a specified amount of time. If the signal is not
 received then a timeout is generated so that the program can make
@@ -141,8 +152,8 @@ The timing diagram, Figure~\ref{dd:b}, shows that the
 \texttt{wait\_atleast} statement waits for a \textit{at least} 10
 seconds, but unlike \texttt{wait\_inbetween} there is no upper
 bound. The statement following the \texttt{wait\_atleast} statement is
-executed after a finite countable, but unbounded delay. Such a statement
-is useful for programming low priority tasks.
+executed after a finite countable, but unbounded postponement. Such a
+statement is useful for programming low priority tasks.
 
 
 \subsubsection{Programming periodic tasks using the exact real-time
@@ -188,3 +199,5 @@ exactly after 1 ms have passed, as shown in Figure~\ref{p1:b}.
 %%% mode: latex
 %%% TeX-master: "paper"
 %%% End: 
+
+%  LocalWords:  statment

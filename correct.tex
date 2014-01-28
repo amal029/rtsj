@@ -22,29 +22,30 @@ Section~\ref{sec:intr-real-time}.
 \begin{theorem}
   Given \texttt{wait\_inbetween (M..N)} Algorithm~\ref{alg:1} gives a
   value \texttt{d}, provided $D$ is a non empty set, such that for any
-	given $\hj{T}$ \hj{in the range of} $BCRT \leq T \leq WCRT$, $M \leq T \times d \leq N$ holds.
+  given reaction time $\hj{\Delta}$ \hj{in the range of} $BCRT \leq
+  \Delta \leq WCRT$, $M \leq \Delta \times d \leq N$ holds.
 \label{th:1}
 \end{theorem}
 \begin{proof}
   We use case analysis and contradiction to prove the above theorem.
   \begin{compactenum}[\hspace{0.25cm} 1.]
-  \item Proof for case $T = WCRT$: Assume \mbox{$d \times WCRT < M$},
-    then $d < \frac{M}{WCRT}$. $BCRT \leq WCRT$, by definition, hence,
-    $\frac{M}{WCRT} \leq \frac{M}{BCRT}$. Thus for the assumption to
-    hold, $d < \frac{M}{BCRT}$, which contradicts
+  \item Proof for case $\Delta = WCRT$: Assume \mbox{$d \times WCRT <
+      M$}, then $d < \frac{M}{WCRT}$. $BCRT \leq WCRT$, by definition,
+    hence, $\frac{M}{WCRT} \leq \frac{M}{BCRT}$. Thus for the assumption
+    to hold, $d < \frac{M}{BCRT}$, which contradicts
     Lemma~\ref{lemma:1}. The assumption $d \times WCRT >N$ is trivially
     proven from Lemma~\ref{lemma:1}.
-  \item Proof for case $T = BCRT$: Like above, the assumption $d \times
-    BCRT < M$ is trivially proven from Lemma~\ref{lemma:1}. For $d
-    \times BCRT > N$ to hold, $d > \frac{N}{BCRT}$ should hold. But,
+  \item Proof for case $\Delta = BCRT$: Like above, the assumption $d
+    \times BCRT < M$ is trivially proven from Lemma~\ref{lemma:1}. For
+    $d \times BCRT > N$ to hold, $d > \frac{N}{BCRT}$ should hold. But,
     $BCRT \leq WCRT$, by definition, hence, $\frac{N}{BCRT} \geq
     \frac{N}{WCRT}$, which again contradicts Lemma~\ref{lemma:1}.
-  \item Proof for case $BCRT < T < WCRT$: For $d \times T < M$ to hold,
-    $d < \frac{M}{T}$ should hold. By definition, $T > BCRT$, thus,
-    $\frac{M}{BCRT} < \frac{M}{T}$, hence, $d < {M}{BCRT}$ should hold,
-    which contradicts Lemma~\ref{lemma:1}. We can prove the other case
-    $d \times T \leq N$, using the upper bound from Lemma~\ref{lemma:1}
-    similarly.
+  \item Proof for case $BCRT < \Delta < WCRT$: For $d \times \Delta < M$
+    to hold, $d < \frac{M}{\Delta}$ should hold. By definition, $\Delta
+    > BCRT$, thus, $\frac{M}{BCRT} < \frac{M}{\Delta}$, hence, $d <
+    {M}{BCRT}$ should hold, which contradicts Lemma~\ref{lemma:1}. We
+    can prove the other case $d \times \Delta \leq N$, using the upper
+    bound from Lemma~\ref{lemma:1} similarly.
   \end{compactenum}
 \end{proof}
 
@@ -52,8 +53,8 @@ Next, we prove the completeness property.
 \begin{theorem}
   Given \texttt{wait\_inbetween (M..N)} Algorithm~\ref{alg:1} gives a
   value \texttt{d}, provided $D$ is a non empty set, such that for
-  \textbf{all} given $BCRT \leq T \leq WCRT$, $M \leq T \times d \leq N$
-  holds.
+  \textbf{all} given reaction times $\Delta$ in the range of $BCRT \leq
+  \Delta \leq WCRT$, $M \leq \Delta \times d \leq N$ holds.
 \end{theorem}
 \begin{proof}
   From Theorem~\ref{th:1} case 3.
@@ -65,7 +66,8 @@ soundness property of Algorithm~\ref{alg:1}.
 \begin{theorem}
   Given \texttt{wait\_inbetween (M..N)} Algorithm~\ref{alg:1}
   \textbf{does not} give a value \texttt{d}, such that for \textbf{all}
-  given $BCRT > T > WCRT$, $M \leq T \times d \leq N$ holds.
+  given reaction times $T$ in the range of $BCRT > T > WCRT$, $M \leq T
+  \times d \leq N$ holds.
 \end{theorem}
 
 \begin{proof}
