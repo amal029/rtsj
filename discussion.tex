@@ -58,11 +58,11 @@ reactive setting.
 % reaction, or a whole CD, can be programmed to run periodically like so:
 
 \begin{figure}[h!]
-  \centering
 	\vspace{-10pt}
-        \begin{lstlisting}[style=sysj,basicstyle=\normalsize\ttfamily,morekeywords={emit,trap,pause,exit,wait_exact}]
-          while(true){wait_exact (1 ms); emit S; //do something
-          }
+        \begin{lstlisting}[style=sysj,basicstyle=\footnotesize\ttfamily,morekeywords={emit,trap,pause,exit,wait_exact}]
+while(true){wait_exact (1 ms); 
+	emit S; //do something
+}
  \end{lstlisting}
   \caption{Programming periodic tasks with wait\_exact statement}
   \label{fig:periodic}
@@ -81,7 +81,7 @@ the (perceived) periodic program and its rewrite below.
   \centering
   \begin{SubFloat}{\label{pp:a}Original program}
     \centering
-			\begin{lstlisting}[style=sysj,basicstyle=\normalsize\ttfamily,morekeywords={emit,trap,pause,exit,wait_exact}]
+			\begin{lstlisting}[style=sysj,basicstyle=\footnotesize\ttfamily,morekeywords={emit,trap,pause,exit,wait_exact}]
 while(true) {
  wait_exact(1 ms);
  //extra pause
@@ -92,7 +92,7 @@ while(true) {
 \end{SubFloat}
 \hspace{9pt}
   \begin{SubFloat}{\label{pp:b}Rewritten program}
-			\begin{lstlisting}[style=sysj,basicstyle=\normalsize\ttfamily,morekeywords={emit,trap,pause,exit,delay}]
+			\begin{lstlisting}[style=sysj,basicstyle=\footnotesize\ttfamily,morekeywords={emit,trap,pause,exit,delay}]
 while(true) {
  while(true) { 
   trap(T) {
@@ -157,11 +157,11 @@ using external timers as in~\cite{rsh94}.
 \begin{figure}[h!]
   \centering
 	\vspace{-10pt}
-		\begin{lstlisting}[style=sysj,basicstyle=\normalsize\ttfamily,morekeywords={emit,trap,pause,exit,delay,suspend}]
-suspend(S) {
- emit START_TIMER(10); 
- await (TIMER);emit O1;
-}
+		\begin{lstlisting}[style=sysj,basicstyle=\footnotesize\ttfamily,morekeywords={emit,trap,pause,exit,delay,suspend}]
+  suspend(S) {
+   emit START_TIMER(10); 
+   await (TIMER);emit O1;
+  }
 		\end{lstlisting}
   \caption{Interaction of preemption and external timers}
   \label{fig:preemp}
@@ -188,7 +188,7 @@ our technique within such a setting with ease.
 \begin{figure}[h!]
   \centering
 	\vspace{-10pt}
-		\begin{lstlisting}[style=sysj,basicstyle=\normalsize\ttfamily,morekeywords={emit,trap,pause,exit,delay,suspend}]
+		\begin{lstlisting}[style=sysj,basicstyle=\footnotesize\ttfamily,morekeywords={emit,trap,pause,exit,delay,suspend}]
 {
  //reaction R1
  emit START_TIMER(1 ms); 
