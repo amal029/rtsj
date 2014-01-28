@@ -66,18 +66,18 @@ Table~\ref{fig:benchlist}.  {\renewcommand{\arraystretch}{0.9}
 \\ \midrule
 HRTCS                  & \texttt{wait\_inbetween(50.3..200.3 ms)} ($CD1$) & 2                  & 56
 \\ \midrule
-\multirow{5}{*}{Motor} & \texttt{wait\_exactly(2.4 ms)}        & \multirow{5}{*}{1} & \multirow{5}{*}{116} \\ 
+\multirow{5}{*}{Motor} & \texttt{wait\_exact(2.4 ms)}        & \multirow{5}{*}{1} & \multirow{5}{*}{116} \\ 
 											 &
-                                                                                         \texttt{wait\_exactly(1.667
+                                                                                         \texttt{wait\_exact(1.667
                                                                                            ms)}      &                    &                      \\ 
 											 &
-                                                                                    \texttt{wait\_exactly(0.05
+                                                                                    \texttt{wait\_exact(0.05
                                                                                            ms)}       &                    &                      \\ 
 											 &
-                                                                                    \texttt{wait\_exactly(0.3
+                                                                                    \texttt{wait\_exact(0.3
                                                                                            ms)}        &                    &                      \\ 
 											 &
-                                                                                         \texttt{wait\_exactly(0.733
+                                                                                         \texttt{wait\_exact(0.733
                                                                                            ms)}      &                    &
 \\ \midrule
 \multirow{3}{*}{Printer}
@@ -87,7 +87,7 @@ HRTCS                  & \texttt{wait\_inbetween(50.3..200.3 ms)} ($CD1$) & 2   
 \\ \midrule
 \multirow{2}{*}{AECS} & \texttt{wait\_atleast(10000 ms)} ($CD1$) 
 & \multirow{2}{*}{2} & \multirow{2}{*}{267} \\
-& \texttt{wait\_exactly(10000 ms)} ($CD2$) & &
+& \texttt{wait\_exact(10000 ms)} ($CD2$) & &
 \\ \bottomrule
 \end{tabular}
 }
@@ -140,18 +140,26 @@ benchmark programs based on their BCRT and WCRT}
 \end{table*}
 }
 
+\hj{
 HRTCS is the human response system described in
-Section~\ref{sec:motivating-example}. Motor is a stepper motor
+Section~\ref{sec:motivating-example}. }
+
+\hj{
+Motor is a stepper motor
 controller from~\cite{Bourke2009a}, used for producing monochrome images
 on paper by correct application of current to a print head (a row of
 resistors). In this example, duration of the current applied is
 controlled by the feedback logic using real-time waits, which are
-expressed using reactive constructs. Printer is an example
+expressed using reactive constructs. }
+
+\hj{
+Printer is an example
 from~\cite{Schneider:1999:CRT:555233}, which models a printer and a
 spooler in timed CSP. Its operation can be described as follows: as soon
 as the spooler receives a print job it passes it to the printer through
 a channel where actual printing process take place. This example along
 with HRTCS demonstrates the use of non exact wait statements.
+}
 
 AECS (Access and Environmental Control System) is an application that
 controls an intelligent room environment described
@@ -246,14 +254,13 @@ applied to the stepper motor coils.
 % kernel statements more efficiently.
 
 We use the \textit{Java Optimized Processor}
-(JOP)~\cite{jop:jnl:jsa2007} to carry out all our experiments. JOP
-implements the JVM specification in hardware directly and has been shown
-to be real-time amenable. We statically estimate the WCRT and BCRT of
-these benchmark applications using the real-time analysis tools provided
-by the JOP design framework. The \textit{Safety Critical Java} (SCJ)
-specification we use for real-time analysis avoids garbage collection
-(GC) and hence, GC overheads and unpredictability are completely
-avoided.
+(JOP)~\cite{jop:jnl:jsa2007}, \hj{which has been shown to be real-time
+amenable}, to carry out all our experiments. We statically estimate the
+WCRT and BCRT of these benchmark applications using the real-time
+analysis tools provided by the JOP design framework. The \textit{Safety
+Critical Java} (SCJ) specification we use for real-time analysis avoids
+garbage collection (GC) and hence, GC overheads and unpredictability are
+completely avoided.
 
 % We disable the \textit{Garbage Collector} (GC) in all experiments to
 % avoid unwanted side-effects such as lengthening clock-domain logical
@@ -261,7 +268,7 @@ avoided.
 
 Table~\ref{fig:comparison} shows the result of our algorithm applied to
 each benchmark program. Note that we allowed the compiler to relax the
-upper real-time bounds for \texttt{wait\_exactly} and
+upper real-time bounds for \texttt{wait\_exact} and
 \texttt{wait\_inbetween} when it failed to find a feasible solution.
 However, a user can prohibit such behavior using compiler switch as
 described in Section~\ref{sec:tool-chain-flow}.
@@ -280,8 +287,8 @@ this range.
 
 % The upper bound \texttt{N} needed to be relaxed for all examples other
 % than HRTCS to obtain a feasible \texttt{d}. Therefore,
-On the other hand, Algorithm \ref{alg:2} is applied to those examples,
-where relaxation was required, to determine the minimum upper real-time
+On the other hand, Algorithm \ref{alg:2} is applied to those examples
+where relaxation was required to determine the minimum upper real-time
 bound \emph{N} such that there exists a solution for \emph{D} in
 Algorithm \ref{alg:1}. This algorithm gives a unique number for logical
 tick delay \emph{d} such that \emph{d} = Min(\emph{$S_2$}) =
