@@ -326,9 +326,9 @@ bound.
 			x tick label style={rotate=45,font=\footnotesize},
 			ylabel=Difference factor,
 		]
-			\addplot + [postaction={pattern=north east lines}] coordinates
+			\addplot + [fill=white,postaction={pattern=north east lines}] coordinates
 			{(HRTCS,1)(Printer/CD1,1)(Printer/CD2,1)(AECS/CD2,1.94)};
-			\addplot + [postaction={pattern=north west
+			\addplot + [fill=white,postaction={pattern=north west
                           lines}] coordinates 
                         {(Printer/CD2, 1)(AECS/CD2, 1.94)};
 	\end{axis}
@@ -357,15 +357,15 @@ bound.
 			}
 %      nodes near coords
 		]
-			\addplot + [postaction={pattern=north east lines}] coordinates
+			\addplot + [fill=white,postaction={pattern=north east lines}] coordinates
                         {(Motor, 2.60)};
-			\addplot + [postaction={pattern=north west lines}] coordinates
+			\addplot + [fill=white,postaction={pattern=north west lines}] coordinates
                         {(Motor, 2.63)};
-			\addplot + [postaction={pattern=dots}] coordinates
+			\addplot + [fill=white,postaction={pattern=dots}] coordinates
                         {(Motor, 4.39)};
-			\addplot + [postaction={pattern=horizontal lines}] coordinates
+			\addplot + [fill=white,postaction={pattern=horizontal lines}] coordinates
                         {(Motor, 2.92)};
-			\addplot + [postaction={pattern=crosshatch}] coordinates
+			\addplot + [fill=white,postaction={pattern=crosshatch}] coordinates
                         {(Motor, 2.69)};
 			\legend{Delay1,Delay2,Delay3,Delay4,Delay5}
 	\end{axis}
