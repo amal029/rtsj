@@ -172,7 +172,9 @@ which can run at any physical clock-speed, bounded by the BCRT and the
 WCRT of the program and still result in the desired real-time wait
 period. Figure~\ref{fig:hrtcssoln} gives the solution space for the
 aforementioned calculation. The patterned space is the only overlapping
-region and hence gives the solution space for the above example.
+region and hence gives the solution space for the above example. It is
+possible that $D$ is an empty set, thereby, no solution can be found. We
+provide solutions for such cases in the next section.
 
 We think this is an elegant solution, because the technique provides
 real-time guarantees while preserving the essence (elastic logical tick)
@@ -295,13 +297,16 @@ language is shown in Figure~\ref{fig:4}. We use static analysis
 techniques to find out the WCRT/BCRT of the programs automatically after
 rewrites and standard compiler optimizations. We require timing
 analyzable platforms, in our case \textit{Java Optimized Processor}
-(JOP)~\cite{jop:jnl:jsa2007}. Moreover, since algorithms~\ref{alg:1}
-and~\ref{alg:2} are performed after scheduling for different constraints
-such as faster execution time, or reduced power consumption, we
-inherently satisfy the criteria of exploiting non-maximal
-parallelism. The low-level analysis guarantees a precise WCRT/BCRT for
-the logical tick, which is then used for calculating $d$ in
-Figure~\ref{fig:3}.
+(JOP)~\cite{jop:jnl:jsa2007}. It is worth pointing out that since all
+rewrites, including the rewrite for the wait constructs happen before
+WCRT/BCRT analysis, this analysis incorporates the affects of the
+introduction of the wait statements. Moreover, since
+algorithms~\ref{alg:1} and~\ref{alg:2} are performed after scheduling
+for different constraints such as faster execution time, or reduced
+power consumption, we inherently satisfy the criteria of exploiting
+non-maximal parallelism. The low-level analysis guarantees a precise
+WCRT/BCRT for the logical tick, which is then used for calculating $d$
+in Figure~\ref{fig:3}.
 
 Our compiler has a switch that enables over-approximation as described
 in Section~\ref{sec:extend-tehcn-vari} provided the wait requirements

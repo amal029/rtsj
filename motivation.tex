@@ -83,13 +83,13 @@ responsiveness can be based on the collected data.
 
 The SystemJ pseudo-code~\cite{amal10} for such a system, along with the
 expected timing behavior of the \texttt{wait\_inbetween} statement, is
-shown in Figure~\ref{fig:1}. We use the SystemJ language in this paper, 
-because being a \textit{Globally Asynchronous Locally
-  Synchronous} (GALS) language it helps us easily describe a larger
-class of systems (like HRTCS in Figure~\ref{fig:1}) compared to purely
-synchronous languages like Esterel. Moreover, being a super-set of
-Esterel, SystemJ allows us to explore the marriage of real-time and
-logical time, which is equally applicable to the synchronous sub-set.
+shown in Figure~\ref{fig:1}. We use the SystemJ language in this paper,
+because being a \textit{Globally Asynchronous Locally Synchronous}
+(GALS) language it helps us easily describe a larger class of systems
+(like HRTCS in Figure~\ref{fig:1}) compared to purely synchronous
+languages like Esterel. Moreover, being a super-set of Esterel, SystemJ
+allows us to explore the marriage of real-time and logical time not only
+in the GALS, but also in the synchronous setting.
 
 The SystemJ program is divided into two \hj{mutually asynchronous}
 clock-domains, the first clock-domain continuously displays a green

@@ -43,7 +43,7 @@ Section~\ref{sec:intr-real-time}.
   \item Proof for case $BCRT < \Delta < WCRT$: For $d \times \Delta < M$
     to hold, $d < \frac{M}{\Delta}$ should hold. By definition, $\Delta
     > BCRT$, thus, $\frac{M}{BCRT} < \frac{M}{\Delta}$, hence, $d <
-    {M}{BCRT}$ should hold, which contradicts Lemma~\ref{lemma:1}. We
+    \frac{M}{BCRT}$ should hold, which contradicts Lemma~\ref{lemma:1}. We
     can prove the other case $d \times \Delta \leq N$, using the upper
     bound from Lemma~\ref{lemma:1} similarly.
   \end{compactenum}
@@ -66,8 +66,8 @@ soundness property of Algorithm~\ref{alg:1}.
 \begin{theorem}
   Given \texttt{wait\_inbetween (M..N)} Algorithm~\ref{alg:1}
   \textbf{does not} give a value \texttt{d}, such that for \textbf{all}
-  given reaction times $T$ in the range of $BCRT > T > WCRT$, $M \leq T
-  \times d \leq N$ holds.
+  given reaction times $\Delta$ in the range of $BCRT > \Delta > WCRT$,
+  $M \leq \Delta \times d \leq N$ holds.
 \end{theorem}
 
 \begin{proof}
@@ -75,7 +75,10 @@ soundness property of Algorithm~\ref{alg:1}.
 \end{proof}
 
 The proofs for correctness, completeness, and soundness for
-Algorithm~\ref{alg:2} are similar to those of Algorithm~\ref{alg:1}.
+Algorithm~\ref{alg:2} are similar to those of
+Algorithm~\ref{alg:1}. Furthermore, the proofs for \texttt{wait\_atleast
+  (M)} and \texttt{wait\_exact (M)} can be proven using the same
+techniques as shown in Theorem~\ref{th:1}.
 
 %%% Local Variables: 
 %%% mode: latex
