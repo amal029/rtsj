@@ -52,9 +52,10 @@ while(true) {
 }
 \end{lstlisting}
 \end{SubFloat}
-\begin{SubFloat}{\label{d:b}Timing diagram -- the X-axis shows
-    the execution of the \texttt{wait\_inbetween} statement. The Y-axis
-    is the time elapsed.}
+\begin{SubFloat}{\label{d:b}Timing diagram -- the X-axis shows the
+    execution of the \texttt{wait\_inbetween} statement. The Y-axis is
+    the time elapsed. The arrow shows one example of the expiration of
+    the \mbox{\texttt{wait\_inbetween (50.3..200.3 ms)}} statement.}
   % \begin{figure}[h!]
     \centering
     \includegraphics[scale=0.7]{FF1}
@@ -68,8 +69,8 @@ while(true) {
 \end{figure}
 
 The \texttt{wait\_inbetween (M..N)} statement postpones the program
-control flow to move to the proceeding statement for a minimum of $M$
-time units and a maximum of $N$ time units, as shown in
+control flow from moving to the proceeding statement for a minimum of
+$M$ time units and a maximum of $N$ time units, as shown in
 Figure~\ref{d:b}.
 
 Consider a machine used to test human response time and collect this
@@ -95,17 +96,17 @@ The SystemJ program is divided into two \hj{mutually asynchronous}
 clock-domains, the first clock-domain continuously displays a green
 light (\texttt{GREEN\_LIGHT} signal) on the touch screen sensor and
 waits for the user to respond. If the user is able to touch the screen
-within the specified time of 50.3 ms to 200.3 ms a positive response is
-sent to the second clock-domain. All the SystemJ programming constructs
-used to implement this system are described in Table~\ref{tab:1} \hj{and
-  more details can be found in~\cite{amal10}}. The
-\texttt{wait\_inbetween} specification, which models the non exact
-postponement between 50.3 ms and 200.3 ms is not supported in the
-current language and cannot be compiled with the current SystemJ
-compiler. We introduce such \texttt{wait\_inbetween} statements in
-SystemJ. Such non exact real-time mechanisms are useful in developing
-systems where the real-time postponement is not known or should not be
-known a priori.
+within the specified time of at least 50.3 ms and at most 200.3 ms, a
+positive response is sent to the second clock-domain. All the SystemJ
+programming constructs used to implement this system are described in
+Table~\ref{tab:1} \hj{and more details can be found
+  in~\cite{amal10}}. The \texttt{wait\_inbetween} specification, which
+models the non exact postponement between 50.3 ms and 200.3 ms is not
+supported in the current language and cannot be compiled with the
+current SystemJ compiler. We introduce such \texttt{wait\_inbetween}
+statements in SystemJ. Such non exact real-time mechanisms are useful
+for developing systems where the real-time postponement is not known or
+should not be known a priori.
 
 \subsubsection{Programming a timeout using the non exact real-time
   construct; the \texttt{wait\_atleast} statement}
@@ -127,7 +128,8 @@ trap(T){
 \end{SubFloat}
 \begin{SubFloat}{\label{dd:b}Timing diagram -- the X-axis shows the
     execution of the \texttt{wait\_atleast} statement. The Y-axis is the
-    time elapsed.}
+    time elapsed. The arrow shows one possible expiration of
+    \texttt{wait\_atleast (10000 ms)} statement.}
 \includegraphics[scale=0.7]{FF2}
 \end{SubFloat}
 \caption{Programming a timeout with \texttt{wait\_atleast}}
@@ -141,7 +143,7 @@ time units. The maximum postponement is unbounded, but countable
 
 There are many instances when one would like to wait on an input from
 environment for only a specified amount of time. If the signal is not
-received then a timeout is generated so that the program can make
+received, then a timeout is generated so that the program can make
 progress. Such a timeout programmed in the SystemJ pseudo-code along
 with its timing behavior is shown in Figure~\ref{dd}. The SystemJ
 program is waiting on an input signal, \texttt{DoorOpened}, from the
@@ -181,7 +183,8 @@ while(true) {
 
 \begin{SubFloat}{\label{p1:b}Timing diagram -- the X-axis shows the
     execution of the \texttt{wait\_exact} statement. The Y-axis is the
-    time elapsed.}
+    time elapsed. The arrow shows the \textit{only} possible expiration
+    of the \texttt{wait\_exact (1 ms)} statement.}
   \includegraphics[scale=0.7]{FF3}
 \end{SubFloat}
   \caption{Programming a periodic task with wait\_exact}
@@ -190,10 +193,10 @@ while(true) {
 \end{figure}
 
 One such example; periodic emission of a signal to the environment is
-shown in Figure~\ref{fig:p1}. As before upon execution of
+shown in Figure~\ref{fig:p1}. As before, upon execution of
 \texttt{wait\_exact (1 ms)} statement, the time starts elapsing. But,
 unlike in previous cases the following statement needs to be executed
-exactly after 1 ms have passed, as shown in Figure~\ref{p1:b}.
+exactly after 1 ms has passed, as shown in Figure~\ref{p1:b}.
 
 %%% Local Variables: 
 %%% mode: latex

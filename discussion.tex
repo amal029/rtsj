@@ -1,10 +1,9 @@
 \section{Discussion}
 \label{sec:disc-perc-limit}
 
-We dedicate this section to discuss the details of the wait construct
-semantics, their usage and the advantages and limitations of our
-proposed technique to introducing these real-time constructs in a
-reactive setting.
+We dedicate this section to discuss the details of the real-time wait
+construct semantics, its advantages and limitations in a reactive
+setting.
 
 \subsection{Programming using the wait\_exact construct -- the
   periodic reactions}
@@ -57,25 +56,26 @@ reactive setting.
 % The third variant is useful for hard-real time guarantees, e.g., a
 % reaction, or a whole CD, can be programmed to run periodically like so:
 
-\begin{figure}[h!]
-	\vspace{-10pt}
-        \begin{lstlisting}[style=sysj,basicstyle=\footnotesize\ttfamily,morekeywords={emit,trap,pause,exit,wait_exact}]
-while(true){wait_exact (1 ms); 
-	emit S; //do something
-}
- \end{lstlisting}
-  \caption{Programming periodic tasks with wait\_exact statement}
-  \label{fig:periodic}
-	\vspace{-10pt}
-\end{figure}
+% \begin{figure}[h!]
+% 	\vspace{-10pt}
+%         \begin{lstlisting}[style=sysj,basicstyle=\footnotesize\ttfamily,morekeywords={emit,trap,pause,exit,wait_exact}]
+% while(true){wait_exact (1 ms); 
+% 	emit S; //do something
+% }
+%  \end{lstlisting}
+%   \caption{Programming periodic tasks with wait\_exact statement}
+%   \label{fig:periodic}
+% 	\vspace{-10pt}
+% \end{figure}
 
-The program in Figure~\ref{fig:preemp}, reproduced from
-Section~\ref{sec:progr-using-exact}, is supposed to emit signal
-\texttt{S} every \texttt{1 ms}. Such periodic reactions (or CDs) require
-special consideration, like any other real-time periodic task. One
-should be aware of the interaction of wait and other \texttt{pause}
+% The program in Figure~\ref{fig:preemp}, reproduced from
+% Section~\ref{sec:progr-using-exact}, is supposed to emit signal
+% \texttt{S} every \texttt{1 ms}.
+
+One should be aware of the interaction of wait and other \texttt{pause}
 constructs in the body of the reaction (or CD). For example, consider
-the (perceived) periodic program and its rewrite below.
+the (perceived) periodic code snippet in Figure~\ref{pp:a} and its
+rewrite in Figure~\ref{pp:b}.
 
 \begin{figure}[h!]
   \centering
@@ -111,27 +111,29 @@ while(true) {
 }
 \end{lstlisting}
   \end{SubFloat}
-\caption{Extra pause statements in periodic tasks}
+  \caption{Extra pause statements in periodic tasks}
   \label{fig:periodic2}
 \end{figure}
 
 The system designer needs to be aware that just introducing a wait
-construct does not make the reaction (or CD) periodic. The program on
-the left does \textit{not} emit signal \texttt{S} every \texttt{1 ms},
-because of the extra \texttt{pause} statement. Introducing additional
-pauses introduces more logical ticks, consequently increasing the
-real-time wait period. Static analysis techniques from real-time
-community can be used to automatically determine the wait specification,
-in such cases, but describing these techniques is out of the scope of
-this work.
+construct does not make the reaction (or CD) periodic. The code snippet
+in Figure~\ref{pp:a} does \textit{not} emit signal \texttt{S} every
+\texttt{1 ms}, because of the extra \texttt{pause}
+statement. Introducing additional pauses introduces more logical ticks,
+consequently increasing the real-time wait period. Static analysis
+techniques from real-time community can be used to automatically
+determine the specification for the \texttt{wait\_exact} statement in
+Figure~\ref{pp:a}, in such cases, but describing these techniques is out
+of the scope of this work.
 
 \subsection{Need for time analyzable platforms}
 \label{sec:need-time-analyzable}
 
-The proposed solution relies on time analyzable platforms, i.e.,
-platforms where WCRT and BCRT can be calculated using static analysis
-tools. Many might consider this to be too much of a restriction. In this
-section we debunk this \textit{perceived} disadvantage.
+The solution for introducing real-time as first class language
+constructs introduced in this paper rely on platforms that allow
+computing the WCRT and the BCRT of the program. Many might consider this
+to be too much of a restriction. In this section we debunk this
+\textit{perceived} disadvantage.
 
 \subsubsection{Interaction of timers and reactive constructs}
 \label{sec:inter-timers-react}
@@ -176,9 +178,8 @@ same logical tick, the \texttt{await} statement is never executed (due
 to suspend) and hence, we enter a deadlock. Such problems are completely
 avoided in our technique, because we convert the real-time wait
 constructs into logical waits (\texttt{pause} constructs), which
-interact well with preemption.  Furthermore, synchronous/GALS languages
-have always been targeted at real-time analyzable platforms and
-constrained
+interact well with preemption.  Furthermore, synchronous languages have
+always been targeted at real-time analyzable platforms and constrained
 environments~\cite{DBLP:journals/pieee/SifakisTY03,boldt07}. One can use
 our technique within such a setting with ease.
 
@@ -188,7 +189,7 @@ our technique within such a setting with ease.
 \begin{figure}[h!]
   \centering
 	\vspace{-10pt}
-		\begin{lstlisting}[style=sysj,basicstyle=\footnotesize\ttfamily,morekeywords={emit,trap,pause,exit,delay,suspend}]
+        \begin{lstlisting}[style=sysj,basicstyle=\footnotesize\ttfamily,morekeywords={emit,trap,pause,exit,delay,suspend}]
 {
  //reaction R1
  emit START_TIMER(1 ms); 
@@ -197,7 +198,7 @@ our technique within such a setting with ease.
 || //synchronous parallel
 {
  //reaction R2
- // do something
+ // do something with heavy computation
 }
 		\end{lstlisting}
   \caption{Resolution of external timers}
@@ -206,7 +207,7 @@ our technique within such a setting with ease.
 \end{figure}
 
 There is yet another problem with timer based systems. Let us consider
-the program in Figure~\ref{fig:resolution}. On a cursory look this
+the code snippet in Figure~\ref{fig:resolution}. On a cursory look this
 example should work fine. An external timer is started in reaction R1,
 which counts down from 1 ms. Once this time has elapsed, a signal
 \texttt{TIMER} is generated from this external timer, which should emit
@@ -216,21 +217,22 @@ whole CD, including reaction R2; while reaction R1 is waiting for the
 \texttt{TIMER} signal, reaction R2 is making progress. Input signals can
 only be captured from the environment at the logical tick boundaries
 (cf. Section~\ref{sec:mapping-logical-time}). In
-Figure~\ref{fig:resolution}, reaction R2 determines the length of the
-tick, because it is performing the heavier computation. Consider what
-happens if the external timer generates the \texttt{TIMER} signal, but
-the system is still performing computation and the logical tick has not
-yet finished -- we \textit{miss} this \texttt{TIMER} signal from the
+Figure~\ref{fig:resolution}, assuming reaction R2 performs some large
+data computation the length of the tick is determined by R2. Consider
+what happens if the external timer generates the \texttt{TIMER} signal,
+but the system is still performing computation and the logical tick has
+not yet finished -- we \textit{miss} this \texttt{TIMER} signal from the
 environment. Thus, even in the absence of the \texttt{suspend}
 construct, we are not guaranteed that the program will capture the
 external timer signal. In fact, the WCRT needs to be smaller than 1 ms
-for the above program to perform as expected. But, this again implies
-need for a time analyzable platform even when using external timers.
+for the above code snippet to perform as expected. But, this again
+implies need for a time analyzable platform even when using external
+timers.
 
 In general we observe that the WCRT determines the lowest resolution of
 any real-time construct whether it be external timer independent, like
 the proposed technique, or external timer dependent, like above. This
-discovery is one of the key insights for proposing the solutions
+analysis is one of the key insights for proposing the solutions
 described in this paper.
 
 % \subsection{Other semantic discussion}

@@ -20,13 +20,13 @@ about the underlying execution platform.  But, one can still reason in
 terms of logical time. These languages support discrete logical clock
 rather than a discrete physical (real-time) clock. The real-time period
 of the discrete logical clock (also referred to as a logical tick) is
-not fixed and it is determined by the responsiveness of the program to
-the input signals. Unlike a discrete physical clock, which has fixed
-real-time period, the period of the logical clock is elastic. Although
-the timing model with logical clock has worked well for reactive
-synchronous/GALS languages in designing discrete systems, there is a
-need to introduce real-time since often, implementation models are in
-the continuous or discrete real-time
+not fixed and it is determined by the speed of computation of the
+program for different input signals. Unlike a discrete physical clock,
+which has fixed real-time period, the period of the logical clock is
+elastic. Although, the timing model with logical clock has worked well
+for reactive synchronous/GALS languages in designing discrete systems,
+there is a need to introduce real-time since often, implementation
+models are in the continuous or discrete real-time
 domain~\cite{DBLP:journals/pieee/SifakisTY03}.  Moreover, adding timing
 capabilities as first class language constructs create additional
 opportunity for formally verifying functional and non-functional

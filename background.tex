@@ -60,7 +60,9 @@ in Figure~\ref{fig:2}.
 SystemJ consists of entities called \textit{Clock Domains} (CD)s, each
 running at their individual pace, interacting with the environment via
 signals and with each other via channels and CSP~\cite{choa85} style
-rendezvous. Each CD has its own notion of logical time. CDs adhere to
+rendezvous. Each CD has its own notion of logical time. CDs are composed
+of one or more units called reactions. These reactions themselves can be
+composed of children reaction forming a hierarchy. Each CD adheres to
 the \textit{perfect synchrony} hypothesis, i.e., all statements execute
 instantaneously in zero time. Only the \texttt{pause} statement consumes
 time, just like in Esterel~\cite{gber931}. Consider the SystemJ program
@@ -106,7 +108,7 @@ while(true){
 \end{figure}
 
 The perfect synchrony hypothesis is ideal for programming the
-synchronous sub-set of SystemJ. Unfortunately, execution of every
+synchronous subset of SystemJ. Unfortunately, execution of every
 statement in the logical zero time requires $\delta$ physical time. Time
 for a logical tick can thus be summarized as $\Delta = \mathcal{F}
 (\delta)$, where $\mathcal{F}$ is the schedule. We call $\Delta$ the
@@ -118,12 +120,12 @@ the \textit{Worst Case Reaction Time} (WCRT) and the resultant WCRT
 needs to be smaller than the time between any two consecutive events on
 any input, else the synchrony hypothesis is violated. Techniques for
 calculating the WCRT of synchronous programs~\cite{boldt07} exist and
-this analysis is not the focus of this paper. The opposite of the WCRT,
+WCRT analysis is not the focus of this paper. The opposite of the WCRT,
 the shortest time for a reaction, is called the \textit{Best Case
   Reaction Time} (BCRT). Formally, let $\{\Delta_1, \Delta_2,\ldots,
 \Delta_N\}$, be the set of all possible reaction times for some
-CD. Then, $\exists i \in N, s.t., WCRT= max (\Delta_i)$ and $\exists j
-\in N, s.t., BCRT = min (\Delta_j)$.
+CD. Then, $\exists i \in N, \mathrm{where\ } WCRT= max (\Delta_i)$,
+similarly, $\exists j \in N$, where $BCRT = min (\Delta_j)$.
 
 
 We denote the WCRT and BCRT in Figure~\ref{fig:2c} using \texttt{W} and

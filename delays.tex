@@ -22,25 +22,25 @@ are variants of this single derived construct.
 %   \label{fig:5}
 % \end{figure}
 
-Given a SystemJ program: \texttt{wait\_inbetween (M..N); p}, where $M
-\in \mathbb{Q}^{>0}$ and $N \in \mathbb{Q}^{>0}$, statement $p$ is
-executed after real-time delay of $\tau$ units, such that, $M \leq \tau
-\leq N$.
+Given a  SystemJ program:  \texttt{wait\_inbetween (M..N); p},  where $M
+\in  \mathbb{Q}^{>0}$  and $N  \in  \mathbb{Q}^{>0}$,  statement $p$  is
+executed after  real-time postponement  of $\tau$  units, such  that, $M
+\leq \tau \leq N$.
 
 We also introduce two variants of the derived statement
 \texttt{wait\_inbetween}.
 \begin{enumerate*}
 \item Given a SystemJ program \texttt{wait\_atleast (M); p}, where $M
-  \in \mathbb{Q}^{>0}$, statement $p$ is executed after real-time delay
-  of $\tau$ units, such that, $M \leq \tau < \infty$. It is important to
-  note that the lower bound of the wait construct; $M$ is \textit{not}
-  an exact delay, but rather the control is allowed to proceed to the
-  next statement anytime after waiting for \textit{at least} $M$ times
-  units.
-\item Given a SystemJ program \texttt{wait\_exact (M); p}, where $M
-  \in \mathbb{Q}^{>0}$, statement $p$ is executed after real-time delay
-  of $\tau$ units, such that, $M \leq \tau \leq M$. In this variant, the
-  waiting time is exact.
+  \in \mathbb{Q}^{>0}$, statement $p$ is executed after real-time
+  postponement of $\tau$ units, such that, $M \leq \tau < \infty$. It is
+  important to note that the lower bound of the wait construct; $M$ is
+  \textit{not} an exact postponement, but rather the control is allowed
+  to proceed to the next statement anytime after waiting for \textit{at
+    least} $M$ times units.
+\item Given a SystemJ program \texttt{wait\_exact (M); p}, where $M \in
+  \mathbb{Q}^{>0}$, statement $p$ is executed after real-time
+  postponement of $\tau$ units, such that, $M \leq \tau \leq M$. In this
+  variant, the waiting time is exact.
 \end{enumerate*}
 
 % Figure~\ref{fig:5} pictorially represents the semantics of these delay
@@ -82,11 +82,11 @@ trap(T){
 \end{figure}
 
 The fundamental observation is that real-time is converted into logical
-time via the \texttt{pause} construct. The rewrite basically maps the
-physical notion of time back to the elegant logical notion of time. The
-rewrite \textit{waits} a certain number of logical ticks, before
-proceeding to the next statement. The number of logical ticks \texttt{d}
-to \textit{wait} (Figure~\ref{fig:3}) is determined by the compiler
+time via the \texttt{pause} construct. The rewrite basically maps
+real-time back to the elegant logical notion of time. The rewrite
+\textit{waits} a certain number of logical ticks, before proceeding to
+the next statement. The number of logical ticks \texttt{d} to
+\textit{wait} (Figure~\ref{fig:3}) is determined by the compiler
 statically at compile time. The value of \texttt{d} is intricately tied
 with the WCRT and BCRT of the program and hence the execution platform.
 
@@ -173,8 +173,9 @@ WCRT of the program and still result in the desired real-time wait
 period. Figure~\ref{fig:hrtcssoln} gives the solution space for the
 aforementioned calculation. The patterned space is the only overlapping
 region and hence gives the solution space for the above example. It is
-possible that $D$ is an empty set, thereby, no solution can be found. We
-provide solutions for such cases in the next section.
+possible that $D$ is an empty set, that means no overlapping region
+could be found. We provide solutions for such cases in the next
+subsection.
 
 We think this is an elegant solution, because the technique provides
 real-time guarantees while preserving the essence (elastic logical tick)
@@ -205,8 +206,8 @@ to get the value of \texttt{d}. It is possible % (and often likely, as
 that the resultant set $D$ is empty (also possible in the case of
 \texttt{wait\_inbetween(M..N)}, but never possible in case of
 \texttt{wait\_atleast(M)}). Note that $S_1$ and $S_2$ can never be empty
-sets and will always contain at minimum a single element. For such cases
-we provide two solutions listed below.
+sets and will always contain at minimum a single element. For such
+cases, we provide two solutions listed below.
 
 % In such a case, we can \textit{relax} the upper bound of the
 % \texttt{delay} statement.
@@ -266,17 +267,19 @@ constructs), just like in hardware design, which is very
 The aforementioned technique maintains the essence of synchronous and
 GALS programs -- the logical tick, but in doing so is unable to provide
 the exact real-time wait of $M$ time units in case of
-\texttt{wait\_exact(M)} statement, thereby violating its
+\texttt{wait\_exact(M)} statement, or is unable to provide a
+postponement in the region of $[M, N]$ time units in the case of
+\texttt{wait\_inbetween (M..N)} statement, thereby violating their
 semantics. The second option is to execute the CD periodically at the
 WCRT. WCRT determines the fastest execution speed of any CD with the
 guarantee that no input events from the environment will be missed
 (cf. Section~\ref{sec:mapping-logical-time}). Thus, if we simply execute
-the CD periodically at the WCRT, we can choose the value of
-\textit{d} from set $S1$. This technique allows meeting the synchronous
-hypothesis, while at the same time guaranteeing the semantics of the
-\texttt{wait\_exact(M)} statement. But, compared to the previous
-option, this technique is very inflexible and results in reduced
-response time and increased power consumption.
+the CD periodically at the WCRT, we can choose the value of \textit{d}
+from set $S1$. This technique allows meeting the synchronous hypothesis,
+while at the same time guaranteeing the semantics of the
+\texttt{wait\_exact(M)} statement. But, compared to the previous option,
+this technique is very inflexible and results in reduced response time
+and increased power consumption.
 
 We believe that the designer should be allowed to choose from either of
 these techniques and hence, provide this option via compiler switches.

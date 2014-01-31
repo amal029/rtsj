@@ -103,10 +103,10 @@ benchmark programs based on their BCRT and WCRT}
 	\multicolumn{2}{c}{} & \emph{HRTCS} & \emph{Motor} & \emph{Printer/CD1} &
 	\emph{Printer/CD2} & \emph{AECS/CD1} &	\emph{AECS/CD2} \\ 
 	\midrule
-	\multicolumn{2}{c}{\emph{BCRT}}	& 0.0.0396 ms	& 0.0425 ms & 0.0190 ms &
+	\multicolumn{2}{c}{\emph{BCRT}}	& 0.0334 ms	& 0.0425 ms & 0.0190 ms &
 	0.0263 ms & 0.1784 ms & 0.1284 ms\\ 
 	\cmidrule(r){1-8}
-	\multicolumn{2}{c}{\emph{WCRT}} &0.1152 ms & 0.1096 ms & 0.0647 ms
+	\multicolumn{2}{c}{\emph{WCRT}} &0.112 ms & 0.1096 ms & 0.0647 ms
 	& 0.0491 ms & 0.3476 ms & 0.2991 ms\\ 
 	\cmidrule(r){1-8}
 
@@ -141,8 +141,8 @@ benchmark programs based on their BCRT and WCRT}
 }
 
 \hj{ HRTCS is the human response system described in
-	Section~\ref{sec:motivating-example}. HRTCS consists of 2 CDs, but
-only one with real-time waits.}
+  Section~\ref{sec:motivating-example}. HRTCS consists of 2 CDs, but
+  only one with real-time wait.}
 
 \hj{ Motor is a stepper motor controller from~\cite{Bourke2009a}, used
 for producing monochrome images on paper by correct application of
@@ -174,7 +174,7 @@ door to the room is being opened or to detect unknown entries (i.e.
 intruders). For instance, the system triggers an alarm 10 seconds after
 detection of an intruder or generates a beep sound when an entrance door
 is being opened for the same amount of time. In the original AECS, the
-system needed to interacts with two external timers through input/output
+system needed to interact with two external timers through input/output
 signals in order to wait for a specific amount of time (e.g.
 \texttt{TimerTriggered} in Figure~\ref{delaycode:a}). When the timer
 expires, it notifies the system through the input signal
@@ -182,8 +182,8 @@ expires, it notifies the system through the input signal
 The program has been modified such that the wait constructs replace
 external timers and corresponding interface (I/O) signals, which is
 shown in Figure~\ref{delaycode:b}.  With the new wait constructs, these
-timers are not necessary and waits can be expressed directly in the
-code.
+timers are not necessary and real-time waits can be expressed directly
+in the SystemJ code.
 
 \begin{figure}[h!]
 	\vspace{-10pt}
@@ -291,9 +291,9 @@ on the newly computed \emph{N} for the examples: Motor and AECS.
 The previous results show that for HRTCS and Printer the compiler was
 able to find \textit{d} without relaxing upper bound of wait
 statements. Figure~\ref{fig:graph1} shows the accuracy of our results by
-comparing differences between programmer specified upper bounds
+comparing between the programmer specified upper bounds
 (Table~\ref{fig:benchlist}) and the actual bounds obtained using our
-techniques (Table~\ref{fig:comparison}) for the other examples requiring
+techniques (Table~\ref{fig:comparison}) for the examples requiring
 relaxation. AECS/CD1 wait specification is not included in
 Figure~\ref{fig:graph2}, because although it requires relaxation, the
 wait specification (Table~\ref{fig:benchlist}) does not have an upper
@@ -371,7 +371,7 @@ that runs on this platform. Clock frequency of the processor directly
 impacts the value of WCRT. On the other hand, programmer can write a
 program such that large data (or control) computations in a single
 logical tick increase WCRT of the program.  Assuming we do not change
-the architecture of the execution platform (i.e. JOP), the differece
+the architecture of the execution platform (i.e. JOP), the difference
 factor can only be reduced by modifying the benchmark programs such that
 the critical paths are broken up using \texttt{pause} constructs,
 thereby reducing the WCRT.  Figure~\ref{fig:improv} shows segments of
