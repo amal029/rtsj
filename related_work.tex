@@ -8,7 +8,7 @@ synchronous) reactive languages. The most prominent works in this area
 are by Shyamsundar~\cite{rsh94} and Bourke et
 al.~\cite{Bourke2009a}. Shyamsundar incorporates real-time using
 external timers in \textit{Communicating Reactive Processes} (CRP),
-which like SystemJ is an extension of synchronous language Esterel to
+which like SystemJ, is an extension of synchronous language Esterel to
 asynchorny. But, as mentioned in Section~\ref{sec:inter-timers-react}
 and~\ref{sec:resolution-real-time} external timers do not interact well
 with preemption constructs in these languages. Bourke et al. introduce
@@ -30,14 +30,14 @@ the compiler developers the chance to optimize for many different
 criteria such as computation time, energy, power, etc, without worrying
 about or violating the real-time wait specification.
 
-Other works such as Quartz~\cite{glog02} and Bertin et
-al.~\cite{Bertin:2000:TVR:1947412.1947439}, also incorporate real-time
-wait statements in Esterel using \texttt{pause} and special
-\textit{pragmas} (annotations), respectively.  The Quartz solution is
-targeted at studying timing properties using model checkers rather than
-implementation, like us. The solution introduced by Bertin et
-al.~\cite{Bertin:2000:TVR:1947412.1947439} translates real-time pragmas
-into Timed automata~\cite{alur94} for model-checking real-time
+Other works such as those of Logothethis et al.~\cite{glog02} and Bertin
+et al.~\cite{Bertin:2000:TVR:1947412.1947439}, also incorporate
+real-time wait statements in Esterel using \texttt{pause} and special
+\textit{pragmas} (annotations), respectively. The Quartz~\cite{glog02}
+solution is targeted at studying timing properties using model checkers
+rather than implementation, like us. The solution introduced by Bertin
+et al.~\cite{Bertin:2000:TVR:1947412.1947439} translates real-time
+pragmas into Timed automata~\cite{alur94} for model-checking real-time
 deadlines. Our solution on the other hand removes all continuous time
 elements and produces single discrete time model thereby making the
 solution amenable to existing functional and real-time verification

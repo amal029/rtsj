@@ -25,7 +25,7 @@ mechanisms introduced in real-time operating systems.
 
 \begin{figure}[t!]
 	\vspace{-10pt}
-        \begin{SubFloat}{\label{delaycode:a}A human responsiveness
+        \begin{SubFloat}{\label{delay:a}A human responsiveness
             system (HRTCS)}
         \begin{lstlisting}[style=sysj,morekeywords={sustain,send,receive,abort,await,emit,present,trap,pause,exit,wait_inbetween,wait_exact,suspend}]
 { // Clock-domain 1
@@ -69,7 +69,7 @@ while(true) {
 \end{figure}
 
 The \texttt{wait\_inbetween (M..N)} statement postpones the program
-control flow from moving to the proceeding statement for a minimum of
+control flow from proceeding to the following statement for a minimum of
 $M$ time units and a maximum of $N$ time units, as shown in
 Figure~\ref{d:b}.
 
@@ -87,26 +87,26 @@ expected timing behavior of the \texttt{wait\_inbetween} statement, is
 shown in Figure~\ref{fig:1}. We use the SystemJ language in this paper,
 because being a \textit{Globally Asynchronous Locally Synchronous}
 (GALS) language it helps us easily describe a larger class of systems
-(like HRTCS in Figure~\ref{fig:1}) compared to purely synchronous
+(like HRTCS in Figure~\ref{delay:a}) compared to purely synchronous
 languages like Esterel. Moreover, being a super-set of Esterel, SystemJ
 allows us to explore the marriage of real-time and logical time not only
 in the GALS, but also in the synchronous setting.
 
-The SystemJ program is divided into two \hj{mutually asynchronous}
-clock-domains, the first clock-domain continuously displays a green
-light (\texttt{GREEN\_LIGHT} signal) on the touch screen sensor and
-waits for the user to respond. If the user is able to touch the screen
-within the specified time of at least 50.3 ms and at most 200.3 ms, a
-positive response is sent to the second clock-domain. All the SystemJ
-programming constructs used to implement this system are described in
-Table~\ref{tab:1} \hj{and more details can be found
-  in~\cite{amal10}}. The \texttt{wait\_inbetween} specification, which
-models the non exact postponement between 50.3 ms and 200.3 ms is not
-supported in the current language and cannot be compiled with the
-current SystemJ compiler. We introduce such \texttt{wait\_inbetween}
-statements in SystemJ. Such non exact real-time mechanisms are useful
-for developing systems where the real-time postponement is not known or
-should not be known a priori.
+The SystemJ program in Figure~\ref{delay:a} is divided into two
+\hj{mutually asynchronous} clock-domains, the first clock-domain
+continuously displays a green light (\texttt{GREEN\_LIGHT} signal) on
+the touch screen sensor and waits for the user to respond. If the user
+is able to touch the screen within the specified time of at least 50.3
+ms and at most 200.3 ms, a positive response is sent to the second
+clock-domain. All the SystemJ programming constructs used to implement
+this system are described in Table~\ref{tab:1} \hj{and more details can
+  be found in~\cite{amal10}}. The \texttt{wait\_inbetween}
+specification, which models the non exact postponement between 50.3 ms
+and 200.3 ms is not supported in the current language and cannot be
+compiled with the current SystemJ compiler. We introduce such
+\texttt{wait\_inbetween} statements in SystemJ. Such non exact real-time
+mechanisms are useful for developing systems where the real-time
+postponement is not known or should not be known a priori.
 
 \subsubsection{Programming a timeout using the non exact real-time
   construct; the \texttt{wait\_atleast} statement}

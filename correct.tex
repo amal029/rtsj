@@ -27,7 +27,7 @@ Section~\ref{sec:intr-real-time}.
 \label{th:1}
 \end{theorem}
 \begin{proof}
-  We use case analysis and contradiction to prove the above theorem.
+  We use contradiction to prove the theorem.
   \begin{compactenum}[\hspace{0.25cm} 1.]
   \item Proof for case $\Delta = WCRT$: Assume \mbox{$d \times WCRT <
       M$}, then $d < \frac{M}{WCRT}$. $BCRT \leq WCRT$, by definition,
@@ -42,10 +42,10 @@ Section~\ref{sec:intr-real-time}.
     \frac{N}{WCRT}$, which again contradicts Lemma~\ref{lemma:1}.
   \item Proof for case $BCRT < \Delta < WCRT$: For $d \times \Delta < M$
     to hold, $d < \frac{M}{\Delta}$ should hold. By definition, $\Delta
-    > BCRT$, thus, $\frac{M}{BCRT} < \frac{M}{\Delta}$, hence, $d <
-    \frac{M}{BCRT}$ should hold, which contradicts Lemma~\ref{lemma:1}. We
-    can prove the other case $d \times \Delta \leq N$, using the upper
-    bound from Lemma~\ref{lemma:1} similarly.
+    > BCRT$, thus, $\frac{M}{\Delta} < \frac{M}{BCRT}$, hence, $d <
+    \frac{M}{BCRT}$ should hold, which contradicts
+    Lemma~\ref{lemma:1}. We can prove the other case $d \times \Delta >
+    N$, using the upper bound from Lemma~\ref{lemma:1} similarly.
   \end{compactenum}
 \end{proof}
 
@@ -71,14 +71,17 @@ soundness property of Algorithm~\ref{alg:1}.
 \end{theorem}
 
 \begin{proof}
-  The proof is the opposite of case 3 in Theorem~\ref{th:1}.
+  Soundness is trivially proven knowing that there exists no $\Delta <
+  BCRT$ or $\Delta > WCRT$ by definition
+  (cf. Section~\ref{sec:mapping-logical-time}).
 \end{proof}
 
 The proofs for correctness, completeness, and soundness for
 Algorithm~\ref{alg:2} are similar to those of
-Algorithm~\ref{alg:1}. Furthermore, even correctness, completeness, and
+Algorithm~\ref{alg:1}. Furthermore, correctness, completeness, and
 soundness for \texttt{wait\_atleast (M)} and \texttt{wait\_exact (M)}
-can be proven using the same techniques as shown in Theorem~\ref{th:1}.
+are dependent on Theorem~\ref{th:1}, because these are variants of the
+\texttt{wait\_inbetween (M..N)} statement.
 
 %%% Local Variables: 
 %%% mode: latex

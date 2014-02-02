@@ -163,27 +163,26 @@ between 1.2 to 30.3 ms once it receives the job from the Spooler CD.
 Actual print job is started between 5.6 to 100.2 ms after the
 notification. In this example, bounded wait ensures that both; channel
 communication and print job should occur within the specified amount of
-time. This example along with HRTCS demonstrates the use of non exact
-wait statements.
+time. % This example along with HRTCS demonstrates the use of non exact
+% wait statements.
 
 AECS (Access and Environmental Control System) is an application that
 controls an intelligent room environment described in~\cite{aecs_ispa}.
-AECS has 2 CDs; CD1 consist of a single wait statement, while CD2 has 2
-wait statements. The system is designed to measure how long the entrance
-door to the room is being opened or to detect unknown entries (i.e.
-intruders). For instance, the system triggers an alarm 10 seconds after
-detection of an intruder or generates a beep sound when an entrance door
-is being opened for the same amount of time. In the original AECS, the
-system needed to interact with two external timers through input/output
-signals in order to wait for a specific amount of time (e.g.
-\texttt{TimerTriggered} in Figure~\ref{delaycode:a}). When the timer
-expires, it notifies the system through the input signal
-\texttt{TimeOut}, which is polled using the \texttt{await} statement.
-The program has been modified such that the wait constructs replace
-external timers and corresponding interface (I/O) signals, which is
-shown in Figure~\ref{delaycode:b}.  With the new wait constructs, these
-timers are not necessary and real-time waits can be expressed directly
-in the SystemJ code.
+AECS has 2 CDs; each with one wait statement. The system is designed to
+measure how long the entrance door to the room is being opened or to
+detect unknown entries (i.e.  intruders). For instance, the system
+triggers an alarm 10 seconds after detection of an intruder or generates
+a beep sound when an entrance door is being opened for the same amount
+of time. In the original AECS, the system needed to interact with two
+external timers through input/output signals in order to wait for a
+specific amount of time (e.g.  \texttt{TimerTriggered} in
+Figure~\ref{delaycode:a}). When the timer expires, it notifies the
+system through the input signal \texttt{TimeOut}, which is polled using
+the \texttt{await} statement.  The program has been modified such that
+the wait constructs replace external timers and corresponding interface
+(I/O) signals, which is shown in Figure~\ref{delaycode:b}.  With the new
+wait constructs, these timers are not necessary and real-time waits can
+be expressed directly in the SystemJ code.
 
 \begin{figure}[h!]
 	\vspace{-10pt}
@@ -293,11 +292,11 @@ able to find \textit{d} without relaxing upper bound of wait
 statements. Figure~\ref{fig:graph1} shows the accuracy of our results by
 comparing between the programmer specified upper bounds
 (Table~\ref{fig:benchlist}) and the actual bounds obtained using our
-techniques (Table~\ref{fig:comparison}) for the examples requiring
-relaxation. AECS/CD1 wait specification is not included in
-Figure~\ref{fig:graph2}, because although it requires relaxation, the
-wait specification (Table~\ref{fig:benchlist}) does not have an upper
-bound.
+techniques (Table~\ref{fig:comparison}).
+% relaxation. % AECS/CD1 wait specification is not included in
+% Figure~\ref{fig:graph1}, because although it requires relaxation, the
+% wait specification (Table~\ref{fig:benchlist}) does not have an upper
+% bound.
 
 \begin{figure}[h!]
 	\centering
@@ -305,7 +304,7 @@ bound.
 	\begin{axis}[
 			ybar,xtick=data,
 			symbolic x
-			coords={HRTCS,Printer/CD1,Printer/CD2,AECS/CD2},
+			coords={HRTCS,Printer/CD1,Printer/CD2,AECS/CD1,AECS/CD2},
 			height=5cm,
 			width=9.5cm,
 			minor y tick num=1,
@@ -318,7 +317,7 @@ bound.
 			ylabel=Difference factor,
 		]
 			\addplot + [black,fill=white,postaction={pattern=north east lines}] coordinates
-			{(HRTCS,1)(Printer/CD1,1)(Printer/CD2,1)(AECS/CD2,1.94)};
+			{(HRTCS,1)(Printer/CD1,1)(Printer/CD2,0)(AECS/CD1,1)(AECS/CD2,0)};
 			\addplot + [black,fill=white,postaction={pattern=north west
                           lines}] coordinates 
                         {(Printer/CD2, 1)(AECS/CD2, 1.94)};
@@ -373,9 +372,9 @@ program such that large data (or control) computations in a single
 logical tick increase WCRT of the program.  Assuming we do not change
 the architecture of the execution platform (i.e. JOP), the difference
 factor can only be reduced by modifying the benchmark programs such that
-the critical paths are broken up using \texttt{pause} constructs,
-thereby reducing the WCRT.  Figure~\ref{fig:improv} shows segments of
-code from AECS whose WCRT is reduced by such technique.
+the critical paths are broken up using additional \texttt{pause}
+constructs, thereby reducing the WCRT.  Figure~\ref{fig:improv} shows
+segments of code from AECS whose WCRT is reduced by such technique.
 
 \begin{figure}[h!]
 	\centering
@@ -384,6 +383,7 @@ code from AECS whose WCRT is reduced by such technique.
     \begin{minipage}[b]{0.45\linewidth}
 		\begin{lstlisting}[style=sysj,morekeywords={present,emit,trap,pause,exit,delay,suspend}]
 present(EntryRequest)
+// obtaining signal value
   id = #EntryRequest;
 else
   id = #ExitRequest;
@@ -485,7 +485,7 @@ application (i.e. data or control dominated).
 			\addplot + [black,fill=white,postaction={pattern=north east lines}] coordinates
                         {(Motor, 8.05) (AECS/CD2, 11.82)};
 			\addplot + [black,fill=white,postaction={pattern=north west lines}] coordinates
-                        {(Motor, 8.00) (AECS/CD2, 11.82)};
+                        {(Motor, 8.00)};
 			\addplot + [black,fill=white,postaction={pattern=dots}] coordinates
                         {(Motor, 6.42)};
 			\addplot + [black,fill=white,postaction={pattern=horizontal lines}] coordinates

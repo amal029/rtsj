@@ -123,25 +123,26 @@ program individually. \textit{The fundamental observation is -- the
 Our algorithm takes as input: WCRT, BCRT, and the lower and upper bounds
 $M$ and $N$, respectively, of the \texttt{wait\_inbetween} construct. We
 first divide $M$ and $N$ with the BCRT and WCRT, respectively. This
-division gives us the number of individual logical ticks required to
-postpone the CD (or synchronous program) by the real-time
-specification. We always $ceil$ when dividing $M$ and $floor$ when
-dividing $N$ to make sure that the resultant values are integers (in
-domain $\mathbb{N}^{>0}$) and these functions guarantee that the
-resultant logical ticks result in real-time postponements between the
-required range $[M,N]$. Next, a function $F$ maps these calculated
-values to a set of equidistant integer points (values) separated by a
-unit value -- these points represent all the logical ticks running at
-the WCRT and the BCRT, respectively that satisfy the real-time wait
-requirements. The intersection of these two sets gives all the logical
-ticks that satisfy the real-time requirements invariant of the logical
-time and its elasticity.
+division gives us the number of individual logical ticks, at the fastest
+(BCRT) and slowest (WCRT) program execution speeds, required to postpone
+the CD (or synchronous program) by the real-time specification. We
+always $ceil$ when dividing $M$ and $floor$ when dividing $N$ to make
+sure that the resultant values are integers (in domain
+$\mathbb{N}^{>0}$) and these functions guarantee that the resultant
+logical ticks result in real-time postponements between the required
+range $[M,N]$. Next, a function $F$ maps these calculated values to a
+set of equidistant integer points (values) separated by a unit value --
+these points represent all the logical ticks running at the WCRT and the
+BCRT, respectively that satisfy the real-time wait requirements. The
+intersection of these two sets gives all the logical ticks that satisfy
+the real-time requirements invariant of the logical time and its
+elasticity.
 
 Let us revisit the HRTCS example (cf. Figure~\ref{fig:1}) to illustrate
 the algorithm. From Figure~\ref{fig:1} we know that $M$ is 50.3 ms and
 $N$ is 200.3 ms, respectively. \hj{Timing analysis of the program has
-found} WCRT and BCRT be: 0.112 ms and 0.0334 ms, respectively. Thus, the
-algorithm proceeds as follows:
+  found} WCRT and BCRT to be: 0.112 ms and 0.0334 ms,
+respectively. Thus, the algorithm proceeds as follows:
 
 \begin{enumerate*}
 \item $l_1 \leftarrow \lceil 50.3/0.112 \rceil$ and $u_1 \leftarrow
@@ -277,9 +278,9 @@ guarantee that no input events from the environment will be missed
 the CD periodically at the WCRT, we can choose the value of \textit{d}
 from set $S1$. This technique allows meeting the synchronous hypothesis,
 while at the same time guaranteeing the semantics of the
-\texttt{wait\_exact(M)} statement. But, compared to the previous option,
-this technique is very inflexible and results in reduced response time
-and increased power consumption.
+\texttt{wait\_exact(M)} statement. This technique trades-off reduced
+average reaction time and increased power consumption while providing
+exact postponement.
 
 We believe that the designer should be allowed to choose from either of
 these techniques and hence, provide this option via compiler switches.

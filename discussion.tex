@@ -218,7 +218,7 @@ whole CD, including reaction R2; while reaction R1 is waiting for the
 only be captured from the environment at the logical tick boundaries
 (cf. Section~\ref{sec:mapping-logical-time}). In
 Figure~\ref{fig:resolution}, assuming reaction R2 performs some large
-data computation the length of the tick is determined by R2. Consider
+data computation, the length of the tick is determined by R2. Consider
 what happens if the external timer generates the \texttt{TIMER} signal,
 but the system is still performing computation and the logical tick has
 not yet finished -- we \textit{miss} this \texttt{TIMER} signal from the
