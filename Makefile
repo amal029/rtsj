@@ -13,3 +13,6 @@ all:
 	bibtex paper.aux
 	pdflatex paper.tex
 	pdflatex paper.tex
+
+clean:
+	rm -fv *.pdf *.bak *.log *.blg *.aux *.bbl
