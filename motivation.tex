@@ -152,8 +152,9 @@ reception of this signal after 10 seconds.
 
 The timing diagram, Figure~\ref{dd:b}, shows that the
 \texttt{wait\_atleast} statement waits for a \textit{at least} 10
-seconds, but unlike \texttt{wait\_inbetween} there is no upper
-bound. The statement following the \texttt{wait\_atleast} statement is
+seconds, but unlike \texttt{wait\_inbetween} there is no upper bound
+i.e. program can proceed to the next statement at any time after 10
+seconds. The statement following the \texttt{wait\_atleast} statement is
 executed after a finite countable, but unbounded postponement. Such a
 statement is useful for programming low priority tasks.
 

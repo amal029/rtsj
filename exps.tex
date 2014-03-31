@@ -85,8 +85,9 @@ HRTCS                  & \texttt{wait\_inbetween(50.3..200.3 ms)} ($CD1$) & 2   
 & \texttt{wait\_inbetween(1.2..30.3 ms)} ($CD2$)		  &														&											\\
 & \texttt{wait\_inbetween(5.6..100.2 ms)} ($CD2$)     &														&											
 \\ \midrule
-\multirow{2}{*}{AECS} & \texttt{wait\_atleast(10000 ms)} ($CD1$) 
-& \multirow{2}{*}{2} & \multirow{2}{*}{267} \\
+\multirow{3}{*}{AECS} & \texttt{wait\_atleast(10000 ms)} ($CD1$) 
+& \multirow{3}{*}{2} & \multirow{3}{*}{267} \\
+& \texttt{wait\_exact(10000 ms)} ($CD2$) & & \\
 & \texttt{wait\_exact(10000 ms)} ($CD2$) & &
 \\ \bottomrule
 \end{tabular}
@@ -113,12 +114,12 @@ benchmark programs based on their BCRT and WCRT}
 	\multirow{2}{*}{Delay 1} & M..N & 50.3-200.3 ms	& 2.4-6.2493 ms	  &
 	2.7-10.6 ms & 1.2-30.3 ms & 10000-19484.3481 ms& 10000-23278.2752 ms \\
 	\cmidrule(r){2-8}
-	& d &1506-1788 & 57 & 143-163 & 46-617 & 56062 &77844\\ 
+	& d &1272-1739 & 57 & 143-163 & 46-617 & 56062 &77844\\ 
 	\cmidrule(r){1-8}
 	\multirow{2}{*}{Delay 2} & M..N & N/A & 1.668-4.3855 ms & N/A &
 	5.6-100.2 ms & N/A &10000-23278.2752 ms\\ 
 	\cmidrule(r){2-8}
-	& d & N/A & 40 & N/A & 213-2041 & N/A &53160\\ 
+	& d & N/A & 40 & N/A & 213-2041 & N/A &77844\\ 
 	\cmidrule(r){1-8}
 	\multirow{2}{*}{Delay 3} & M..N & N/A & 0.05-0.2193 ms & N/A & N/A & N/A
 	&N/A\\ 
@@ -267,8 +268,8 @@ As a first step, BCRT and WCRT were calculated for all examples. Given
 the real-time \mbox{\texttt{wait\_inbetween (M..N)}} provided by
 programmers, required logical delay \textit{d} was determined by
 applying Algorithm~\ref{alg:1}. In HRTCS, real-time delay of the range
-50.3..200.3 (ms) is only satisfied when \emph{d} is between 1506 and
-1788 (as shown previously in Section~\ref{sec:find-logic-delay}). Delay
+50.3..200.3 (ms) is only satisfied when \emph{d} is between 1272 and
+1739 (as shown previously in Section~\ref{sec:find-logic-delay}). Delay
 2.7..10.6 (ms) is satisfied in Printer/CD1 with \emph{d} of 143..163.
 Similarly, Printer/CD2 satisfies real-time ranges of 1.2..30.3 (ms) and
 5.6..100.2 (ms) when \emph{d} is 46..617 and 213..2041, respectively. It
@@ -317,7 +318,7 @@ techniques (Table~\ref{fig:comparison}).
 			ylabel=Difference factor,
 		]
 			\addplot + [black,fill=white,postaction={pattern=north east lines}] coordinates
-			{(HRTCS,1)(Printer/CD1,1)(Printer/CD2,0)(AECS/CD1,1)(AECS/CD2,0)};
+			{(HRTCS,1)(Printer/CD1,1)(Printer/CD2,1)(AECS/CD1,1)(AECS/CD2,1.94)};
 			\addplot + [black,fill=white,postaction={pattern=north west
                           lines}] coordinates 
                         {(Printer/CD2, 1)(AECS/CD2, 1.94)};
@@ -485,7 +486,7 @@ application (i.e. data or control dominated).
 			\addplot + [black,fill=white,postaction={pattern=north east lines}] coordinates
                         {(Motor, 8.05) (AECS/CD2, 11.82)};
 			\addplot + [black,fill=white,postaction={pattern=north west lines}] coordinates
-                        {(Motor, 8.00)};
+                        {(Motor, 8.00) (AECS/CD2, 11.82)};
 			\addplot + [black,fill=white,postaction={pattern=dots}] coordinates
                         {(Motor, 6.42)};
 			\addplot + [black,fill=white,postaction={pattern=horizontal lines}] coordinates
