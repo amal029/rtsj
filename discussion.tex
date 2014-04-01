@@ -81,7 +81,7 @@ rewrite in Figure~\ref{pp:b}.
   \centering
   \begin{SubFloat}{\label{pp:a}Original program}
     \centering
-			\begin{lstlisting}[style=sysj,basicstyle=\footnotesize\ttfamily,morekeywords={emit,trap,pause,exit,wait_exact}]
+    \begin{lstlisting}[style=sysj,basicstyle=\footnotesize\ttfamily,morekeywords={emit,trap,pause,exit,wait_exact}]
 while(true) {
  wait_exact(1 ms);
  //extra pause
@@ -92,7 +92,7 @@ while(true) {
 \end{SubFloat}
 \hspace{9pt}
   \begin{SubFloat}{\label{pp:b}Rewritten program}
-			\begin{lstlisting}[style=sysj,basicstyle=\footnotesize\ttfamily,morekeywords={emit,trap,pause,exit,delay}]
+    \begin{lstlisting}[style=sysj,basicstyle=\footnotesize\ttfamily,morekeywords={emit,trap,pause,exit,delay}]
 while(true) {
  while(true) { 
   trap(T) {

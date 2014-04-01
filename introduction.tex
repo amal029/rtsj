@@ -29,10 +29,12 @@ is a need to introduce real-time since often, implementation models are
 in the continuous or discrete real-time
 domain~\cite{DBLP:journals/pieee/SifakisTY03}. This paper targets
 enhancing the expressiveness of formal GALS and synchronous languages by
-adding real-time constructs. The real-time constructs speed up the
+adding real-time constructs. These real-time constructs speed up the
 design process by allowing system designers to explicitly program
 real-time control logic within the language itself without relying on
-external resources such as timers.
+external resources such as timers. Introduction of real-time as a
+language construct allows verification of temporal properties of
+programs before deployment.
 
 %Moreover, adding timing
 %capabilities as first class language constructs create additional
@@ -73,10 +75,14 @@ rest of the paper. Our contributions can be further refined as follows:
   real-time in synchronous/GALS languages.
 \end{enumerate*}
 
-All aforementioned contributions hold under a single assumption that
-real-time analyzable platforms are available. The rest of the paper is
-arranged as follows: Section~\ref{sec:background} gives the background
-on SystemJ and related techniques required for the rest of the paper.
+All aforementioned contributions require a single \textbf{assumption}
+that real-time analyzable platforms are available that allow computing
+the timing bounds of SystemJ programs. This assumption is necessary for
+all hard real-time system implementations~\cite{wilhelm08}.
+
+The rest of the paper is arranged as follows:
+Section~\ref{sec:background} gives the background on SystemJ and related
+techniques required for the rest of the paper.
 Section~\ref{sec:intr-real-time} introduces real-time mechanisms in the
 GALS paradigm and describes their compilation into logical time.
 Section~\ref{sec:proof-correctness} sketches the correctness proofs for
