@@ -372,6 +372,7 @@
 \linespread{0.994}
 % \usepackage{bibspacing}
 \usepackage{color}
+%\usepackage{hyperref}
 \makeatletter
 \newbox\sf@box
 \newenvironment{SubFloat}[2][]%
@@ -398,11 +399,17 @@
 \title{Times square -- marriage of real-time and logical-time in GALS
   and synchronous languages} % Modified by K. Kobayashi 18/06/02
 
-
 % author names and affiliations
 % use a multiple column layout for up to three different
 % affiliations
-\author{}
+\author{\IEEEauthorblockN{HeeJong Park, Avinash Malik and Zoran Salcic}
+\IEEEauthorblockA{Department of Electrical and Computer Engineering\\
+	University of Auckland\\
+	Auckand, New Zealand\\
+	hpar081@aucklanduni.ac.nz, avinash.malik@auckland.ac.nz,
+	z.salcic@auckland.ac.nz
+}
+}
 
 % conference papers do not typically use \thanks and this command
 % is locked out in conference mode. If really needed, such as for
@@ -486,8 +493,9 @@
   stringstyle=\color{orange},
 }
 
-\setlength\textfloatsep{0.4cm}
-%\setlength\intextsep{0.4cm}
+\setlength\textfloatsep{0.2cm}
+\setlength\intextsep{0.2cm}
+\setlength{\abovecaptionskip}{0.2cm}
 
 \input{introduction}
 \input{background}
